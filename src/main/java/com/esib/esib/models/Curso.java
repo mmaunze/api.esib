@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -27,16 +29,22 @@ public class Curso {
             @org.hibernate.annotations.Parameter(name = "increment_size", value = "1")
     })
     @Column(name = "id_curso")
-    private Integer idCurso;
+    private Long idCurso;
 
     @Column(name = "descricao", nullable = false, unique = true)
+    @NotNull
+    @NotEmpty
     private String descricao;
 
     @ManyToOne(fetch = FetchType.EAGER) // Opcionalmente, especifique aqui o comportamento de carregamento
     @JoinColumn(name = "id_faculdade", nullable = false)
+    @NotNull
+    @NotEmpty
     private Faculdade faculdade;
 
     @Column(name = "sigla", nullable = false, unique = true, length = 10)
+    @NotNull
+    @NotEmpty
     private String sigla;
 
 }

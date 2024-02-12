@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -29,21 +31,27 @@ public class Devolucao {
             @org.hibernate.annotations.Parameter(name = "increment_size", value = "1")
     })
     @Column(name = "id_devolucao")
-    private Integer idDevolucao;
+    private Long idDevolucao;
 
     @ManyToOne(fetch = FetchType.EAGER) // Opcionalmente, especifique aqui o comportamento de carregamento
     @JoinColumn(name = "id_emprestimo", nullable = false)
+    @NotNull
+    @NotEmpty
     private Emprestimo emprestimo;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_bibliotecario", nullable = false)
+    @NotNull
+    @NotEmpty
     private Bibliotecario bibliotecario;
 
     @Column(name = "data_devolucao", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
+    @NotEmpty
     private java.util.Date dataDevolucao;
 
     @Column(name = "atraso")
-    private Integer atraso;
+    private Long atraso;
 
 }

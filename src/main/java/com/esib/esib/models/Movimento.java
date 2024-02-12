@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -29,26 +31,36 @@ public class Movimento {
             @org.hibernate.annotations.Parameter(name = "increment_size", value = "1")
     })
     @Column(name = "id_movimento")
-    private Integer idMovimento;
+    private Long idMovimento;
 
     @Column(name = "data_movimento", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
+    @NotEmpty
     private java.util.Date dataMovimento;
 
     @ManyToOne(fetch = FetchType.EAGER) // Opcionalmente, especifique aqui o comportamento de carregamento
     @JoinColumn(name = "id_tipo_movimento", nullable = false)
+    @NotNull
+    @NotEmpty
     private TipoMovimento tipoMovimento;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_obra", nullable = false)
+    @NotNull
+    @NotEmpty
     private Obra obra;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_utilizador")
+    @NotNull
+    @NotEmpty
     private Utilizador utilizador;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_bibliotecario", nullable = false)
+    @NotNull
+    @NotEmpty
     private Bibliotecario bibliotecario;
 
     @Column(name = "observacao", columnDefinition = "text")

@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -27,17 +29,23 @@ public class Multa {
             @org.hibernate.annotations.Parameter(name = "increment_size", value = "1")
     })
     @Column(name = "id_multa")
-    private Integer idMulta;
+    private Long idMulta;
 
     @ManyToOne(fetch = FetchType.EAGER) // Opcionalmente, especifique aqui o comportamento de carregamento
     @JoinColumn(name = "id_emprestimo", nullable = false)
+    @NotNull
+    @NotEmpty
     private Emprestimo emprestimo;
 
     @Column(name = "valor_multa", nullable = false)
+    @NotNull
+    @NotEmpty
     private Double valorMulta;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_estado", nullable = false)
+    @NotNull
+    @NotEmpty
     private Estado estado;
 
 }

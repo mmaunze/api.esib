@@ -11,6 +11,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,12 +28,16 @@ public class Monografia extends Obra {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Use geração automática de ID (substitui a estratégia da
                                                         // classe pai)
     @Column(name = "id_obra")
-    private Integer idMonografia; // Renomeia a coluna para evitar conflito
+    private Long idMonografia; // Renomeia a coluna para evitar conflito
 
     @Column(name = "id_curso", nullable = false)
-    private Integer idCurso;
+    @NotNull
+    @NotEmpty
+    private Long idCurso;
 
     @Column(name = "supervisor", nullable = false, length = 70)
+    @NotNull
+    @NotEmpty
     private String supervisor;
 
     @Column(name = "co_supervisor", length = 70)
@@ -39,15 +45,14 @@ public class Monografia extends Obra {
 
     @ManyToOne(fetch = FetchType.EAGER) // Carrega universidade junto com monografia (opcional)
     @JoinColumn(name = "id_faculdade") // Reutiliza id_faculdade como chave estrangeira
+    @NotNull
+    @NotEmpty
     private Faculdade faculdade;
 
     @Column(name = "data_publicacao")
+    @NotNull
+    @NotEmpty
     private java.util.Date dataPublicacao;
 
-    @Column(name = "tiragem")
-    private Integer tiragem;
-
-    @Column(name = "isbn_13", length = 13)
-    private String isbn13;
 
 }

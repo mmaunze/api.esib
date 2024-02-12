@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,41 +25,42 @@ public class RevistaPeriodica extends Obra {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Use geração automática de ID (substitui a estratégia da
                                                         // classe pai)
     @Column(name = "id_obra")
-    private Integer idRevistaPeriodica; // Renomeia a coluna para evitar conflito
+    private Long idRevistaPeriodica; // Renomeia a coluna para evitar conflito
 
     @Column(name = "nome", nullable = false, length = 255)
+    @NotNull
+    @NotEmpty
     private String nome;
 
     @Column(name = "issn", nullable = false)
-    private Integer issn;
+    @NotNull
+    @NotEmpty
+    private Long issn;
 
     @Column(name = "volume")
-    private Integer volume;
+    private Long volume;
 
     @Column(name = "numero", nullable = false)
-    private Integer numero;
+    @NotNull
+    @NotEmpty
+    private Long numero;
 
     @Column(name = "editora", nullable = false, length = 70)
+    @NotNull
+    @NotEmpty
     private String editora;
 
     // Atributos adicionais que você pode considerar:
 
     @Column(name = "data_publicacao")
+    @NotNull
+    @NotEmpty
     private java.util.Date dataPublicacao;
 
     @Column(name = "periodicidade", length = 50) // Ex: Semanal, Mensal, Anual
     private String periodicidade;
 
-    @Column(name = "area_tematica", length = 100)
-    private String areaTematica;
-
     @Column(name = "url_revista")
-    private String urlRevista; // Link para a revista online (opcional)
-/* 
-    @ManyToOne(fetch = FetchType.EAGER) // Opcionalmente, carregue autores junto com a revista
-    @JoinColumn(name = "id_autor") // Adicione uma coluna para autores (se necessário)
-    private Autor autor; // Referência à entidade Autor
-*/
-    // ... outros atributos específicos
+    private String urlRevista; 
 
 }

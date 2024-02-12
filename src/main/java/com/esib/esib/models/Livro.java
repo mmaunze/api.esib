@@ -11,6 +11,9 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,18 +29,18 @@ public class Livro extends Obra {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Use geração automática de ID (substitui a estratégia da
                                                         // classe pai)
     @Column(name = "id_obra")
-    private Integer idLivro; // Renomeia a coluna para evitar conflito
-
-    @Column(name = "isbn", nullable = false, unique = true, length = 20)
-    private String isbn;
+    private Long idLivro; // Renomeia a coluna para evitar conflito
 
     @Column(name = "edicao", nullable = false)
-    private Integer edicao;
+    private Long edicao;
 
     @Column(name = "volume", nullable = false)
-    private Integer volume;
+
+    private Long volume;
 
     @Column(name = "editora", nullable = false, length = 70)
+    @NotNull
+    @NotEmpty
     private String editora;
 
     @OneToOne(fetch = FetchType.EAGER) // Carrega editora junto com livro (opcional)
@@ -49,10 +52,10 @@ public class Livro extends Obra {
     @Column(name = "data_publicacao")
     private java.util.Date dataPublicacao;
 
-    @Column(name = "tiragem")
-    private Integer tiragem;
-
-    @Column(name = "isbn_13", length = 13)
-    private String isbn13;
+    @Column(name = "isbn", length = 13)
+    @NotNull
+    @NotEmpty
+    @Size(min=13, max=13)
+    private String isbn;
 
 }

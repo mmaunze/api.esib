@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -24,9 +26,11 @@ public class Estado {
             @org.hibernate.annotations.Parameter(name = "increment_size", value = "1")
     })
     @Column(name = "id_estado")
-    private Integer idEstado;
+    private Long idEstado;
 
     @Column(name = "descricao", nullable = false, unique = true, length = 100)
+    @NotNull
+    @NotEmpty
     private String descricao;
 
 }
