@@ -1,4 +1,4 @@
-package com.esib.esib.repositories;
+package com.esib.esib.repository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;

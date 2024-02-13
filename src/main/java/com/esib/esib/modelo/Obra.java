@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 
@@ -46,7 +47,8 @@ public class Obra implements Serializable {
     private String titulo;
 
     @Basic(optional = false)
-    @Column(name = "ano_publicacao", nullable = false)
+    @Size(min=4, max=4)
+    @Column(name = "ano_publicacao", nullable = false,  length = 4)
     private int anoPublicacao;
 
     @Basic(optional = false)
