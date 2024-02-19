@@ -1,18 +1,20 @@
 package com.esib.esib.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.esib.esib.modelo.AreaCientifica;
 import com.esib.esib.modelo.Departamento;
 import com.esib.esib.modelo.Emprestimo;
-import com.esib.esib.modelo.Estado;
 import com.esib.esib.modelo.Reserva;
 import com.esib.esib.modelo.TipoUtilizador;
 import com.esib.esib.modelo.Utilizador;
 import com.esib.esib.repository.UtilizadorRepository;
-import java.util.List;
-import java.util.Optional;
-import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class UtilizadorService {
@@ -20,27 +22,28 @@ public class UtilizadorService {
     @Autowired
     private UtilizadorRepository utilizadorRepository;
 
-   // @Autowired
-   // private PasswordEncoder passwordEncoder;
+    // @Autowired
+    // private PasswordEncoder passwordEncoder;
 
     // CRUD methods
 
-   /*  @Transactional
-     public Utilizador criarUtilizador(Utilizador utilizador) {
-        validarUtilizador(utilizador);
-
-        // Criptografe a senha antes de salvar
-        utilizador.setSenha(passwordEncoder.encode(utilizador.getSenha()));
-
-        // Salve o utilizador
+    public Utilizador create(Utilizador utilizador) {
+        /*
+         * validarUtilizador(utilizador);
+         * 
+         * // Criptografe a senha antes de salvar
+         * utilizador.setSenha(passwordEncoder.encode(utilizador.getSenha()));
+         * 
+         * // Salve o utilizador
+         */
         return utilizadorRepository.save(utilizador);
-    }*/
+    }
 
     public Optional<Utilizador> buscarUtilizadorPorId(Long id) {
         return utilizadorRepository.findById(id);
     }
 
-    public List<Utilizador> buscarTodosUtilizadores() {
+    public List<Utilizador> findAll() {
         return utilizadorRepository.findAll();
     }
 
@@ -55,28 +58,35 @@ public class UtilizadorService {
     public Utilizador buscarUtilizadorPorUsername(String username) {
         return utilizadorRepository.findByUsername(username);
     }
-/* 
-    @Transactional
-    public Utilizador atualizarUtilizador(Utilizador utilizador) {
-        validarUtilizador(utilizador);
 
-        // Criptografe a senha antes de salvar (se a senha foi alterada)
-        Utilizador utilizadorExistente = utilizadorRepository.findById(utilizador.getIdUtilizador()).get();
-        if (!utilizador.getSenha().equals(utilizadorExistente.getSenha())) {
-            utilizador.setSenha(passwordEncoder.encode(utilizador.getSenha()));
-        }
+    public Utilizador update(Utilizador utilizador) {
 
-        // Salve o utilizador
         return utilizadorRepository.save(utilizador);
     }
-*/
+
+    /*
+     * @Transactional
+     * public Utilizador atualizarUtilizador(Utilizador utilizador) {
+     * validarUtilizador(utilizador);
+     * 
+     * // Criptografe a senha antes de salvar (se a senha foi alterada)
+     * Utilizador utilizadorExistente =
+     * utilizadorRepository.findById(utilizador.getIdUtilizador()).get();
+     * if (!utilizador.getSenha().equals(utilizadorExistente.getSenha())) {
+     * utilizador.setSenha(passwordEncoder.encode(utilizador.getSenha()));
+     * }
+     * 
+     * // Salve o utilizador
+     * return utilizadorRepository.save(utilizador);
+     * }
+     */
     @Transactional
-    public void excluirUtilizador(Long id) {
+    public void delete(Long id) {
         // Verifique se o utilizador tem emprestimos em aberto antes de excluir
         var utilizador = utilizadorRepository.findById(id).get();
         List<Emprestimo> emprestimos = utilizador.getEmprestimoList();
         for (var emprestimo : emprestimos) {
-            if (emprestimo.isAtivo() ) {
+            if (emprestimo.isAtivo()) {
                 throw new RuntimeException("Utilizador possui empréstimos em aberto e não pode ser excluído");
             }
         }

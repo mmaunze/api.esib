@@ -1,6 +1,8 @@
 
 package com.esib.esib.modelo;
 
+import javax.persistence.CascadeType;
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -25,17 +27,17 @@ public class Estudante implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_utilizador", nullable = false)
     private Long idUtilizador;
-    
+
     @Basic(optional = false)
     @Column(nullable = false)
     private int nivel;
 
     @JoinColumn(name = "id_curso", referencedColumnName = "id_curso", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY)
+    @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Curso idCurso;
 
     @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = LAZY)
+    @OneToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Utilizador utilizador;
 
 }

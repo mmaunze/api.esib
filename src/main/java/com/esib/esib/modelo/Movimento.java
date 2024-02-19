@@ -1,6 +1,8 @@
 
 package com.esib.esib.modelo;
 
+import javax.persistence.CascadeType;
+
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -39,15 +41,15 @@ public class Movimento implements Serializable {
     private String observacao;
 
     @JoinColumn(name = "id_bibliotecario", referencedColumnName = "id_bibliotecario", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY)
+    @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Bibliotecario idBibliotecario;
 
     @JoinColumn(name = "id_obra", referencedColumnName = "id_obra", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY)
+    @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Obra idObra;
 
     @JoinColumn(name = "id_tipo_movimento", referencedColumnName = "id_tipo_movimento", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY)
+    @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private TipoMovimento idTipoMovimento;
 
     @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador")

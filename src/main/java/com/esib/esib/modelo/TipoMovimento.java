@@ -1,20 +1,23 @@
 
 package com.esib.esib.modelo;
 
+import static javax.persistence.CascadeType.*;
+import static javax.persistence.FetchType.*;
+import static javax.persistence.GenerationType.*;
+
 import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.Basic;
-import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import static javax.persistence.FetchType.LAZY;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
+
 import lombok.Data;
 
 @Entity
@@ -35,7 +38,7 @@ public class TipoMovimento implements Serializable {
     private String descricao;
     @OneToMany(cascade = ALL, mappedBy = "idTipoMovimento", fetch = LAZY)
     private List<Movimento> movimentoList;
-    
+
     public boolean getPermiteEmprestimo() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getPermiteEmprestimo'");

@@ -1,6 +1,8 @@
 
 package com.esib.esib.modelo;
 
+import javax.persistence.CascadeType;
+
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -37,10 +39,10 @@ public class PagamentoMulta implements Serializable {
     @Temporal(TIMESTAMP)
     private Date dataPagamento;
     @JoinColumn(name = "id_bibliotecario", referencedColumnName = "id_bibliotecario", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY)
+    @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Bibliotecario idBibliotecario;
     @JoinColumn(name = "id_multa", referencedColumnName = "id_multa", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY)
+    @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Multa idMulta;
 
 }

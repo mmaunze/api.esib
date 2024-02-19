@@ -1,6 +1,8 @@
 
 package com.esib.esib.modelo;
 
+import javax.persistence.CascadeType;
+
 import static javax.persistence.CascadeType.*;
 import static javax.persistence.FetchType.*;
 
@@ -78,19 +80,19 @@ public class Obra implements Serializable {
     private List<Emprestimo> emprestimoList;
 
     @JoinColumn(name = "id_area", referencedColumnName = "id_area", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY)
+    @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private AreaCientifica idArea;
 
     @JoinColumn(name = "id_estado", referencedColumnName = "id_estado", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY)
+    @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Estado idEstado;
 
     @JoinColumn(name = "id_idioma", referencedColumnName = "id_idioma", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY)
+    @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Idioma idIdioma;
 
     @JoinColumn(name = "id_tipo_obra", referencedColumnName = "id_tipo_obra", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY)
+    @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private TipoObra idTipoObra;
 
     @OneToOne(cascade = ALL, mappedBy = "obra", fetch = LAZY)
@@ -112,9 +114,9 @@ public class Obra implements Serializable {
     }
 
     public void setDisponivel(boolean b) {
-       if (b) 
-        this.idEstado.setDisponivel();
-        else 
-         this.idEstado.isAciva();
+        if (b)
+            this.idEstado.setDisponivel();
+        else
+            this.idEstado.isAciva();
     }
 }

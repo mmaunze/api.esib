@@ -1,5 +1,7 @@
 package com.esib.esib.modelo;
 
+import javax.persistence.CascadeType;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -39,11 +41,11 @@ public class Bibliotecario implements Serializable {
     private List<Devolucao> devolucaoList;
 
     @JoinColumn(name = "id_faculdade", referencedColumnName = "id_faculdade", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY)
+    @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Faculdade idFaculdade;
 
     @JoinColumn(name = "id_bibliotecario", referencedColumnName = "id_utilizador", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = LAZY)
+    @OneToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Utilizador utilizador;
 
     @OneToMany(cascade = ALL, mappedBy = "idBibliotecario", fetch = LAZY)

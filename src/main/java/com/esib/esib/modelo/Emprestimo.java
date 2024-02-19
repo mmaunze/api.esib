@@ -1,6 +1,8 @@
 
 package com.esib.esib.modelo;
 
+import javax.persistence.CascadeType;
+
 import static javax.persistence.CascadeType.*;
 import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
@@ -52,19 +54,19 @@ public class Emprestimo implements Serializable {
     private int atraso;
 
     @JoinColumn(name = "id_bibliotecario", referencedColumnName = "id_bibliotecario", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY)
+    @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Bibliotecario idBibliotecario;
 
     @JoinColumn(name = "id_estado", referencedColumnName = "id_estado", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY)
+    @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Estado idEstado;
 
     @JoinColumn(name = "id_obra", referencedColumnName = "id_obra", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY)
+    @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Obra idObra;
 
     @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY)
+    @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Utilizador idUtilizador;
 
     @OneToMany(cascade = ALL, mappedBy = "idEmprestimo", fetch = LAZY)
@@ -78,10 +80,10 @@ public class Emprestimo implements Serializable {
     }
 
     public void setAtivo(boolean b) {
-     if (b)
-        this.idEstado.setDescricao("activo");
-     else
-        this.idEstado.setDisponivel();
+        if (b)
+            this.idEstado.setDescricao("activo");
+        else
+            this.idEstado.setDisponivel();
     }
 
 }
