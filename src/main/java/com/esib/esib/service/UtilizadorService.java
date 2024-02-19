@@ -47,15 +47,15 @@ public class UtilizadorService {
         return utilizadorRepository.findAll();
     }
 
-    public Utilizador buscarUtilizadorPorContacto(String contacto) {
+    public Optional<Utilizador> buscarUtilizadorPorContacto(String contacto) {
         return utilizadorRepository.findByContacto(contacto);
     }
 
-    public Utilizador buscarUtilizadorPorEmail(String email) {
+    public Optional<Utilizador> buscarUtilizadorPorEmail(String email) {
         return utilizadorRepository.findByEmail(email);
     }
 
-    public Utilizador buscarUtilizadorPorUsername(String username) {
+    public Optional<Utilizador> buscarUtilizadorPorUsername(String username) {
         return utilizadorRepository.findByUsername(username);
     }
 
@@ -71,7 +71,7 @@ public class UtilizadorService {
      * 
      * // Criptografe a senha antes de salvar (se a senha foi alterada)
      * Utilizador utilizadorExistente =
-     * utilizadorRepository.findById(utilizador.getIdUtilizador()).get();
+     * utilizadorRepository.findById(utilizador.getutilizador()).get();
      * if (!utilizador.getSenha().equals(utilizadorExistente.getSenha())) {
      * utilizador.setSenha(passwordEncoder.encode(utilizador.getSenha()));
      * }
@@ -106,15 +106,15 @@ public class UtilizadorService {
     }
 
     public AreaCientifica buscarAreaCientificaPorUtilizador(Utilizador utilizador) {
-        return utilizador.getIdArea();
+        return utilizador.getAreaCientifica();
     }
 
     public Departamento buscarDepartamentoPorUtilizador(Utilizador utilizador) {
-        return utilizador.getIdDepartamento();
+        return utilizador.getDepartamento();
     }
 
     public TipoUtilizador buscarTipoUtilizadorPorUtilizador(Utilizador utilizador) {
-        return utilizador.getIdTipoUtilizador();
+        return utilizador.getTipoUtilizador();
     }
 
     public List<Reserva> buscarReservasPorUtilizador(Utilizador utilizador) {

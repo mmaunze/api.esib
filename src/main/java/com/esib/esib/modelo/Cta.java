@@ -29,12 +29,15 @@ public class Cta implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "id_utilizador", nullable = false)
-    private Long idUtilizador;
+    private Long id;
+
     @Column(length = 50)
     private String grau;
+
     @JoinColumn(name = "id_cargo", referencedColumnName = "id_cargo", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private Cargo idCargo;
+    private Cargo cargo;
+
     @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Utilizador utilizador;

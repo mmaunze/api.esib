@@ -37,10 +37,10 @@ public class ObraService {
          * }
          */
         // Verifique se as entidades associadas existem
-        AreaCientifica areaCientifica = obra.getIdArea();
-        Estado estado = obra.getIdEstado();
-        Idioma idioma = obra.getIdIdioma();
-        TipoObra tipoObra = obra.getIdTipoObra();
+        AreaCientifica areaCientifica = obra.getAreaCientifica();
+        Estado estado = obra.getEstado();
+        Idioma idioma = obra.getIdioma();
+        TipoObra tipoObra = obra.getTipoObra();
 
         if (areaCientifica == null || estado == null || idioma == null || tipoObra == null) {
             throw new RuntimeException("Entidades associadas à obra não informadas");
@@ -86,7 +86,7 @@ public class ObraService {
      * return obraRepository.save(obra);
      * }
      */
-    
+
     @Transactional
     public void excluirObra(Long id) {
         // Verifique se a obra possui empréstimos, reservas ou multas relacionadas antes
@@ -95,10 +95,10 @@ public class ObraService {
         List<Emprestimo> emprestimos = obra.getEmprestimoList();
         List<Reserva> reservas = obra.getReservaList();
         List<Movimento> movimentos = obra.getMovimentoList();
-        List<Multa> multas = obra.getIdEstado().getMultaList();
+        List<Multa> multas = obra.getEstado().getMultaList();
 
         if (!emprestimos.isEmpty() || !reservas.isEmpty() || !movimentos.isEmpty()
-                || multas.stream().anyMatch(multa -> multa.getIdEmprestimo().getIdObra().equals(id))) {
+                || multas.stream().anyMatch(multa -> multa.getEmprestimo().getObra().equals(id))) {
             throw new RuntimeException("Obra possui entidades relacionadas e não pode ser excluída");
         }
 

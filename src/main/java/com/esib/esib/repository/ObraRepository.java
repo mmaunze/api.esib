@@ -21,7 +21,7 @@ public interface ObraRepository extends JpaRepository<Obra, Long> {
     @Query(value = "SELECT o from Obra o where o.titulo =:titulo")
     List<Obra> findByTituloContainingIgnoreCase(@Param("titulo") String titulo);
 
-    @Query(value = "SELECT o from Obra o where o.idArea.descricao =: areaCientifica")
+    @Query(value = "SELECT o from Obra o where o.areaCientifica.descricao =: areaCientifica")
     List<Obra> findByAreaCientifica(@Param("areaCientifica") String areaCientifica);
 
 }

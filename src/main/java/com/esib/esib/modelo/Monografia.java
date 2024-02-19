@@ -1,13 +1,12 @@
 
 package com.esib.esib.modelo;
 
-import javax.persistence.CascadeType;
-
 import static javax.persistence.FetchType.*;
 
 import java.io.Serializable;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -29,7 +28,7 @@ public class Monografia implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "id_obra", nullable = false)
-    private Long idObra;
+    private Long id;
 
     @Basic(optional = false)
     @Column(nullable = false, length = 70)
@@ -40,11 +39,11 @@ public class Monografia implements Serializable {
 
     @JoinColumn(name = "id_curso", referencedColumnName = "id_curso", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private Curso idCurso;
+    private Curso curso;
 
     @JoinColumn(name = "id_faculdade", referencedColumnName = "id_faculdade", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private Faculdade idFaculdade;
+    private Faculdade faculdade;
 
     @JoinColumn(name = "id_obra", referencedColumnName = "id_obra", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })

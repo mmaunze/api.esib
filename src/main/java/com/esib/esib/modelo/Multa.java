@@ -33,7 +33,7 @@ public class Multa implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_multa", nullable = false)
-    private Long idMulta;
+    private Long id;
 
     @Basic(optional = false)
     @Column(name = "valor_multa", nullable = false)
@@ -41,13 +41,13 @@ public class Multa implements Serializable {
 
     @JoinColumn(name = "id_emprestimo", referencedColumnName = "id_emprestimo", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private Emprestimo idEmprestimo;
+    private Emprestimo emprestimo;
 
     @JoinColumn(name = "id_estado", referencedColumnName = "id_estado", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private Estado idEstado;
+    private Estado estado;
 
-    @OneToMany(cascade = ALL, mappedBy = "idMulta", fetch = LAZY)
+    @OneToMany(cascade = ALL, mappedBy = "multa", fetch = LAZY)
     private List<PagamentoMulta> pagamentoMultaList;
 
 }

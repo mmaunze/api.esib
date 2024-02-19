@@ -32,11 +32,13 @@ public class TipoMovimento implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_tipo_movimento", nullable = false)
-    private Long idTipoMovimento;
+    private Long id;
+
     @Basic(optional = false)
     @Column(nullable = false, length = 100)
     private String descricao;
-    @OneToMany(cascade = ALL, mappedBy = "idTipoMovimento", fetch = LAZY)
+
+    @OneToMany(cascade = ALL, mappedBy = "tipoMovimento", fetch = LAZY)
     private List<Movimento> movimentoList;
 
     public boolean getPermiteEmprestimo() {

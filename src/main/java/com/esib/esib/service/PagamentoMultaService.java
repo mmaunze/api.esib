@@ -1,14 +1,17 @@
 package com.esib.esib.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.esib.esib.modelo.Bibliotecario;
 import com.esib.esib.modelo.Multa;
 import com.esib.esib.modelo.PagamentoMulta;
 import com.esib.esib.repository.PagamentoMultaRepository;
-import java.util.List;
-import java.util.Optional;
-import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class PagamentoMultaService {
@@ -21,7 +24,7 @@ public class PagamentoMultaService {
     @Transactional
     public PagamentoMulta criarPagamentoMulta(PagamentoMulta pagamentoMulta) {
         // Verifique se a multa associada existe
-        Multa multa = pagamentoMulta.getIdMulta();
+        Multa multa = pagamentoMulta.getMulta();
         if (multa == null) {
             throw new RuntimeException("Multa associada ao pagamento não informada");
         }
@@ -32,12 +35,12 @@ public class PagamentoMultaService {
         }
 
         // Verifique se a multa já possui pagamento registrado
-        if (multa.getIdEstado().getIdEstado() == 2) { // Estado da multa = Paga
+        if (multa.getEstado().getId() == 2) { // Estado da multa = Paga
             throw new RuntimeException("Multa já possui pagamento registrado");
         }
 
         // Atualize o estado da multa para paga
-        multa.getIdEstado().setPaga(); // Estado da multa = Paga
+        multa.getEstado().setPaga(); // Estado da multa = Paga
 
         return pagamentoMultaRepository.save(pagamentoMulta);
     }
@@ -61,11 +64,11 @@ public class PagamentoMultaService {
     // Methods related to relationships
 
     public Multa buscarMultaPorPagamentoMulta(PagamentoMulta pagamentoMulta) {
-        return pagamentoMulta.getIdMulta();
+        return pagamentoMulta.getMulta();
     }
 
     public Bibliotecario buscarBibliotecarioPorPagamentoMulta(PagamentoMulta pagamentoMulta) {
-        return pagamentoMulta.getIdBibliotecario();
+        return pagamentoMulta.getBibliotecario();
     }
 
 }

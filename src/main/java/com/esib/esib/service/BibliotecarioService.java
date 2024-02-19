@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.esib.esib.modelo.Bibliotecario;
 import com.esib.esib.modelo.Devolucao;
 import com.esib.esib.modelo.Emprestimo;
-import com.esib.esib.modelo.Faculdade;
 import com.esib.esib.modelo.PagamentoMulta;
 import com.esib.esib.repository.BibliotecarioRepository;
 import com.esib.esib.repository.EstadoRepository;
@@ -27,7 +26,7 @@ public class BibliotecarioService {
 
     @Transactional
     public Bibliotecario criarBibliotecario(Bibliotecario bibliotecario) {
-        
+
         return bibliotecarioRepository.save(bibliotecario);
     }
 
@@ -42,12 +41,12 @@ public class BibliotecarioService {
 
     public List<Bibliotecario> buscarBibliotecariosPorNome(String nome) {
 
-        return bibliotecarioRepository.findByIDUtilizadorNome(nome);
+        return bibliotecarioRepository.findByutilizadorNome(nome);
     }
 
     @Transactional
     public Bibliotecario atualizarBibliotecario(Bibliotecario bibliotecario) {
-        buscarBibliotecarioPorId(bibliotecario.getIdBibliotecario());
+        buscarBibliotecarioPorId(bibliotecario.getId());
         return bibliotecarioRepository.save(bibliotecario);
     }
 
@@ -60,23 +59,23 @@ public class BibliotecarioService {
 
     @Transactional
     public Emprestimo registrarEmprestimo(Emprestimo emprestimo) {
-        emprestimo.setIdBibliotecario(buscarBibliotecarioPorId(emprestimo.getIdBibliotecario().getIdBibliotecario())
+        emprestimo.setBibliotecario(buscarBibliotecarioPorId(emprestimo.getBibliotecario().getId())
                 .orElseThrow(() -> new RuntimeException("Bibliotecario não encontrado")));
         return emprestimo;
     }
 
     @Transactional
     public Devolucao registrarDevolucao(Devolucao devolucao) {
-        Emprestimo emprestimo = devolucao.getIdEmprestimo();
-        emprestimo.setIdEstado(estadoRepository.findByDescricao("devolvido"));
-        bibliotecarioRepository.save(emprestimo.getIdBibliotecario()); // Update bibliotecario with updated emprestimo
+        Emprestimo emprestimo = devolucao.getEmprestimo();
+        emprestimo.setEstado(estadoRepository.findByDescricao("devolvido"));
+        bibliotecarioRepository.save(emprestimo.getBibliotecario()); // Update bibliotecario with updated emprestimo
         return devolucao;
     }
 
     @Transactional
     public PagamentoMulta registrarPagamentoMulta(PagamentoMulta pagamentoMulta) {
-        bibliotecarioRepository.save(pagamentoMulta.getIdBibliotecario()); // Update bibliotecario with updated
-                                                                           // pagamentoMulta
+        bibliotecarioRepository.save(pagamentoMulta.getBibliotecario()); // Update bibliotecario with updated
+                                                                         // pagamentoMulta
         return pagamentoMulta;
     }
 

@@ -1,17 +1,18 @@
 
 package com.esib.esib.modelo;
 
-import javax.persistence.CascadeType;
+import static javax.persistence.CascadeType.*;
+import static javax.persistence.FetchType.*;
+import static javax.persistence.GenerationType.*;
 
 import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.Basic;
-import static javax.persistence.CascadeType.ALL;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import static javax.persistence.FetchType.LAZY;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
+
 import lombok.Data;
 
 @Entity
@@ -34,7 +36,7 @@ public class Curso implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_curso", nullable = false)
-    private Long idCurso;
+    private Long id;
 
     @Basic(optional = false)
     @Column(nullable = false, length = 255)
@@ -46,12 +48,12 @@ public class Curso implements Serializable {
 
     @JoinColumn(name = "id_faculdade", referencedColumnName = "id_faculdade", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private Faculdade idFaculdade;
+    private Faculdade faculdade;
 
-    @OneToMany(cascade = ALL, mappedBy = "idCurso", fetch = LAZY)
+    @OneToMany(cascade = ALL, mappedBy = "curso", fetch = LAZY)
     private List<Monografia> monografiaList;
 
-    @OneToMany(cascade = ALL, mappedBy = "idCurso", fetch = LAZY)
+    @OneToMany(cascade = ALL, mappedBy = "curso", fetch = LAZY)
     private List<Estudante> estudanteList;
 
 }

@@ -87,11 +87,11 @@ public class MonografiaService {
     }
 
     public Curso buscarCursoPorMonografia(Monografia monografia) {
-        return monografia.getIdCurso();
+        return monografia.getCurso();
     }
 
     public Faculdade buscarFaculdadePorMonografia(Monografia monografia) {
-        return monografia.getIdFaculdade();
+        return monografia.getFaculdade();
     }
 
 }

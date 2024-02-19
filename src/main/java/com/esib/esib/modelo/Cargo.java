@@ -32,12 +32,13 @@ public class Cargo implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_cargo", nullable = false)
-    private Long idCargo;
+    private Long id;
 
     @Basic(optional = false)
     @Column(name = "descricao", nullable = false, length = 120)
     private String descricao;
-    @OneToMany(cascade = ALL, mappedBy = "idCargo", fetch = LAZY)
+    
+    @OneToMany(cascade = ALL, mappedBy = "cargo", fetch = LAZY)
     private List<Cta> ctaList;
 
 }

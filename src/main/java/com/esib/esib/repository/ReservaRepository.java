@@ -12,10 +12,10 @@ import com.esib.esib.modelo.Reserva;
 @Repository
 public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 
-    @Query(value = "SELECT r from Reserva r where r.idObra.idObra =: idObra")
-    List<Reserva> findByObra(@Param("idObra") Long idObra);
+    @Query(value = "SELECT r from Reserva r where r.obra.id =: id")
+    List<Reserva> findByObra(@Param("id") Long id);
 
-    @Query(value = "SELECT r from Reserva r where r.idUtilizador.idUtilizador =: idUtilizador")
-    List<Reserva> findByUtilizador(@Param("idUtilizador") Long idUtilizador);
+    @Query(value = "SELECT r from Reserva r where r.utilizador.id =: id")
+    List<Reserva> findByUtilizador(@Param("id") Long id);
 
 }

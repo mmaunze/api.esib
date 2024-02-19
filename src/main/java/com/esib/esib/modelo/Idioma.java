@@ -29,13 +29,13 @@ public class Idioma implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_idioma", nullable = false)
-    private Long idIdioma;
+    private Long id;
 
     @Basic(optional = false)
     @Column(nullable = false, length = 100)
     private String descricao;
 
-    @OneToMany(cascade = ALL, mappedBy = "idIdioma", fetch = LAZY)
+    @OneToMany(cascade = ALL, mappedBy = "idioma", fetch = LAZY)
     private List<Obra> obraList;
 
 }

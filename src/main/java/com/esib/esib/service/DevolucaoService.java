@@ -1,16 +1,18 @@
 package com.esib.esib.service;
 
-import com.esib.esib.modelo.Bibliotecario;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.esib.esib.modelo.Devolucao;
 import com.esib.esib.modelo.Emprestimo;
 import com.esib.esib.repository.DevolucaoRepository;
 import com.esib.esib.repository.EmprestimoRepository;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class DevolucaoService {
@@ -26,7 +28,7 @@ public class DevolucaoService {
     @Transactional
     public Devolucao criarDevolucao(Devolucao devolucao) {
         // Verifique se o emprestimo associado existe e está ativo
-        Emprestimo emprestimo = devolucao.getIdEmprestimo();
+        Emprestimo emprestimo = devolucao.getEmprestimo();
         if (emprestimo == null || !emprestimo.isAtivo()) {
             throw new RuntimeException("Emprestimo não encontrado ou já devolvido");
         }

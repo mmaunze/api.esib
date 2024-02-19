@@ -1,15 +1,18 @@
 package com.esib.esib.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.esib.esib.modelo.Emprestimo;
 import com.esib.esib.modelo.Estado;
 import com.esib.esib.modelo.Multa;
 import com.esib.esib.modelo.PagamentoMulta;
 import com.esib.esib.repository.MultaRepository;
-import java.util.List;
-import java.util.Optional;
-import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class MultaService {
@@ -22,8 +25,8 @@ public class MultaService {
     @Transactional
     public Multa criarMulta(Multa multa) {
         // Verifique se as entidades associadas existem
-        Emprestimo emprestimo = multa.getIdEmprestimo();
-        Estado estado = multa.getIdEstado();
+        Emprestimo emprestimo = multa.getEmprestimo();
+        Estado estado = multa.getEstado();
 
         if (emprestimo == null || estado == null) {
             throw new RuntimeException("Entidades associadas à multa não informadas");
@@ -67,11 +70,11 @@ public class MultaService {
     // Methods related to relationships
 
     public Emprestimo buscarEmprestimoPorMulta(Multa multa) {
-        return multa.getIdEmprestimo();
+        return multa.getEmprestimo();
     }
 
     public Estado buscarEstadoPorMulta(Multa multa) {
-        return multa.getIdEstado();
+        return multa.getEstado();
     }
 
     public List<PagamentoMulta> buscarPagamentosPorMulta(Multa multa) {

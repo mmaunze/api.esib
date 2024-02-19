@@ -25,7 +25,7 @@ public class ReservaService {
     @Transactional
     public Reserva criarReserva(Reserva reserva) {
         // Verifique se a obra associada existe
-        Obra obra = reserva.getIdObra();
+        Obra obra = reserva.getObra();
         if (obra == null) {
             throw new RuntimeException("Obra associada à reserva não informada");
         }
@@ -36,7 +36,7 @@ public class ReservaService {
         }
         /*
          * // Verifique se o utilizador já possui uma reserva ativa para a mesma obra
-         * Utilizador utilizador = reserva.getIdUtilizador();
+         * Utilizador utilizador = reserva.getutilizador();
          * List<Reserva> reservas =
          * reservaRepository.findByUtilizadorAndIdObraAndIdEstado(utilizador, obra, new
          * Estado().isAciva()); // Estado da reserva = Ativa
@@ -72,7 +72,7 @@ public class ReservaService {
     @Transactional
     public Reserva atualizarReserva(Reserva reserva) {
         // Verifique se a obra associada existe
-        Obra obra = reserva.getIdObra();
+        Obra obra = reserva.getObra();
         if (obra == null) {
             throw new RuntimeException("Obra associada à reserva não informada");
         }
@@ -85,12 +85,12 @@ public class ReservaService {
     public void excluirReserva(Long id) {
         // Verifique se a reserva está ativa antes de excluir
         var reserva = reservaRepository.findById(id).get();
-        if (reserva.getIdEstado().getIdEstado() != 1) { // Estado da reserva != Ativa
+        if (reserva.getEstado().getId() != 1) { // Estado da reserva != Ativa
             throw new RuntimeException("Não é possível excluir reserva inativa");
         }
 
         // Libere a obra reservada (atualize o estado da obra para "Disponível")
-        reserva.getIdObra().setDisponivel(true);
+        reserva.getObra().setDisponivel(true);
 
         reservaRepository.deleteById(id);
     }
@@ -98,15 +98,15 @@ public class ReservaService {
     // Methods related to relationships
 
     public Obra buscarObraPorReserva(Reserva reserva) {
-        return reserva.getIdObra();
+        return reserva.getObra();
     }
 
     public Utilizador buscarUtilizadorPorReserva(Reserva reserva) {
-        return reserva.getIdUtilizador();
+        return reserva.getUtilizador();
     }
 
     public Estado buscarEstadoPorReserva(Reserva reserva) {
-        return reserva.getIdEstado();
+        return reserva.getEstado();
     }
 
     // Additional methods

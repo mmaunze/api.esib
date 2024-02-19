@@ -12,10 +12,10 @@ import com.esib.esib.modelo.PagamentoMulta;
 @Repository
 public interface PagamentoMultaRepository extends JpaRepository<PagamentoMulta, Long> {
 
-    @Query(value = "SELECT pm from PagamentoMulta pm where pm.idMulta.idMulta =:idMulta")
-    List<PagamentoMulta> findByMulta(@Param("idMulta") Long idMulta);
+    @Query(value = "SELECT pm from PagamentoMulta pm where pm.multa.id =:id")
+    List<PagamentoMulta> findByMulta(@Param("id") Long id);
 
-    @Query(value = "SELECT pm from PagamentoMulta pm where pm.idBibliotecario.idBibliotecario =:idBibliotecario")
-    List<PagamentoMulta> findByBibliotecario(@Param("idBibliotecario") Long idBibliotecario);
+    @Query(value = "SELECT pm from PagamentoMulta pm where pm.bibliotecario.id =:id")
+    List<PagamentoMulta> findByBibliotecario(@Param("id") Long id);
 
 }

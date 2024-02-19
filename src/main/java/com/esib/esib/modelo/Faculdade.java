@@ -34,7 +34,7 @@ public class Faculdade implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_faculdade", nullable = false)
-    private Long idFaculdade;
+    private Long id;
 
     @Basic(optional = false)
     @Column(name = "descricao", nullable = false, length = 255)
@@ -44,12 +44,12 @@ public class Faculdade implements Serializable {
     @Column(nullable = false, length = 10)
     private String sigla;
 
-    @OneToMany(cascade = ALL, mappedBy = "idFaculdade", fetch = LAZY)
+    @OneToMany(cascade = ALL, mappedBy = "faculdade", fetch = LAZY)
     private List<Curso> cursoList;
 
-    @OneToMany(cascade = ALL, mappedBy = "idFaculdade", fetch = LAZY)
+    @OneToMany(cascade = ALL, mappedBy = "faculdade", fetch = LAZY)
     private List<Monografia> monografiaList;
 
-    @OneToMany(cascade = ALL, mappedBy = "idFaculdade", fetch = LAZY)
+    @OneToMany(cascade = ALL, mappedBy = "faculdade", fetch = LAZY)
     private List<Bibliotecario> bibliotecarioList;
 }

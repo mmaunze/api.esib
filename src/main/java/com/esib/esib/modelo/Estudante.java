@@ -1,19 +1,21 @@
 
 package com.esib.esib.modelo;
 
-import javax.persistence.CascadeType;
+import static javax.persistence.FetchType.*;
 
 import java.io.Serializable;
+
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import static javax.persistence.FetchType.LAZY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+
 import lombok.Data;
 
 @Entity
@@ -26,7 +28,7 @@ public class Estudante implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "id_utilizador", nullable = false)
-    private Long idUtilizador;
+    private Long id;
 
     @Basic(optional = false)
     @Column(nullable = false)
@@ -34,7 +36,7 @@ public class Estudante implements Serializable {
 
     @JoinColumn(name = "id_curso", referencedColumnName = "id_curso", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private Curso idCurso;
+    private Curso curso;
 
     @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })

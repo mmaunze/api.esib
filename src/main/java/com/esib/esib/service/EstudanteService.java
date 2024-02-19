@@ -29,7 +29,7 @@ public class EstudanteService {
         }
 
         // Verifique se o utilizador já está cadastrado como estudante
-        var estudanteExistente = buscarEstudantePorId(estudante.getIdUtilizador());
+        var estudanteExistente = buscarEstudantePorId(estudante.getId());
         if (estudanteExistente != null) {
             throw new RuntimeException("Utilizador já cadastrado como estudante");
         }

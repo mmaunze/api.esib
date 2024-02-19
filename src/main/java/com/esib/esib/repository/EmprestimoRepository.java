@@ -13,16 +13,16 @@ import com.esib.esib.modelo.Emprestimo;
 
 public interface EmprestimoRepository extends JpaRepository<Emprestimo, Long> {
 
-    @Query(value = "SELECT e from Emprestimo e where e.idBibliotecario.idBibliotecario =: idBibliotecario")
-    List<Emprestimo> findByBibliotecario(@Param("IdBibliotecario") Long idBibliotecario);
+    @Query(value = "SELECT e from Emprestimo e where e.bibliotecario.id =: id")
+    List<Emprestimo> findByBibliotecario(@Param("bibliotecario") Long id);
 
-    @Query(value = "SELECT e from Emprestimo e where e.idUtilizador.idUtilizador =: idUtilizador")
-    List<Emprestimo> findByUtilizador(@Param("IdBibliotecario") Long idBibliotecario);
+    @Query(value = "SELECT e from Emprestimo e where e.utilizador.id =: id")
+    List<Emprestimo> findByUtilizador(@Param("id") Long id);
 
-    @Query(value = "SELECT e from Emprestimo e where e.idUtilizador.idUtilizador =: idUtilizador")
-    List<Emprestimo> findByObra(@Param("idUtilizador") Long idUtilizador);
+    @Query(value = "SELECT e from Emprestimo e where e.utilizador.id =: id")
+    List<Emprestimo> findByObra(@Param("id") Long id);
 
-    @Query(value = "SELECT e from Emprestimo e where e.idEstado.descricao =: descricao")
+    @Query(value = "SELECT e from Emprestimo e where e.estado.descricao =: descricao")
     List<Emprestimo> findByEstado(@Param("descricao") String descricao);
 
 }

@@ -1,15 +1,16 @@
 
 package com.esib.esib.modelo;
 
-import javax.persistence.CascadeType;
+import static javax.persistence.CascadeType.*;
+import static javax.persistence.FetchType.*;
 
 import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.Basic;
-import static javax.persistence.CascadeType.ALL;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import static javax.persistence.FetchType.LAZY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,6 +19,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
+
 import lombok.Data;
 
 @Entity
@@ -33,7 +35,7 @@ public class Utilizador implements Serializable {
         @Id
         @Basic(optional = false)
         @Column(name = "id_utilizador", nullable = false)
-        private Long idUtilizador;
+        private Long id;
 
         @Basic(optional = false)
         @Column(nullable = false, length = 255)
@@ -57,7 +59,7 @@ public class Utilizador implements Serializable {
         @Column(length = 70)
         private String senha;
 
-        @OneToMany(cascade = ALL, mappedBy = "idUtilizador", fetch = LAZY)
+        @OneToMany(cascade = ALL, mappedBy = "utilizador", fetch = LAZY)
         private List<Emprestimo> emprestimoList;
 
         @OneToOne(cascade = ALL, mappedBy = "utilizador", fetch = LAZY)
@@ -65,25 +67,26 @@ public class Utilizador implements Serializable {
 
         @JoinColumn(name = "id_area", referencedColumnName = "id_area", nullable = false)
         @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-        private AreaCientifica idArea;
+        private AreaCientifica areaCientifica;
 
         @JoinColumn(name = "id_departamento", referencedColumnName = "id_departamento", nullable = false)
         @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-        private Departamento idDepartamento;
+        private Departamento departamento;
 
         @JoinColumn(name = "id_tipo_utilizador", referencedColumnName = "id_tipo_utilizador", nullable = false)
         @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-        private TipoUtilizador idTipoUtilizador;
+        private TipoUtilizador tipoUtilizador;
 
         @OneToOne(cascade = ALL, mappedBy = "utilizador", fetch = LAZY)
         private Bibliotecario bibliotecario;
+
         @OneToOne(cascade = ALL, mappedBy = "utilizador", fetch = LAZY)
         private Estudante estudante;
 
-        @OneToMany(cascade = ALL, mappedBy = "idUtilizador", fetch = LAZY)
+        @OneToMany(cascade = ALL, mappedBy = "utilizador", fetch = LAZY)
         private List<Reserva> reservaList;
 
-        @OneToMany(mappedBy = "idUtilizador", fetch = LAZY)
+        @OneToMany(mappedBy = "utilizador", fetch = LAZY)
         private List<Movimento> movimentoList;
 
 }

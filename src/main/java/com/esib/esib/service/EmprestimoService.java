@@ -1,20 +1,18 @@
 package com.esib.esib.service;
 
-import com.esib.esib.modelo.Bibliotecario;
-import com.esib.esib.modelo.Devolucao;
-import com.esib.esib.modelo.Emprestimo;
-import com.esib.esib.modelo.Estado;
-import com.esib.esib.modelo.Obra;
-import com.esib.esib.modelo.Utilizador;
-import com.esib.esib.repository.EmprestimoRepository;
-import com.esib.esib.repository.ObraRepository;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.esib.esib.modelo.Emprestimo;
+import com.esib.esib.modelo.Obra;
+import com.esib.esib.repository.EmprestimoRepository;
+import com.esib.esib.repository.ObraRepository;
 
 @Service
 public class EmprestimoService {
@@ -23,23 +21,22 @@ public class EmprestimoService {
     private EmprestimoRepository emprestimoRepository;
     @Autowired
     private ObraRepository obraRepository;
-    
 
     // CRUD methods
 
     @Transactional
     public Emprestimo criarEmprestimo(Emprestimo emprestimo) {
         // Verifique se todos os dados obrigatórios estão presentes
-        if (emprestimo.getIdBibliotecario() == null ||
-                emprestimo.getIdEstado() == null ||
-                emprestimo.getIdObra() == null ||
-                emprestimo.getIdUtilizador() == null) {
+        if (emprestimo.getBibliotecario() == null ||
+                emprestimo.getEstado() == null ||
+                emprestimo.getObra() == null ||
+                emprestimo.getUtilizador() == null) {
             throw new RuntimeException("Dados obrigatórios do emprestimo não informados");
         }
 
         // Verifique se a obra está disponível
-        Obra obra = emprestimo.getIdObra();
-        if (!obra.getIdEstado().getDescricao().equalsIgnoreCase("disponivel") ) {
+        Obra obra = emprestimo.getObra();
+        if (!obra.getEstado().getDescricao().equalsIgnoreCase("disponivel")) {
             throw new RuntimeException("Obra indisponível para empréstimo");
         }
 
@@ -85,18 +82,21 @@ public class EmprestimoService {
     public Emprestimo atualizarEmprestimo(Emprestimo emprestimo) {
         return emprestimoRepository.save(emprestimo);
     }
-/* 
-    @Transactional
-    public void excluirEmprestimo(Long id) {
-        Optional<Emprestimo> emprestimo = emprestimoRepository.findById(id);
-        // Verifique se o emprestimo possui devoluções antes de excluir
-        List<Devolucao> devolucoes = emprestimo.getDevolucaoList();
-        if (!devolucoes.isEmpty()) {
-            throw new RuntimeException("Emprestimo possui devoluções associadas e não pode ser excluído");
-        }
-
-        emprestimoRepository.deleteById(id);
-    }*/
+    /*
+     * @Transactional
+     * public void excluirEmprestimo(Long id) {
+     * Optional<Emprestimo> emprestimo = emprestimoRepository.findById(id);
+     * // Verifique se o emprestimo possui devoluções antes de excluir
+     * List<Devolucao> devolucoes = emprestimo.getDevolucaoList();
+     * if (!devolucoes.isEmpty()) {
+     * throw new
+     * RuntimeException("Emprestimo possui devoluções associadas e não pode ser excluído"
+     * );
+     * }
+     * 
+     * emprestimoRepository.deleteById(id);
+     * }
+     */
 
     // Method to calculate due date
     private Date calcularDataParaDevolucao(int prazoEmprestimo) {

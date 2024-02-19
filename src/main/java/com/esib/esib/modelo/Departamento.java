@@ -33,7 +33,7 @@ public class Departamento implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_departamento", nullable = false)
-    private Long idDepartamento;
+    private Long id;
 
     @Basic(optional = false)
     @Column(name = "descricao", nullable = false, length = 255)
@@ -42,6 +42,6 @@ public class Departamento implements Serializable {
     @Column(name = "sigla", length = 10)
     private String sigla;
 
-    @OneToMany(cascade = ALL, mappedBy = "idDepartamento", fetch = LAZY)
+    @OneToMany(cascade = ALL, mappedBy = "departamento", fetch = LAZY)
     private List<Utilizador> utilizadorList;
 }

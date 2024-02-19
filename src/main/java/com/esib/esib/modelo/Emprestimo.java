@@ -1,8 +1,6 @@
 
 package com.esib.esib.modelo;
 
-import javax.persistence.CascadeType;
-
 import static javax.persistence.CascadeType.*;
 import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
@@ -13,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,7 +36,7 @@ public class Emprestimo implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_emprestimo", nullable = false)
-    private Long idEmprestimo;
+    private Long id;
 
     @Basic(optional = false)
     @Column(name = "data_emprestimo", nullable = false)
@@ -55,35 +54,35 @@ public class Emprestimo implements Serializable {
 
     @JoinColumn(name = "id_bibliotecario", referencedColumnName = "id_bibliotecario", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private Bibliotecario idBibliotecario;
+    private Bibliotecario bibliotecario;
 
     @JoinColumn(name = "id_estado", referencedColumnName = "id_estado", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private Estado idEstado;
+    private Estado estado;
 
     @JoinColumn(name = "id_obra", referencedColumnName = "id_obra", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private Obra idObra;
+    private Obra obra;
 
     @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private Utilizador idUtilizador;
+    private Utilizador utilizador;
 
-    @OneToMany(cascade = ALL, mappedBy = "idEmprestimo", fetch = LAZY)
+    @OneToMany(cascade = ALL, mappedBy = "emprestimo", fetch = LAZY)
     private List<Multa> multaList;
 
-    @OneToMany(cascade = ALL, mappedBy = "idEmprestimo", fetch = LAZY)
+    @OneToMany(cascade = ALL, mappedBy = "emprestimo", fetch = LAZY)
     private List<Devolucao> devolucaoList;
 
     public boolean isAtivo() {
-        return this.idEstado.getDescricao().equalsIgnoreCase("activo");
+        return this.estado.getDescricao().equalsIgnoreCase("activo");
     }
 
     public void setAtivo(boolean b) {
         if (b)
-            this.idEstado.setDescricao("activo");
+            this.estado.setDescricao("activo");
         else
-            this.idEstado.setDisponivel();
+            this.estado.setDisponivel();
     }
 
 }

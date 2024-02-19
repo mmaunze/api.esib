@@ -32,17 +32,22 @@ public class Estado implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_estado", nullable = false)
-    private Long idEstado;
+    private Long id;
+
     @Basic(optional = false)
     @Column(nullable = false, length = 100)
     private String descricao;
-    @OneToMany(cascade = ALL, mappedBy = "idEstado", fetch = LAZY)
+
+    @OneToMany(cascade = ALL, mappedBy = "estado", fetch = LAZY)
     private List<Emprestimo> emprestimoList;
-    @OneToMany(cascade = ALL, mappedBy = "idEstado", fetch = LAZY)
+
+    @OneToMany(cascade = ALL, mappedBy = "estado", fetch = LAZY)
     private List<Multa> multaList;
-    @OneToMany(cascade = ALL, mappedBy = "idEstado", fetch = LAZY)
+
+    @OneToMany(cascade = ALL, mappedBy = "estado", fetch = LAZY)
     private List<Obra> obraList;
-    @OneToMany(cascade = ALL, mappedBy = "idEstado", fetch = LAZY)
+
+    @OneToMany(cascade = ALL, mappedBy = "estado", fetch = LAZY)
     private List<Reserva> reservaList;
 
     public void setPaga() {

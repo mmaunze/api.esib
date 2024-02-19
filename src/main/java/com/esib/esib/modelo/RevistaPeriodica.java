@@ -27,20 +27,25 @@ public class RevistaPeriodica implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "id_obra", nullable = false)
-    private Long idObra;
+    private Long id;
+
     @Basic(optional = false)
     @Column(nullable = false, length = 255)
     private String nome;
+
     @Basic(optional = false)
     @Column(nullable = false)
     private int issn;
+
     private Long volume;
     @Basic(optional = false)
     @Column(nullable = false)
     private int numero;
+
     @Basic(optional = false)
     @Column(nullable = false, length = 255)
     private String editora;
+
     @JoinColumn(name = "id_obra", referencedColumnName = "id_obra", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Obra obra;

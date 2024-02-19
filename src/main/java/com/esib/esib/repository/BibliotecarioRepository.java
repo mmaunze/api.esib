@@ -13,9 +13,9 @@ import com.esib.esib.modelo.Bibliotecario;
 public interface BibliotecarioRepository extends JpaRepository<Bibliotecario, Long> {
 
     @Query(value = " SELECT b from Bibliotecario b where b.utilizador.nome =:nome")
-    List<Bibliotecario> findByIDUtilizadorNome(@Param("nome") String nome);
+    List<Bibliotecario> findByutilizadorNome(@Param("nome") String nome);
 
-    @Query(value = " SELECT b from Bibliotecario b where b.idFaculdade.descricao =:descricao")
-    List<Bibliotecario> findByIdFaculdade (@Param("descricao") String descricao);
+    @Query(value = " SELECT b from Bibliotecario b where b.faculdade.descricao =:descricao")
+    List<Bibliotecario> findByIdFaculdade(@Param("descricao") String descricao);
 
 }

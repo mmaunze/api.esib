@@ -32,16 +32,17 @@ public class AreaCientifica implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_area", nullable = false)
-    private Long idArea;
+    private Long id;
 
     @Basic(optional = false)
     @Column(name = "descricao", nullable = false, length = 255)
     private String descricao;
 
-    @OneToMany(cascade = ALL, mappedBy = "idArea", fetch = LAZY)
+    @OneToMany(cascade = ALL, mappedBy = "areaCientifica", fetch = LAZY)
+    
     private List<Obra> obraList;
 
-    @OneToMany(cascade = ALL, mappedBy = "idArea", fetch = LAZY)
+    @OneToMany(cascade = ALL, mappedBy = "areaCientifica", fetch = LAZY)
     private List<Utilizador> utilizadorList;
 
 }

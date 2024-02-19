@@ -33,19 +33,23 @@ public class Reserva implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_reserva", nullable = false)
-    private Long idReserva;
+    private Long id;
+
     @Basic(optional = false)
     @Column(name = "data_reserva", nullable = false)
     @Temporal(TIMESTAMP)
     private Date dataReserva;
+
     @JoinColumn(name = "id_estado", referencedColumnName = "id_estado", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private Estado idEstado;
+    private Estado estado;
+
     @JoinColumn(name = "id_obra", referencedColumnName = "id_obra", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private Obra idObra;
+    private Obra obra;
+
     @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private Utilizador idUtilizador;
+    private Utilizador utilizador;
 
 }

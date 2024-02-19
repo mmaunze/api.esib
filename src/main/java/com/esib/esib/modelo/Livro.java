@@ -29,19 +29,24 @@ public class Livro implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "id_obra", nullable = false)
-    private Long idObra;
+    private Long id;
+
     @Basic(optional = false)
     @Column(nullable = false, length = 20)
     private String isbn;
+
     @Basic(optional = false)
     @Column(nullable = false)
     private int edicao;
+
     @Basic(optional = false)
     @Column(nullable = false)
     private int volume;
+
     @Basic(optional = false)
     @Column(nullable = false, length = 70)
     private String editora;
+
     @JoinColumn(name = "id_obra", referencedColumnName = "id_obra", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Obra obra;

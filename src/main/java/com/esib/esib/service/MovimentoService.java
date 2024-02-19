@@ -1,16 +1,19 @@
 package com.esib.esib.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.esib.esib.modelo.Bibliotecario;
 import com.esib.esib.modelo.Movimento;
 import com.esib.esib.modelo.Obra;
 import com.esib.esib.modelo.TipoMovimento;
 import com.esib.esib.modelo.Utilizador;
 import com.esib.esib.repository.MovimentoRepository;
-import java.util.List;
-import java.util.Optional;
-import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class MovimentoService {
@@ -23,16 +26,16 @@ public class MovimentoService {
     @Transactional
     public Movimento criarMovimento(Movimento movimento) {
         // Verifique se as entidades associadas existem
-        Bibliotecario bibliotecario = movimento.getIdBibliotecario();
-        Obra obra = movimento.getIdObra();
-        TipoMovimento tipoMovimento = movimento.getIdTipoMovimento();
+        Bibliotecario bibliotecario = movimento.getBibliotecario();
+        Obra obra = movimento.getObra();
+        TipoMovimento tipoMovimento = movimento.getTipoMovimento();
 
         if (bibliotecario == null || obra == null || tipoMovimento == null) {
             throw new RuntimeException("Entidades associadas ao movimento não informadas");
         }
 
         // Verifique se o tipo de movimento permite a operação pretendida
-        if (!tipoMovimento.getPermiteEmprestimo() && movimento.getIdUtilizador() != null) {
+        if (!tipoMovimento.getPermiteEmprestimo() && movimento.getUtilizador() != null) {
             throw new RuntimeException("Tipo de movimento não permite empréstimo");
         }
 
@@ -79,19 +82,19 @@ public class MovimentoService {
     // Methods related to relationships
 
     public Bibliotecario buscarBibliotecarioPorMovimento(Movimento movimento) {
-        return movimento.getIdBibliotecario();
+        return movimento.getBibliotecario();
     }
 
     public Obra buscarObraPorMovimento(Movimento movimento) {
-        return movimento.getIdObra();
+        return movimento.getObra();
     }
 
     public TipoMovimento buscarTipoMovimentoPorMovimento(Movimento movimento) {
-        return movimento.getIdTipoMovimento();
+        return movimento.getTipoMovimento();
     }
 
     public Utilizador buscarUtilizadorPorMovimento(Movimento movimento) {
-        return movimento.getIdUtilizador();
+        return movimento.getUtilizador();
     }
 
 }

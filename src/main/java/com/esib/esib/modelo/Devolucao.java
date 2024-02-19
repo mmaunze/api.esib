@@ -33,7 +33,7 @@ public class Devolucao implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_devolucao", nullable = false)
-    private Long idDevolucao;
+    private Long id;
 
     @Basic(optional = false)
     @Column(name = "data_devolucao", nullable = false)
@@ -43,10 +43,10 @@ public class Devolucao implements Serializable {
     private Long atraso;
     @JoinColumn(name = "id_bibliotecario", referencedColumnName = "id_bibliotecario", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private Bibliotecario idBibliotecario;
+    private Bibliotecario bibliotecario;
 
     @JoinColumn(name = "id_emprestimo", referencedColumnName = "id_emprestimo", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private Emprestimo idEmprestimo;
+    private Emprestimo emprestimo;
 
 }

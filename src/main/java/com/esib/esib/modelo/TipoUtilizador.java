@@ -33,10 +33,12 @@ public class TipoUtilizador implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_tipo_utilizador", nullable = false)
-    private Long idTipoUtilizador;
+    private Long id;
+
     @Column(length = 100)
     private String descricao;
-    @OneToMany(cascade = ALL, mappedBy = "idTipoUtilizador", fetch = LAZY)
+
+    @OneToMany(cascade = ALL, mappedBy = "tipoUtilizador", fetch = LAZY)
     private List<Utilizador> utilizadorList;
 
 }

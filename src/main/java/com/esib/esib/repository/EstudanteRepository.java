@@ -11,7 +11,7 @@ import com.esib.esib.modelo.Estudante;
 
 @Repository
 public interface EstudanteRepository extends JpaRepository<Estudante, Long> {
-    @Query(value = "SELECT e from Estudante e where e.idCurso.sigla =: sigla")
+    @Query(value = "SELECT e from Estudante e where e.curso.sigla =: sigla")
     List<Estudante> findByCurso(@Param("sigla") String sigla);
 
     @Query(value = "SELECT e from Estudante e where e.nivel =: nivel")
