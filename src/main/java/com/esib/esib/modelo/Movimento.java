@@ -3,21 +3,19 @@ package com.esib.esib.modelo;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import static javax.persistence.FetchType.LAZY;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import static javax.persistence.TemporalType.TIMESTAMP;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import lombok.Data;
 
 @Entity
@@ -28,32 +26,32 @@ public class Movimento implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_movimento", nullable = false)
     private Long idMovimento;
 
     @Column(name = "data_movimento", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TIMESTAMP)
     private Date dataMovimento;
 
     @Column(name = "observacao", length = 255)
     private String observacao;
 
     @JoinColumn(name = "id_bibliotecario", referencedColumnName = "id_bibliotecario", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = LAZY)
     private Bibliotecario idBibliotecario;
 
     @JoinColumn(name = "id_obra", referencedColumnName = "id_obra", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = LAZY)
     private Obra idObra;
 
     @JoinColumn(name = "id_tipo_movimento", referencedColumnName = "id_tipo_movimento", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = LAZY)
     private TipoMovimento idTipoMovimento;
 
     @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     private Utilizador idUtilizador;
 
 }

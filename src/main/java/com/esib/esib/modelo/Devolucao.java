@@ -3,21 +3,19 @@ package com.esib.esib.modelo;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import static javax.persistence.FetchType.LAZY;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import static javax.persistence.TemporalType.TIMESTAMP;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import lombok.Data;
 
 @Entity
@@ -28,20 +26,23 @@ public class Devolucao implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_devolucao", nullable = false)
     private Long idDevolucao;
+
     @Basic(optional = false)
     @Column(name = "data_devolucao", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TIMESTAMP)
     private Date dataDevolucao;
+
     private Long atraso;
     @JoinColumn(name = "id_bibliotecario", referencedColumnName = "id_bibliotecario", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = LAZY)
     private Bibliotecario idBibliotecario;
+    
     @JoinColumn(name = "id_emprestimo", referencedColumnName = "id_emprestimo", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = LAZY)
     private Emprestimo idEmprestimo;
 
 }

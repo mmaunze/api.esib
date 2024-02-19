@@ -4,10 +4,10 @@ package com.esib.esib.modelo;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import static javax.persistence.FetchType.LAZY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,7 +16,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import lombok.Data;
 
 @Entity
@@ -49,26 +48,26 @@ public class Utilizador implements Serializable {
         private String username;
         @Column(length = 70)
         private String senha;
-        @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilizador", fetch = FetchType.LAZY)
+        @OneToMany(cascade = ALL, mappedBy = "idUtilizador", fetch = LAZY)
         private List<Emprestimo> emprestimoList;
-        @OneToOne(cascade = CascadeType.ALL, mappedBy = "utilizador", fetch = FetchType.LAZY)
+        @OneToOne(cascade = ALL, mappedBy = "utilizador", fetch = LAZY)
         private Cta cta;
         @JoinColumn(name = "id_area", referencedColumnName = "id_area", nullable = false)
-        @ManyToOne(optional = false, fetch = FetchType.LAZY)
+        @ManyToOne(optional = false, fetch = LAZY)
         private AreaCientifica idArea;
         @JoinColumn(name = "id_departamento", referencedColumnName = "id_departamento", nullable = false)
-        @ManyToOne(optional = false, fetch = FetchType.LAZY)
+        @ManyToOne(optional = false, fetch = LAZY)
         private Departamento idDepartamento;
         @JoinColumn(name = "id_tipo_utilizador", referencedColumnName = "id_tipo_utilizador", nullable = false)
-        @ManyToOne(optional = false, fetch = FetchType.LAZY)
+        @ManyToOne(optional = false, fetch = LAZY)
         private TipoUtilizador idTipoUtilizador;
-        @OneToOne(cascade = CascadeType.ALL, mappedBy = "utilizador", fetch = FetchType.LAZY)
+        @OneToOne(cascade = ALL, mappedBy = "utilizador", fetch = LAZY)
         private Bibliotecario bibliotecario;
-        @OneToOne(cascade = CascadeType.ALL, mappedBy = "utilizador", fetch = FetchType.LAZY)
+        @OneToOne(cascade = ALL, mappedBy = "utilizador", fetch = LAZY)
         private Estudante estudante;
-        @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilizador", fetch = FetchType.LAZY)
+        @OneToMany(cascade = ALL, mappedBy = "idUtilizador", fetch = LAZY)
         private List<Reserva> reservaList;
-        @OneToMany(mappedBy = "idUtilizador", fetch = FetchType.LAZY)
+        @OneToMany(mappedBy = "idUtilizador", fetch = LAZY)
         private List<Movimento> movimentoList;
 
 }
