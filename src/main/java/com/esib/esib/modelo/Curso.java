@@ -50,6 +50,10 @@ public class Curso implements Serializable {
     @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Faculdade faculdade;
 
+    @JoinColumn(name = "id_area", referencedColumnName = "id_area", nullable = false)
+    @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    private AreaCientifica areaCientifica;
+
     @OneToMany(cascade = ALL, mappedBy = "curso", fetch = LAZY)
     private List<Monografia> monografiaList;
 

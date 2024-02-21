@@ -39,8 +39,10 @@ public class AreaCientifica implements Serializable {
     private String descricao;
 
     @OneToMany(cascade = ALL, mappedBy = "areaCientifica", fetch = LAZY)
-    
     private List<Obra> obraList;
+
+    @OneToMany(cascade = ALL, mappedBy = "areaCientifica", fetch = LAZY)
+    private List<Curso> cursoList;
 
     @OneToMany(cascade = ALL, mappedBy = "areaCientifica", fetch = LAZY)
     private List<Utilizador> utilizadorList;
