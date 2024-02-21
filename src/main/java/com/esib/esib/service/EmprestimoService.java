@@ -75,17 +75,13 @@ public class EmprestimoService {
     public List<Emprestimo> findByObra(Long obra) {
         return emprestimoRepository.findByObra(obra);
     }
-
-    public List<Emprestimo> findEmprestimosPorEstado(String estado) {
-        return emprestimoRepository.findByEstado(estado);
+    
+    public List<Emprestimo> findByTitulo(String titulo) {
+        return emprestimoRepository.findByTitulo(titulo);
     }
 
-    public List<Emprestimo> findByTitulo(String estado) {
-        return emprestimoRepository.findByTitulo(estado);
-    }
-
-    public List<Emprestimo> findByIdioma(String estado) {
-        return emprestimoRepository.findByIdioma(estado);
+    public List<Emprestimo> findByIdioma(String idioma) {
+        return emprestimoRepository.findByIdioma(idioma);
     }
 
     public List<Emprestimo> findByAreaCientifica(String estado) {
@@ -124,5 +120,10 @@ public class EmprestimoService {
         var dataEmprestimo = new Date();
         return new Date(dataEmprestimo.getTime() + prazoEmprestimo * milisegundosPorDia);
     }
+
+    public List<Emprestimo> findByEstado(String estado) {
+        return emprestimoRepository.findByEstado(estado);
+    }
+
 
 }

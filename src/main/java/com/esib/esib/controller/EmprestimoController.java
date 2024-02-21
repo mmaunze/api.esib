@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.esib.esib.modelo.Devolucao;
 import com.esib.esib.modelo.Emprestimo;
-import com.esib.esib.modelo.dto.DevolucaoDTO;
 import com.esib.esib.modelo.dto.EmprestimoDTO;
 import com.esib.esib.service.BibliotecarioService;
 import com.esib.esib.service.EmprestimoService;
@@ -103,7 +101,20 @@ public class EmprestimoController {
         }
     }
 
-    
+    @GetMapping("/estado/{estado}")
+    public ResponseEntity<List<EmprestimoDTO>> findByEstado(@PathVariable String estado) {
+        try {
+            List<Emprestimo> emprestimos = emprestimoService.findByEstado(estado);
+            List<EmprestimoDTO> emprestimosDTO = emprestimos.stream()
+                    .map(this::convertToDTO)
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(emprestimosDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     @GetMapping("/utilizador/{utilizador}")
     public ResponseEntity<List<EmprestimoDTO>> findByUtilizador(@PathVariable Long utilizador) {
         try {
@@ -142,7 +153,6 @@ public class EmprestimoController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     @PostMapping()
     public ResponseEntity<Void> create(@RequestBody EmprestimoDTO emprestimoDTO) {
