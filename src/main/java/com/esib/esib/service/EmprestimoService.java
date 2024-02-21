@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esib.esib.modelo.Emprestimo;
@@ -14,18 +13,21 @@ import com.esib.esib.modelo.Obra;
 import com.esib.esib.repository.EmprestimoRepository;
 import com.esib.esib.repository.ObraRepository;
 
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
+@Data
 public class EmprestimoService {
 
-    @Autowired
-    private EmprestimoRepository emprestimoRepository;
-    @Autowired
-    private ObraRepository obraRepository;
+    private final EmprestimoRepository emprestimoRepository;
+    private final ObraRepository obraRepository;
 
     // CRUD methods
 
     @Transactional
-    public Emprestimo criarEmprestimo(Emprestimo emprestimo) {
+    public Emprestimo create(Emprestimo emprestimo) {
         // Verifique se todos os dados obrigatórios estão presentes
         if (emprestimo.getBibliotecario() == null ||
                 emprestimo.getEstado() == null ||
@@ -54,49 +56,67 @@ public class EmprestimoService {
         return emprestimo;
     }
 
-    public Optional<Emprestimo> buscarEmprestimoPorId(Long id) {
-        return emprestimoRepository.findById(id);
+    public Optional<Emprestimo> findById(Long id) {
+      return emprestimoRepository.findById(id);
     }
 
-    public List<Emprestimo> buscarTodosEmprestimos() {
+    public List<Emprestimo> findAll() {
         return emprestimoRepository.findAll();
     }
 
-    public List<Emprestimo> buscarEmprestimosPorBibliotecario(Long bibliotecario) {
+    public List<Emprestimo> findByBibliotecario(Long bibliotecario) {
         return emprestimoRepository.findByBibliotecario(bibliotecario);
     }
 
-    public List<Emprestimo> buscarEmprestimosPorUtilizador(Long utilizador) {
+    public List<Emprestimo> findByUtilizador(Long utilizador) {
         return emprestimoRepository.findByUtilizador(utilizador);
     }
 
-    public List<Emprestimo> buscarEmprestimosPorObra(Long obra) {
+    public List<Emprestimo> findByObra(Long obra) {
         return emprestimoRepository.findByObra(obra);
     }
 
-    public List<Emprestimo> buscarEmprestimosPorEstado(String estado) {
+    public List<Emprestimo> findEmprestimosPorEstado(String estado) {
         return emprestimoRepository.findByEstado(estado);
     }
 
-    @Transactional
-    public Emprestimo atualizarEmprestimo(Emprestimo emprestimo) {
-        return emprestimoRepository.save(emprestimo);
+    public List<Emprestimo> findByTitulo(String estado) {
+        return emprestimoRepository.findByTitulo(estado);
     }
-    /*
-     * @Transactional
-     * public void excluirEmprestimo(Long id) {
-     * Optional<Emprestimo> emprestimo = emprestimoRepository.findById(id);
-     * // Verifique se o emprestimo possui devoluções antes de excluir
-     * List<Devolucao> devolucoes = emprestimo.getDevolucaoList();
-     * if (!devolucoes.isEmpty()) {
-     * throw new
-     * RuntimeException("Emprestimo possui devoluções associadas e não pode ser excluído"
-     * );
-     * }
-     * 
-     * emprestimoRepository.deleteById(id);
-     * }
-     */
+
+    public List<Emprestimo> findByIdioma(String estado) {
+        return emprestimoRepository.findByIdioma(estado);
+    }
+
+    public List<Emprestimo> findByAreaCientifica(String estado) {
+        return emprestimoRepository.findByAcientifica(estado);
+    }
+
+    @Transactional
+    public Emprestimo update(Emprestimo emprestimo) {
+        
+        Emprestimo newEmprestimo = new Emprestimo();
+
+        newEmprestimo.setId(emprestimo.getId());
+        newEmprestimo.setBibliotecario(emprestimo.getBibliotecario());
+        newEmprestimo.setAtraso(emprestimo.getAtraso());
+        newEmprestimo.setDataEmprestimo(emprestimo.getDataEmprestimo());
+        newEmprestimo.setDataParaDevolucao(emprestimo.getDataParaDevolucao());
+        newEmprestimo.setEstado(emprestimo.getEstado());
+
+        return emprestimoRepository.save(newEmprestimo);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        findById(id);
+        try {
+            emprestimoRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException(" Impossivel remover Emprestimo " + e);
+        }
+
+    }
 
     // Method to calculate due date
     private Date calcularDataParaDevolucao(int prazoEmprestimo) {

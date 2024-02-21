@@ -5,25 +5,26 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.esib.esib.modelo.Curso;
-import com.esib.esib.modelo.Faculdade;
 import com.esib.esib.modelo.Monografia;
 import com.esib.esib.modelo.Obra;
 import com.esib.esib.repository.MonografiaRepository;
 
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
+@Data
 public class MonografiaService {
 
-    @Autowired
-    private MonografiaRepository monografiaRepository;
+    private final MonografiaRepository monografiaRepository;
 
     // CRUD methods
 
     @Transactional
-    public Monografia criarMonografia(Monografia monografia) {
+    public Monografia create(Monografia monografia) {
         // Verifique se a obra associada existe
         Obra obra = monografia.getObra();
         if (obra == null) {
@@ -41,30 +42,21 @@ public class MonografiaService {
         return monografiaRepository.save(monografia);
     }
 
-    public Optional<Monografia> buscarMonografiaPorId(Long id) {
+    public Optional<Monografia> findById(Long id) {
         return monografiaRepository.findById(id);
     }
 
-    public List<Monografia> buscarTodasMonografias() {
+    public List<Monografia> findAll() {
         return monografiaRepository.findAll();
     }
 
-    /*
-     * public List<Monografia> buscarMonografiasPorCurso(String curso) {
-     * return monografiaRepository.findByCurso(curso);
-     * }
-     * 
-     * public List<Monografia> buscarMonografiasPorFaculdade(String faculdade) {
-     * return monografiaRepository.findByFaculdade(faculdade);
-     * }
-     */
     @Transactional
-    public Monografia atualizarMonografia(Monografia monografia) {
+    public Monografia update(Monografia monografia) {
         return monografiaRepository.save(monografia);
     }
 
     @Transactional
-    public void excluirMonografia(Long id) {
+    public void delete(Long id) {
         var monografia = monografiaRepository.findById(id);
 
         /*
@@ -82,16 +74,35 @@ public class MonografiaService {
 
     // Methods related to relationships
 
-    public Obra buscarObraPorMonografia(Monografia monografia) {
+    public Obra findObraPorMonografia(Monografia monografia) {
         return monografia.getObra();
     }
 
-    public Curso buscarCursoPorMonografia(Monografia monografia) {
-        return monografia.getCurso();
+    public List<Monografia> findByTitulo(String titulo) {
+
+        return monografiaRepository.findByTitulo(titulo);
     }
 
-    public Faculdade buscarFaculdadePorMonografia(Monografia monografia) {
-        return monografia.getFaculdade();
+    public List<Monografia> findByIdioma(String idioma) {
+        return monografiaRepository.findByIdioma(idioma);
+    }
+
+    public List<Monografia> findByAreaCientifica(String areacientifica) {
+
+        return monografiaRepository.findByAreaCientifica(areacientifica);
+
+    }
+
+    public List<Monografia> findByFaculdade(String faculdade) {
+        return monografiaRepository.findByFaculdade(faculdade);
+    }
+
+    public List<Monografia> findByCurso(String curso) {
+        return monografiaRepository.findByCurso(curso);
+    }
+
+    public List<Monografia> findBySupervisor(String supervisor) {
+        return monografiaRepository.findBySupervisor(supervisor);
     }
 
 }

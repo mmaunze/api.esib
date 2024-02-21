@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esib.esib.modelo.Estado;
@@ -14,16 +13,20 @@ import com.esib.esib.modelo.Reserva;
 import com.esib.esib.modelo.Utilizador;
 import com.esib.esib.repository.ReservaRepository;
 
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
+@Data
 public class ReservaService {
 
-    @Autowired
-    private ReservaRepository reservaRepository;
+    private final ReservaRepository reservaRepository;
 
     // CRUD methods
 
     @Transactional
-    public Reserva criarReserva(Reserva reserva) {
+    public Reserva create(Reserva reserva) {
         // Verifique se a obra associada existe
         Obra obra = reserva.getObra();
         if (obra == null) {
@@ -53,24 +56,16 @@ public class ReservaService {
         return reservaRepository.save(reserva);
     }
 
-    public Optional<Reserva> buscarReservaPorId(Long id) {
+    public Optional<Reserva> findById(Long id) {
         return reservaRepository.findById(id);
     }
 
-    public List<Reserva> buscarTodasReservas() {
+    public List<Reserva> findAll() {
         return reservaRepository.findAll();
     }
 
-    public List<Reserva> buscarReservasPorObra(Long obra) {
-        return reservaRepository.findByObra(obra);
-    }
-
-    public List<Reserva> buscarReservasPorUtilizador(Long utilizador) {
-        return reservaRepository.findByUtilizador(utilizador);
-    }
-
     @Transactional
-    public Reserva atualizarReserva(Reserva reserva) {
+    public Reserva update(Reserva reserva) {
         // Verifique se a obra associada existe
         Obra obra = reserva.getObra();
         if (obra == null) {
@@ -82,7 +77,7 @@ public class ReservaService {
     }
 
     @Transactional
-    public void excluirReserva(Long id) {
+    public void delete(Long id) {
         // Verifique se a reserva está ativa antes de excluir
         var reserva = reservaRepository.findById(id).get();
         if (reserva.getEstado().getId() != 1) { // Estado da reserva != Ativa
@@ -97,16 +92,40 @@ public class ReservaService {
 
     // Methods related to relationships
 
-    public Obra buscarObraPorReserva(Reserva reserva) {
+    public Obra findObraPorReserva(Reserva reserva) {
         return reserva.getObra();
     }
 
-    public Utilizador buscarUtilizadorPorReserva(Reserva reserva) {
+    public Utilizador findUtilizadorPorReserva(Reserva reserva) {
         return reserva.getUtilizador();
     }
 
-    public Estado buscarEstadoPorReserva(Reserva reserva) {
+    public Estado findEstadoPorReserva(Reserva reserva) {
         return reserva.getEstado();
+    }
+
+    public List<Reserva> findByUtilizador(Long utilizador) {
+        return reservaRepository.findByUtilizador(utilizador);
+    }
+
+    public List<Reserva> findByObra(Long obra) {
+        return reservaRepository.findByObra(obra);
+    }
+
+    public List<Reserva> findEmprestimosPorEstado(String estado) {
+        return reservaRepository.findByEstado(estado);
+    }
+
+    public List<Reserva> findByTitulo(String estado) {
+        return reservaRepository.findByTitulo(estado);
+    }
+
+    public List<Reserva> findByIdioma(String estado) {
+        return reservaRepository.findByIdioma(estado);
+    }
+
+    public List<Reserva> findByAreaCientifica(String estado) {
+        return reservaRepository.findByAcientifica(estado);
     }
 
     // Additional methods

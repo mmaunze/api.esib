@@ -5,26 +5,28 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esib.esib.modelo.Bibliotecario;
 import com.esib.esib.modelo.Movimento;
 import com.esib.esib.modelo.Obra;
 import com.esib.esib.modelo.TipoMovimento;
-import com.esib.esib.modelo.Utilizador;
 import com.esib.esib.repository.MovimentoRepository;
 
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
+@Data
 public class MovimentoService {
 
-    @Autowired
-    private MovimentoRepository movimentoRepository;
+    private final MovimentoRepository movimentoRepository;
 
     // CRUD methods
 
     @Transactional
-    public Movimento criarMovimento(Movimento movimento) {
+    public Movimento create(Movimento movimento) {
         // Verifique se as entidades associadas existem
         Bibliotecario bibliotecario = movimento.getBibliotecario();
         Obra obra = movimento.getObra();
@@ -53,48 +55,48 @@ public class MovimentoService {
         return movimentoRepository.save(movimento);
     }
 
-    public Optional<Movimento> buscarMovimentoPorId(Long id) {
+    public Optional<Movimento> findById(Long id) {
         return movimentoRepository.findById(id);
     }
 
-    public List<Movimento> buscarTodosMovimentos() {
+    public List<Movimento> findAll() {
         return movimentoRepository.findAll();
     }
 
-    public List<Movimento> buscarMovimentosPorObra(Long obra) {
-        return movimentoRepository.findByObra(obra);
-    }
-
-    public List<Movimento> buscarMovimentosPorUtilizador(Long utilizador) {
-        return movimentoRepository.findByUtilizador(utilizador);
-    }
-
     @Transactional
-    public Movimento atualizarMovimento(Movimento movimento) {
+    public Movimento update(Movimento movimento) {
         return movimentoRepository.save(movimento);
     }
 
     @Transactional
-    public void excluirMovimento(Long id) {
+    public void delete(Long id) {
         movimentoRepository.deleteById(id);
     }
 
-    // Methods related to relationships
-
-    public Bibliotecario buscarBibliotecarioPorMovimento(Movimento movimento) {
-        return movimento.getBibliotecario();
+    public List<Movimento> findByBibliotecario(Long bibliotecario) {
+        return movimentoRepository.findByBibliotecario(bibliotecario);
     }
 
-    public Obra buscarObraPorMovimento(Movimento movimento) {
-        return movimento.getObra();
+    public List<Movimento> findByUtilizador(Long utilizador) {
+        return movimentoRepository.findByUtilizador(utilizador);
     }
 
-    public TipoMovimento buscarTipoMovimentoPorMovimento(Movimento movimento) {
-        return movimento.getTipoMovimento();
+    public List<Movimento> findByObra(Long obra) {
+        return movimentoRepository.findByObra(obra);
     }
 
-    public Utilizador buscarUtilizadorPorMovimento(Movimento movimento) {
-        return movimento.getUtilizador();
+
+
+    public List<Movimento> findByTitulo(String estado) {
+        return movimentoRepository.findByTitulo(estado);
+    }
+
+    public List<Movimento> findByIdioma(String estado) {
+        return movimentoRepository.findByIdioma(estado);
+    }
+
+    public List<Movimento> findByAreaCientifica(String estado) {
+        return movimentoRepository.findByAcientifica(estado);
     }
 
 }

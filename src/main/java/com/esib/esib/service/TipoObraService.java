@@ -5,23 +5,26 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esib.esib.modelo.Obra;
 import com.esib.esib.modelo.TipoObra;
 import com.esib.esib.repository.TipoObraRepository;
 
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
+@Data
 public class TipoObraService {
 
-    @Autowired
-    private TipoObraRepository tipoObraRepository;
+    private final TipoObraRepository tipoObraRepository;
 
     // CRUD methods
 
     @Transactional
-    public TipoObra criarTipoObra(TipoObra tipoObra) {
+    public TipoObra create(TipoObra tipoObra) {
         // Verifique se a descrição do tipo de obra já existe
         /*
          * String descricao = tipoObra.getDescricao();
@@ -34,20 +37,20 @@ public class TipoObraService {
         return tipoObraRepository.save(tipoObra);
     }
 
-    public Optional<TipoObra> buscarTipoObraPorId(Long id) {
+    public Optional<TipoObra> findById(Long id) {
         return tipoObraRepository.findById(id);
     }
 
-    public List<TipoObra> buscarTodosTiposObras() {
+    public List<TipoObra> findAll() {
         return tipoObraRepository.findAll();
     }
 
-    public TipoObra buscarTipoObraPorDescricao(String descricao) {
+    public TipoObra findTipoObraPorDescricao(String descricao) {
         return tipoObraRepository.findByDescricao(descricao);
     }
 
     @Transactional
-    public TipoObra atualizarTipoObra(TipoObra tipoObra) {
+    public TipoObra update(TipoObra tipoObra) {
         // Verifique se a descrição do tipo de obra já existe (se alterada)
         /*
          * if (!tipoObra.getDescricao().equals(tipoObraRepository.findById(tipoObra.
@@ -62,7 +65,7 @@ public class TipoObraService {
     }
 
     @Transactional
-    public void excluirTipoObra(Long id) {
+    public void delete(Long id) {
         // Verifique se o tipo de obra está associado a alguma obra antes de excluir
         var tipoObra = tipoObraRepository.findById(id).get();
         List<Obra> obras = tipoObra.getObraList();
@@ -76,7 +79,7 @@ public class TipoObraService {
 
     // Methods related to relationships
 
-    public List<Obra> buscarObrasPorTipoObra(TipoObra tipoObra) {
+    public List<Obra> findObrasPorTipoObra(TipoObra tipoObra) {
         return tipoObra.getObraList();
     }
 

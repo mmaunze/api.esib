@@ -1,4 +1,4 @@
-package com.esib.esib.dto;
+package com.esib.esib.modelo.dto;
 
 import lombok.Data;
 
@@ -7,6 +7,6 @@ import lombok.Data;
 public class CursoDTO {
     private Long id;
     private String descricao;
-    private FaculdadeDTO faculdade;
+    private String faculdade;
 
 }

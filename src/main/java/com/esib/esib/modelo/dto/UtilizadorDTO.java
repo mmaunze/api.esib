@@ -1,4 +1,4 @@
-package com.esib.esib.dto;
+package com.esib.esib.modelo.dto;
 
 import lombok.Data;
 
@@ -12,8 +12,8 @@ public class UtilizadorDTO {
     private String email;
     private Character sexo;
     private String username;
-    private AreaCientificaDTO areaCientifica;
-    private TipoUtilizadorDTO tipoUtilizador;
-    private DepartamentoDTO departamento;
+    private String areaCientifica;
+    private String tipoUtilizador;
+    private String departamento;
 
 }

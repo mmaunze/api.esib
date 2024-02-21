@@ -95,7 +95,7 @@ public class Obra implements Serializable {
     private TipoObra tipoObra;
 
     @OneToOne(cascade = ALL, mappedBy = "obra", fetch = LAZY)
-    private RevistaPeriodica revistaPeriodica;
+    private Revista revistaPeriodica;
     @OneToOne(cascade = ALL, mappedBy = "obra", fetch = LAZY)
     private Livro livro;
 

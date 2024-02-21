@@ -1,44 +1,50 @@
 package com.esib.esib.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Service;
+
 import com.esib.esib.modelo.Bibliotecario;
 import com.esib.esib.modelo.Curso;
 import com.esib.esib.modelo.Faculdade;
 import com.esib.esib.modelo.Monografia;
 import com.esib.esib.repository.FaculdadeRepository;
-import java.util.List;
-import java.util.Optional;
-import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
+@Data
 public class FaculdadeService {
 
-    @Autowired
-    private FaculdadeRepository faculdadeRepository;
+    private final FaculdadeRepository faculdadeRepository;
 
     // CRUD methods
 
     @Transactional
-    public Faculdade criarFaculdade(Faculdade faculdade) {
+    public Faculdade create(Faculdade faculdade) {
         return faculdadeRepository.save(faculdade);
     }
 
-    public Optional<Faculdade> buscarFaculdadePorId(Long id) {
+    public Optional<Faculdade> findById(Long id) {
         return faculdadeRepository.findById(id);
     }
 
-    public List<Faculdade> buscarTodasFaculdades() {
+    public List<Faculdade> findAll() {
         return faculdadeRepository.findAll();
     }
 
     @Transactional
-    public Faculdade atualizarFaculdade(Faculdade faculdade) {
+    public Faculdade update(Faculdade faculdade) {
         return faculdadeRepository.save(faculdade);
     }
 
     @Transactional
-    public void excluirFaculdade(Long id) {
+    public void delete(Long id) {
         var faculdade = faculdadeRepository.getById(id);
         // Verifique se a faculdade possui entidades relacionadas antes de excluir
         List<Curso> cursos = faculdade.getCursoList();
@@ -54,16 +60,19 @@ public class FaculdadeService {
 
     // Methods related to relationships
 
-    public List<Curso> buscarCursosPorFaculdade(Faculdade faculdade) {
+    public List<Curso> findCursosPorFaculdade(Faculdade faculdade) {
         return faculdade.getCursoList();
     }
 
-    public List<Monografia> buscarMonografiasPorFaculdade(Faculdade faculdade) {
+    public List<Monografia> findMonografiasPorFaculdade(Faculdade faculdade) {
         return faculdade.getMonografiaList();
     }
 
-    public List<Bibliotecario> buscarBibliotecariosPorFaculdade(Faculdade faculdade) {
+    public List<Bibliotecario> findBibliotecariosPorFaculdade(Faculdade faculdade) {
         return faculdade.getBibliotecarioList();
     }
 
+    public Faculdade findByDescricao(String faculdade) {
+        return faculdadeRepository.findByDescricao(faculdade);
+    }
 }

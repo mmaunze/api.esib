@@ -25,4 +25,12 @@ public interface EmprestimoRepository extends JpaRepository<Emprestimo, Long> {
     @Query(value = "SELECT e from Emprestimo e where e.estado.descricao =: descricao")
     List<Emprestimo> findByEstado(@Param("descricao") String descricao);
 
+    @Query(value = "SELECT e from Emprestimo e where e.obra.titulo =: titulo")
+    List<Emprestimo> findByTitulo(@Param("titulo") String titulo);
+
+    @Query(value = "SELECT e from Emprestimo e where e.obra.idioma.descricao =: descricao")
+    List<Emprestimo> findByIdioma(@Param("descricao") String descricao);
+
+    @Query(value = "SELECT e from Emprestimo e where e.obra.areaCientifica.descricao =: descricao")
+    List<Emprestimo> findByAcientifica(@Param("descricao") String descricao);
 }

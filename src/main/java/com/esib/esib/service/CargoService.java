@@ -1,42 +1,55 @@
 package com.esib.esib.service;
 
-import com.esib.esib.modelo.Cargo;
-import com.esib.esib.repository.CargoRepository;
 import java.util.List;
 import java.util.Optional;
+
 import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
+import com.esib.esib.modelo.Cargo;
+import com.esib.esib.repository.CargoRepository;
+
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
+@Data
 public class CargoService {
 
-    @Autowired
-    private CargoRepository cargoRepository;
+    private final CargoRepository cargoRepository;
 
     // CRUD methods
 
     @Transactional
-    public Cargo criarCargo(Cargo cargo) {
+    public Cargo create(Cargo cargo) {
+        if (cargo.getId() != null)
+            cargo.setId(null);
         return cargoRepository.save(cargo);
     }
 
-    public Optional<Cargo> buscarCargoPorId(Long id) {
+    public Optional<Cargo> findById(Long id) {
         return cargoRepository.findById(id);
     }
 
-    public List<Cargo> buscarTodosCargos() {
+    public List<Cargo> findAll() {
         return cargoRepository.findAll();
     }
 
     @Transactional
-    public Cargo atualizarCargo(Cargo cargo) {
+    public Cargo update(Cargo cargo) {
         return cargoRepository.save(cargo);
     }
 
     @Transactional
-    public void excluirCargo(Long id) {
+    public void delete(Long id) {
         cargoRepository.deleteById(id);
+    }
+
+    public Cargo findByDescricao(String cargo) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByDescricao'");
     }
 
 }

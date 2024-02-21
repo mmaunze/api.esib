@@ -17,4 +17,16 @@ public interface MovimentoRepository extends JpaRepository<Movimento, Long> {
 
     @Query(value = "SELECT m from Movimento m where m.obra.id = :id")
     List<Movimento> findByObra(@Param("id") Long id);
+
+    @Query(value = "SELECT m from Movimento m where m.bibliotecario.id =: id")
+    List<Movimento> findByBibliotecario(@Param("bibliotecario") Long id);
+
+    @Query(value = "SELECT m from Movimento m where m.obra.titulo =: titulo")
+    List<Movimento> findByTitulo(@Param("titulo") String titulo);
+
+    @Query(value = "SELECT m from Movimento m where m.obra.idioma.descricao =: descricao")
+    List<Movimento> findByIdioma(@Param("descricao") String descricao);
+
+    @Query(value = "SELECT m from Movimento m where m.obra.areaCientifica.descricao =: descricao")
+    List<Movimento> findByAcientifica(@Param("descricao") String descricao);
 }

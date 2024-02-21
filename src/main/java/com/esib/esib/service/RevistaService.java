@@ -1,24 +1,30 @@
 package com.esib.esib.service;
 
-import com.esib.esib.modelo.Obra;
-import com.esib.esib.modelo.RevistaPeriodica;
-import com.esib.esib.repository.RevistaPeriodicaRepository;
 import java.util.List;
 import java.util.Optional;
+
 import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
-@Service
-public class RevistaPeriodicaService {
+import com.esib.esib.modelo.Obra;
+import com.esib.esib.modelo.Revista;
+import com.esib.esib.repository.RevistaRepository;
 
-    @Autowired
-    private RevistaPeriodicaRepository revistaPeriodicaRepository;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+@Data
+public class RevistaService {
+
+    private final RevistaRepository revistaPeriodicaRepository;
 
     // CRUD methods
 
     @Transactional
-    public RevistaPeriodica criarRevistaPeriodica(RevistaPeriodica revistaPeriodica) {
+    public Revista create(Revista revistaPeriodica) {
         // Verifique se a obra associada existe
         Obra obra = revistaPeriodica.getObra();
         if (obra == null) {
@@ -37,25 +43,25 @@ public class RevistaPeriodicaService {
         return revistaPeriodica;
     }
 
-    public Optional<RevistaPeriodica> buscarRevistaPeriodicaPorId(Long id) {
+    public Optional<Revista> findById(Long id) {
         return revistaPeriodicaRepository.findById(id);
     }
 
-    public List<RevistaPeriodica> buscarTodasRevistasPeriodicas() {
+    public List<Revista> findAll() {
         return revistaPeriodicaRepository.findAll();
     }
 
-    public RevistaPeriodica buscarRevistaPeriodicaPorObra(Obra obra) {
+    public Revista findRevistaPeriodicaPorObra(Obra obra) {
         return obra.getRevistaPeriodica();
     }
 
     @Transactional
-    public RevistaPeriodica atualizarRevistaPeriodica(RevistaPeriodica revistaPeriodica) {
+    public Revista update(Revista revistaPeriodica) {
         return revistaPeriodicaRepository.save(revistaPeriodica);
     }
 
     @Transactional
-    public void excluirRevistaPeriodica(Long id) {
+    public void delete(Long id) {
         // Verifique se a revista periódica está associada a uma obra antes de excluir
         var revistaPeriodica = revistaPeriodicaRepository.findById(id).get();
         if (revistaPeriodica.getObra() != null) {
@@ -67,8 +73,44 @@ public class RevistaPeriodicaService {
 
     // Methods related to relationships
 
-    public Obra buscarObraPorRevistaPeriodica(RevistaPeriodica revistaPeriodica) {
+    public Obra findObraPorRevistaPeriodica(Revista revistaPeriodica) {
         return revistaPeriodica.getObra();
+    }
+
+    public List<Revista> findByTitulo(String titulo) {
+        return revistaPeriodicaRepository.findByTitulo(titulo);
+    }
+
+    public List<Revista> findByIdioma(String idioma) {
+        return revistaPeriodicaRepository.findByIdioma(idioma);
+
+    }
+
+    public List<Revista> findByAreaCientifica(String areacientifica) {
+
+        return revistaPeriodicaRepository.findByAreaCientifica(areacientifica);
+
+    }
+
+    public List<Revista> findByVolume(Long volume) {
+
+        return revistaPeriodicaRepository.findByVolume(volume);
+
+    }
+
+    public List<Revista> findByEditora(String editora) {
+
+        return revistaPeriodicaRepository.findByEditora(editora);
+
+    }
+
+    public List<Revista> findByNome(String nome) {
+        return revistaPeriodicaRepository.findByNome(nome);
+
+    }
+
+    public List<Revista> findByNumero(Integer numero) {
+        return revistaPeriodicaRepository.findByNumero(numero);
     }
 
 }

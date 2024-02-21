@@ -21,7 +21,7 @@ import lombok.Data;
 @Table(name = "revista_periodica", catalog = "esib", schema = "public")
 @XmlRootElement
 @Data
-public class RevistaPeriodica implements Serializable {
+public class Revista implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

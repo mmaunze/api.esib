@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.esib.esib.dto.UtilizadorDTO;
 import com.esib.esib.modelo.Utilizador;
+import com.esib.esib.modelo.dto.UtilizadorDTO;
+import com.esib.esib.service.AreaCientificaService;
+import com.esib.esib.service.DepartamentoService;
+import com.esib.esib.service.TipoUtilizadorService;
 import com.esib.esib.service.UtilizadorService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,6 +32,9 @@ import lombok.RequiredArgsConstructor;
 public class UtilizadorController {
 
     private final UtilizadorService utilizadorService;
+    private final DepartamentoService departamentoService;
+    private final TipoUtilizadorService tipoUtilizadorService;
+    private final AreaCientificaService areaCientificaService;
 
     @GetMapping()
     public ResponseEntity<List<UtilizadorDTO>> findAll() {
@@ -43,10 +49,49 @@ public class UtilizadorController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/areacientifica/{areacientifica}")
+    public ResponseEntity<List<UtilizadorDTO>> findByAreaCientifica(@PathVariable String areacientifica) {
+        try {
+            List<Utilizador> utilizadores = utilizadorService.findByAreaCientifica(areacientifica);
+            List<UtilizadorDTO> obrasDTO = utilizadores.stream()
+                    .map(this::convertToDTO)
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(obrasDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/departamento/{departamento}")
+    public ResponseEntity<List<UtilizadorDTO>> findByDepartamento(@PathVariable String departamento) {
+        try {
+            List<Utilizador> utilizadores = utilizadorService.findByDepartamento(departamento);
+            List<UtilizadorDTO> utilizadoresDTO = utilizadores.stream()
+                    .map(this::convertToDTO)
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(utilizadoresDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/tipoutilizador/{tipoutilizador}")
+    public ResponseEntity<List<UtilizadorDTO>> findByTipoUtilizador(@PathVariable String tipoutilizador) {
+        try {
+            List<Utilizador> utilizadores = utilizadorService.findByTipoUtilizador(tipoutilizador);
+            List<UtilizadorDTO> utilizadoresDTO = utilizadores.stream()
+                    .map(this::convertToDTO)
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(utilizadoresDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/utilizador/{id}")
     public ResponseEntity<UtilizadorDTO> findById(@PathVariable Long id) {
         try {
-            Optional<Utilizador> utilizador = utilizadorService.buscarUtilizadorPorId(id);
+            Optional<Utilizador> utilizador = utilizadorService.findById(id);
             return utilizador.map(u -> ResponseEntity.ok(convertToDTO(u)))
                     .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception e) {
@@ -54,10 +99,10 @@ public class UtilizadorController {
         }
     }
 
-    @GetMapping("username/{username}")
+    @GetMapping("/username/{username}")
     public ResponseEntity<UtilizadorDTO> findByUsername(@PathVariable String username) {
         try {
-            Optional<Utilizador> utilizador = utilizadorService.buscarUtilizadorPorUsername(username);
+            Optional<Utilizador> utilizador = utilizadorService.findUtilizadorPorUsername(username);
             return utilizador.map(u -> ResponseEntity.ok(convertToDTO(u)))
                     .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception e) {
@@ -65,10 +110,10 @@ public class UtilizadorController {
         }
     }
 
-    @GetMapping("contacto/{contacto}")
+    @GetMapping("/contacto/{contacto}")
     public ResponseEntity<UtilizadorDTO> findByContacto(@PathVariable String contacto) {
         try {
-            Optional<Utilizador> utilizador = utilizadorService.buscarUtilizadorPorContacto(contacto);
+            Optional<Utilizador> utilizador = utilizadorService.findUtilizadorPorContacto(contacto);
             return utilizador.map(u -> ResponseEntity.ok(convertToDTO(u)))
                     .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception e) {
@@ -76,10 +121,10 @@ public class UtilizadorController {
         }
     }
 
-    @GetMapping("email/{email}")
+    @GetMapping("/email/{email}")
     public ResponseEntity<UtilizadorDTO> findByEmail(@PathVariable String email) {
         try {
-            Optional<Utilizador> utilizador = utilizadorService.buscarUtilizadorPorEmail(email);
+            Optional<Utilizador> utilizador = utilizadorService.findUtilizadorPorEmail(email);
             return utilizador.map(u -> ResponseEntity.ok(convertToDTO(u)))
                     .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception e) {
@@ -88,47 +133,48 @@ public class UtilizadorController {
     }
 
     @PostMapping()
-    public ResponseEntity<UtilizadorDTO> create(@RequestBody UtilizadorDTO utilizadorDTO) {
+    public ResponseEntity<Void> create(@RequestBody UtilizadorDTO utilizadorDTO) {
         try {
-            Utilizador novoUtilizador = utilizadorService.create(convertToEntity(utilizadorDTO));
-            UtilizadorDTO novoUtilizadorDTO = convertToDTO(novoUtilizador);
+            Utilizador newUtilizador = utilizadorService.create(convertToEntity(utilizadorDTO));
+            UtilizadorDTO newUtilizadorDTO = convertToDTO(newUtilizador);
 
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest()
                     .path("/{id}")
-                    .buildAndExpand(novoUtilizadorDTO.getId())
+                    .buildAndExpand(newUtilizadorDTO.getId())
                     .toUri();
 
-            return ResponseEntity.created(location).body(novoUtilizadorDTO);
+            return ResponseEntity.created(location).build();
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<UtilizadorDTO> update(@RequestBody UtilizadorDTO utilizadorDTO, @PathVariable Long id) {
+    public ResponseEntity<Void> update(@RequestBody UtilizadorDTO utilizadorDTO, @PathVariable Long id) {
         try {
-            Utilizador utilizadorAtualizado = utilizadorService.update(convertToEntity(utilizadorDTO));
-            return new ResponseEntity<>(convertToDTO(utilizadorAtualizado), HttpStatus.OK);
+            utilizadorService.update(convertToEntity(utilizadorDTO));
+            return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @DeleteMapping("/remover/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             utilizadorService.delete(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // Métodos auxiliares para conversão entre Entidade e DTO
+    /*
+     * Métodos auxiliares para conversão entre Entidade e DTO
+     */
+
     private UtilizadorDTO convertToDTO(Utilizador utilizador) {
-        // Implemente a lógica de conversão de Utilizador para UtilizadorDTO
-        // Exemplo:
         UtilizadorDTO utilizadorDTO = new UtilizadorDTO();
         utilizadorDTO.setId(utilizador.getId());
         utilizadorDTO.setNome(utilizador.getNome());
@@ -136,16 +182,15 @@ public class UtilizadorController {
         utilizadorDTO.setSexo(utilizador.getSexo());
         utilizadorDTO.setContacto(utilizador.getContacto());
         utilizadorDTO.setUsername(utilizador.getUsername());
-
-        // utilizadorDTO.setAreaCientifica(utilizador.getIdArea());
-        // utilizadorDTO.setDepartamento(utilizador.getIdDepartamento());
+        utilizadorDTO.setAreaCientifica(utilizador.getAreaCientifica().getDescricao());
+        utilizadorDTO.setDepartamento(utilizador.getDepartamento().getDescricao());
+        utilizadorDTO.setTipoUtilizador(utilizador.getTipoUtilizador().getDescricao());
 
         return utilizadorDTO;
     }
 
     private Utilizador convertToEntity(UtilizadorDTO utilizadorDTO) {
-        // Implemente a lógica de conversão de UtilizadorDTO para Utilizador
-        // Exemplo:
+
         Utilizador utilizador = new Utilizador();
         utilizador.setId(utilizadorDTO.getId());
         utilizador.setNome(utilizadorDTO.getNome());
@@ -153,9 +198,10 @@ public class UtilizadorController {
         utilizador.setSexo(utilizadorDTO.getSexo());
         utilizador.setContacto(utilizadorDTO.getContacto());
         utilizador.setUsername(utilizadorDTO.getUsername());
-        // utilizador.setIdArea(utilizadorDTO.getAreaCientifica());
-        // utilizador.setIdDepartamento(utilizadorDTO.getDepartamento());
-        // Continue para outros campos...
+        utilizador.setAreaCientifica(areaCientificaService.findByDescricao((utilizadorDTO.getAreaCientifica())));
+        utilizador.setDepartamento(departamentoService.findByDescricao(utilizadorDTO.getDepartamento()));
+        utilizador.setTipoUtilizador(tipoUtilizadorService.findByDescricao(utilizadorDTO.getTipoUtilizador()));
+
         return utilizador;
     }
 }

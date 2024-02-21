@@ -5,23 +5,26 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esib.esib.modelo.Movimento;
 import com.esib.esib.modelo.TipoMovimento;
 import com.esib.esib.repository.TipoMovimentoRepository;
 
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
+@Data
 public class TipoMovimentoService {
 
-    @Autowired
-    private TipoMovimentoRepository tipoMovimentoRepository;
+    private final TipoMovimentoRepository tipoMovimentoRepository;
 
     // CRUD methods
 
     @Transactional
-    public TipoMovimento criarTipoMovimento(TipoMovimento tipoMovimento) {
+    public TipoMovimento create(TipoMovimento tipoMovimento) {
         // Verifique se a descrição do tipo de movimento já existe
         /*
          * String descricao = tipoMovimento.getDescricao();
@@ -34,20 +37,20 @@ public class TipoMovimentoService {
         return tipoMovimentoRepository.save(tipoMovimento);
     }
 
-    public Optional<TipoMovimento> buscarTipoMovimentoPorId(Long id) {
+    public Optional<TipoMovimento> findById(Long id) {
         return tipoMovimentoRepository.findById(id);
     }
 
-    public List<TipoMovimento> buscarTodosTiposMovimentos() {
+    public List<TipoMovimento> findAll() {
         return tipoMovimentoRepository.findAll();
     }
 
-    public TipoMovimento buscarTipoMovimentoPorDescricao(String descricao) {
+    public TipoMovimento findTipoMovimentoPorDescricao(String descricao) {
         return tipoMovimentoRepository.findByDescricao(descricao);
     }
 
     @Transactional
-    public TipoMovimento atualizarTipoMovimento(TipoMovimento tipoMovimento) {
+    public TipoMovimento update(TipoMovimento tipoMovimento) {
         // Verifique se a descrição do tipo de movimento já existe (se alterada)
         /*
          * if (!tipoMovimento.getDescricao().equals(tipoMovimentoRepository.findById(
@@ -63,7 +66,7 @@ public class TipoMovimentoService {
     }
 
     @Transactional
-    public void excluirTipoMovimento(Long id) {
+    public void delete(Long id) {
         // Verifique se o tipo de movimento está associado a algum movimento antes de
         // excluir
         var tipoMovimento = tipoMovimentoRepository.findById(id).get();
@@ -78,8 +81,13 @@ public class TipoMovimentoService {
 
     // Methods related to relationships
 
-    public List<Movimento> buscarMovimentosPorTipoMovimento(TipoMovimento tipoMovimento) {
+    public List<Movimento> findMovimentosPorTipoMovimento(TipoMovimento tipoMovimento) {
         return tipoMovimento.getMovimentoList();
+    }
+
+    public TipoMovimento findByDescricao(String tipoMovimento) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByDescricao'");
     }
 
 }

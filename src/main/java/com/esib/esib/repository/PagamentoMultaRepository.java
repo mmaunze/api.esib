@@ -18,4 +18,8 @@ public interface PagamentoMultaRepository extends JpaRepository<PagamentoMulta, 
     @Query(value = "SELECT pm from PagamentoMulta pm where pm.bibliotecario.id =:id")
     List<PagamentoMulta> findByBibliotecario(@Param("id") Long id);
 
+
+    @Query(value = "SELECT pm from PagamentoMulta pm where pm.multa.emprestimo.utilizador.id =:id")
+    List<PagamentoMulta> findByUtilizador(@Param("id") Long id);
+
 }

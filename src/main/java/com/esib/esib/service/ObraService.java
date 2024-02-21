@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esib.esib.modelo.AreaCientifica;
@@ -19,24 +18,21 @@ import com.esib.esib.modelo.Reserva;
 import com.esib.esib.modelo.TipoObra;
 import com.esib.esib.repository.ObraRepository;
 
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
+@Data
 public class ObraService {
 
-    @Autowired
-    private ObraRepository obraRepository;
+    private final ObraRepository obraRepository;
 
     // CRUD methods
 
     @Transactional
-    public Obra criarObra(Obra obra) {
-        /*
-         * // Verifique se a localização da obra já está ocupada
-         * String localizacao = obra.getLocalizacao();
-         * if (obraRepository.existsByLocalizacao(localizacao)) {
-         * throw new RuntimeException("Localização da obra já ocupada");
-         * }
-         */
-        // Verifique se as entidades associadas existem
+    public Obra create(Obra obra) {
+
         AreaCientifica areaCientifica = obra.getAreaCientifica();
         Estado estado = obra.getEstado();
         Idioma idioma = obra.getIdioma();
@@ -50,48 +46,35 @@ public class ObraService {
         return obraRepository.save(obra);
     }
 
-    public Optional<Obra> buscarObraPorId(Long id) {
+    public Optional<Obra> findById(Long id) {
         return obraRepository.findById(id);
     }
 
-    public List<Obra> buscarTodasObras() {
+    public List<Obra> findAll() {
         return obraRepository.findAll();
     }
 
-    public List<Obra> buscarObrasPorTitulo(String titulo) {
-        return obraRepository.findByTituloContainingIgnoreCase(titulo);
-    }
-
-    public List<Obra> buscarObrasPorAutor(String autor) {
+    public List<Obra> findByAutor(String autor) {
         return obraRepository.findByAutor1ContainingIgnoreCaseOrAutor2ContainingIgnoreCaseOrAutor3ContainingIgnoreCase(
                 autor, autor, autor);
     }
 
-    public List<Obra> buscarObrasPorAreaCientifica(AreaCientifica areaCientifica) {
-        return obraRepository.findByAreaCientifica(areaCientifica.getDescricao());
+    public List<Obra> findByAreaCientifica(String areacientifica) {
+        return obraRepository.findByAreaCientifica(areacientifica);
     }
 
-    /*
-     * @Transactional
-     * public Obra atualizarObra(Obra obra) {
-     * // Verifique se a localização da obra já está ocupada (se alterada)
-     * if
-     * (!obra.getLocalizacao().equals(obraRepository.findById(obra.getIdObra()).get(
-     * ).getLocalizacao())) {
-     * if (obraRepository.existsByLocalizacao(obra.getLocalizacao())) {
-     * throw new RuntimeException("Localização da obra já ocupada");
-     * }
-     * }
-     * 
-     * return obraRepository.save(obra);
-     * }
-     */
+    @Transactional
+    public Obra update(Obra obra) {
+
+        return obraRepository.save(obra);
+    }
 
     @Transactional
-    public void excluirObra(Long id) {
+    public void delete(Long id) {
         // Verifique se a obra possui empréstimos, reservas ou multas relacionadas antes
         // de excluir
         var obra = obraRepository.findById(id).get();
+
         List<Emprestimo> emprestimos = obra.getEmprestimoList();
         List<Reserva> reservas = obra.getReservaList();
         List<Movimento> movimentos = obra.getMovimentoList();
@@ -103,6 +86,14 @@ public class ObraService {
         }
 
         obraRepository.deleteById(id);
+    }
+
+    public List<Obra> findByIdioma(String idioma) {
+        return obraRepository.findByIdioma(idioma);
+    }
+
+    public List<Obra> findByTitulo(String titulo) {
+        return obraRepository.findByTitulo(titulo);
     }
 
     // Methods related

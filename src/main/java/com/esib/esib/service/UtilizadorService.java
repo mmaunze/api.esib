@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esib.esib.modelo.AreaCientifica;
@@ -16,30 +15,24 @@ import com.esib.esib.modelo.TipoUtilizador;
 import com.esib.esib.modelo.Utilizador;
 import com.esib.esib.repository.UtilizadorRepository;
 
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
+@Data
 public class UtilizadorService {
 
-    @Autowired
-    private UtilizadorRepository utilizadorRepository;
+    private final UtilizadorRepository utilizadorRepository;
 
-    // @Autowired
-    // private PasswordEncoder passwordEncoder;
 
-    // CRUD methods
 
     public Utilizador create(Utilizador utilizador) {
-        /*
-         * validarUtilizador(utilizador);
-         * 
-         * // Criptografe a senha antes de salvar
-         * utilizador.setSenha(passwordEncoder.encode(utilizador.getSenha()));
-         * 
-         * // Salve o utilizador
-         */
+      
         return utilizadorRepository.save(utilizador);
     }
 
-    public Optional<Utilizador> buscarUtilizadorPorId(Long id) {
+    public Optional<Utilizador> findById(Long id) {
         return utilizadorRepository.findById(id);
     }
 
@@ -47,15 +40,15 @@ public class UtilizadorService {
         return utilizadorRepository.findAll();
     }
 
-    public Optional<Utilizador> buscarUtilizadorPorContacto(String contacto) {
+    public Optional<Utilizador> findUtilizadorPorContacto(String contacto) {
         return utilizadorRepository.findByContacto(contacto);
     }
 
-    public Optional<Utilizador> buscarUtilizadorPorEmail(String email) {
+    public Optional<Utilizador> findUtilizadorPorEmail(String email) {
         return utilizadorRepository.findByEmail(email);
     }
 
-    public Optional<Utilizador> buscarUtilizadorPorUsername(String username) {
+    public Optional<Utilizador> findUtilizadorPorUsername(String username) {
         return utilizadorRepository.findByUsername(username);
     }
 
@@ -64,22 +57,6 @@ public class UtilizadorService {
         return utilizadorRepository.save(utilizador);
     }
 
-    /*
-     * @Transactional
-     * public Utilizador atualizarUtilizador(Utilizador utilizador) {
-     * validarUtilizador(utilizador);
-     * 
-     * // Criptografe a senha antes de salvar (se a senha foi alterada)
-     * Utilizador utilizadorExistente =
-     * utilizadorRepository.findById(utilizador.getutilizador()).get();
-     * if (!utilizador.getSenha().equals(utilizadorExistente.getSenha())) {
-     * utilizador.setSenha(passwordEncoder.encode(utilizador.getSenha()));
-     * }
-     * 
-     * // Salve o utilizador
-     * return utilizadorRepository.save(utilizador);
-     * }
-     */
     @Transactional
     public void delete(Long id) {
         // Verifique se o utilizador tem emprestimos em aberto antes de excluir
@@ -101,23 +78,39 @@ public class UtilizadorService {
 
     // Methods related to relationships
 
-    public List<Emprestimo> buscarEmprestimosPorUtilizador(Utilizador utilizador) {
+    public List<Emprestimo> findEmprestimosPorUtilizador(Utilizador utilizador) {
         return utilizador.getEmprestimoList();
     }
 
-    public AreaCientifica buscarAreaCientificaPorUtilizador(Utilizador utilizador) {
+    public AreaCientifica findAreaCientificaPorUtilizador(Utilizador utilizador) {
         return utilizador.getAreaCientifica();
     }
 
-    public Departamento buscarDepartamentoPorUtilizador(Utilizador utilizador) {
+    public Departamento findDepartamentoPorUtilizador(Utilizador utilizador) {
         return utilizador.getDepartamento();
     }
 
-    public TipoUtilizador buscarTipoUtilizadorPorUtilizador(Utilizador utilizador) {
+    public TipoUtilizador findTipoUtilizadorPorUtilizador(Utilizador utilizador) {
         return utilizador.getTipoUtilizador();
     }
 
-    public List<Reserva> buscarReservasPorUtilizador(Utilizador utilizador) {
+    public List<Reserva> findReservasPorUtilizador(Utilizador utilizador) {
         return utilizador.getReservaList();
     }
+
+    public List<Utilizador> findByAreaCientifica(String areacientifica) {
+        return utilizadorRepository.findByAreaCientifica(areacientifica);
+    }
+
+    public List<Utilizador> findByDepartamento(String departamento) {
+
+        return utilizadorRepository.findByDepartamento(departamento);
+
+    }
+
+    public List<Utilizador> findByTipoUtilizador(String tipoutilizador) {
+        return utilizadorRepository.findByTipoUtilizador(tipoutilizador);
+
+    }
+
 }

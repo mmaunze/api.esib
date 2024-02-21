@@ -14,7 +14,7 @@ public interface MultaRepository extends JpaRepository<Multa, Long> {
     @Query(value = "SELECT m from Multa m where m.emprestimo.id =:id")
     List<Multa> findByEmprestimo(@Param("id") Long id);
 
-    @Query(value = "SELECT m from Multa m where m.estado =:id")
-    List<Multa> findByEstado(@Param("id") Long id);
+    @Query(value = "SELECT m from Multa m where m.estado.descricao =:descricao")
+    List<Multa> findByEstado(@Param("descricao") String descricao);
 
 }

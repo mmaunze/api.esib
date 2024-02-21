@@ -1,59 +1,69 @@
 package com.esib.esib.service;
 
-import com.esib.esib.modelo.Curso;
-import com.esib.esib.modelo.Estudante;
-import com.esib.esib.modelo.Faculdade;
-import com.esib.esib.modelo.Monografia;
-import com.esib.esib.repository.CursoRepository;
 import java.util.List;
 import java.util.Optional;
+
 import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
+import com.esib.esib.modelo.Curso;
+import com.esib.esib.modelo.Estudante;
+import com.esib.esib.modelo.Monografia;
+import com.esib.esib.repository.CursoRepository;
+
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
+@Data
 public class CursoService {
 
-    @Autowired
-    private CursoRepository cursoRepository;
+    private final CursoRepository cursoRepository;
 
     // CRUD methods
 
     @Transactional
-    public Curso criarCurso(Curso curso) {
+    public Curso create(Curso curso) {
         return cursoRepository.save(curso);
     }
 
-    public Optional<Curso> buscarCursoPorId(Long id) {
+    public Optional<Curso> findById(Long id) {
         return cursoRepository.findById(id);
     }
 
-    public List<Curso> buscarTodosCursos() {
+    public List<Curso> findAll() {
         return cursoRepository.findAll();
     }
 
-    public List<Curso> buscarCursosPorFaculdade(String faculdade) {
+    public List<Curso> findCursosPorFaculdade(String faculdade) {
         return cursoRepository.findByFaculdade(faculdade);
     }
 
     @Transactional
-    public Curso atualizarCurso(Curso curso) {
+    public Curso update(Curso curso) {
         return cursoRepository.save(curso);
     }
 
     @Transactional
-    public void excluirCurso(Long id) {
+    public void delete(Long id) {
         cursoRepository.deleteById(id);
     }
 
     // Methods related to relationships
 
-    public List<Estudante> buscarEstudantesPorCurso(Curso curso) {
+    public List<Estudante> findEstudantesPorCurso(Curso curso) {
         return curso.getEstudanteList();
     }
 
-    public List<Monografia> buscarMonografiasPorCurso(Curso curso) {
+    public List<Monografia> findMonografiasPorCurso(Curso curso) {
         return curso.getMonografiaList();
+    }
+
+    public Curso findByDescricao(String curso) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByDescricao'");
     }
 
 }

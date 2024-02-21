@@ -1,10 +1,10 @@
-package com.esib.esib.dto;
+package com.esib.esib.modelo.dto;
 
 import lombok.Data;
 
 @Data
 
-public class TipoUtilizadorDTO {
+public class AreaCientificaDTO {
     private Long id;
     private String descricao;
 }

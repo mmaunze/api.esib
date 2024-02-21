@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esib.esib.modelo.Bibliotecario;
@@ -15,43 +14,52 @@ import com.esib.esib.modelo.PagamentoMulta;
 import com.esib.esib.repository.BibliotecarioRepository;
 import com.esib.esib.repository.EstadoRepository;
 
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
+@Data
 public class BibliotecarioService {
 
-    @Autowired
-    private BibliotecarioRepository bibliotecarioRepository;
-    private EstadoRepository estadoRepository;
+    private final BibliotecarioRepository bibliotecarioRepository;
+
+    private final EstadoRepository estadoRepository;
 
     // CRUD methods
 
     @Transactional
-    public Bibliotecario criarBibliotecario(Bibliotecario bibliotecario) {
+    public Bibliotecario create(Bibliotecario bibliotecario) {
 
         return bibliotecarioRepository.save(bibliotecario);
     }
 
-    public Optional<Bibliotecario> buscarBibliotecarioPorId(Long id) {
+    public List<Bibliotecario> findAll() {
+        return bibliotecarioRepository.findAll();
+    }
+
+    public Optional<Bibliotecario> findById(Long id) {
 
         return bibliotecarioRepository.findById(id);
     }
 
-    public List<Bibliotecario> buscarBibliotecariosPorFaculdade(String faculdade) {
+    public List<Bibliotecario> findBibliotecariosPorFaculdade(String faculdade) {
         return bibliotecarioRepository.findByIdFaculdade(faculdade);
     }
 
-    public List<Bibliotecario> buscarBibliotecariosPorNome(String nome) {
+    public List<Bibliotecario> findBibliotecariosPorNome(String nome) {
 
         return bibliotecarioRepository.findByutilizadorNome(nome);
     }
 
     @Transactional
-    public Bibliotecario atualizarBibliotecario(Bibliotecario bibliotecario) {
-        buscarBibliotecarioPorId(bibliotecario.getId());
+    public Bibliotecario update(Bibliotecario bibliotecario) {
+        findById(bibliotecario.getId());
         return bibliotecarioRepository.save(bibliotecario);
     }
 
     @Transactional
-    public void excluirBibliotecario(Long id) {
+    public void delete(Long id) {
         bibliotecarioRepository.deleteById(id);
     }
 
@@ -59,7 +67,7 @@ public class BibliotecarioService {
 
     @Transactional
     public Emprestimo registrarEmprestimo(Emprestimo emprestimo) {
-        emprestimo.setBibliotecario(buscarBibliotecarioPorId(emprestimo.getBibliotecario().getId())
+        emprestimo.setBibliotecario(findById(emprestimo.getBibliotecario().getId())
                 .orElseThrow(() -> new RuntimeException("Bibliotecario não encontrado")));
         return emprestimo;
     }
@@ -77,6 +85,19 @@ public class BibliotecarioService {
         bibliotecarioRepository.save(pagamentoMulta.getBibliotecario()); // Update bibliotecario with updated
                                                                          // pagamentoMulta
         return pagamentoMulta;
+    }
+
+    public Optional<Bibliotecario> findBibliotecarioPorContacto(String contacto) {
+        return bibliotecarioRepository.findBibliotecarioPorContacto(contacto);
+    }
+
+    public Optional<Bibliotecario> findBibliotecarioPorEmail(String email) {
+        return bibliotecarioRepository.findBibliotecarioPorEmail(email);
+    }
+
+    public Optional<Bibliotecario> findBibliotecarioPorUsername(String username) {
+        return bibliotecarioRepository.findBibliotecarioPorUsername(username);
+
     }
 
 }

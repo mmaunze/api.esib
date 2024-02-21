@@ -5,23 +5,26 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esib.esib.modelo.TipoUtilizador;
 import com.esib.esib.modelo.Utilizador;
 import com.esib.esib.repository.TipoUtilizadorRepository;
 
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
+@Data
 public class TipoUtilizadorService {
 
-    @Autowired
-    private TipoUtilizadorRepository tipoUtilizadorRepository;
+    private final TipoUtilizadorRepository tipoUtilizadorRepository;
 
     // CRUD methods
 
     @Transactional
-    public TipoUtilizador criarTipoUtilizador(TipoUtilizador tipoUtilizador) {
+    public TipoUtilizador create(TipoUtilizador tipoUtilizador) {
         // Verifique se a descrição do tipo de utilizador já existe
         /*
          * String descricao = tipoUtilizador.getDescricao();
@@ -34,20 +37,16 @@ public class TipoUtilizadorService {
         return tipoUtilizadorRepository.save(tipoUtilizador);
     }
 
-    public Optional<TipoUtilizador> buscarTipoUtilizadorPorId(Long id) {
+    public Optional<TipoUtilizador> findById(Long id) {
         return tipoUtilizadorRepository.findById(id);
     }
 
-    public List<TipoUtilizador> buscarTodosTiposUtilizadores() {
+    public List<TipoUtilizador> findAll() {
         return tipoUtilizadorRepository.findAll();
     }
 
-    public TipoUtilizador buscarTipoUtilizadorPorDescricao(String descricao) {
-        return tipoUtilizadorRepository.findByDescricao(descricao);
-    }
-
     @Transactional
-    public TipoUtilizador atualizarTipoUtilizador(TipoUtilizador tipoUtilizador) {
+    public TipoUtilizador update(TipoUtilizador tipoUtilizador) {
         // Verifique se a descrição do tipo de utilizador já existe (se alterada)
         /*
          * if (tipoUtilizador.getDescricao() != null &&
@@ -64,7 +63,7 @@ public class TipoUtilizadorService {
     }
 
     @Transactional
-    public void excluirTipoUtilizador(Long id) {
+    public void delete(Long id) {
         // Verifique se o tipo de utilizador está associado a algum utilizador antes de
         // excluir
         var tipoUtilizador = tipoUtilizadorRepository.findById(id).get();
@@ -79,8 +78,12 @@ public class TipoUtilizadorService {
 
     // Methods related to relationships
 
-    public List<Utilizador> buscarUtilizadoresPorTipoUtilizador(TipoUtilizador tipoUtilizador) {
+    public List<Utilizador> findUtilizadoresPorTipoUtilizador(TipoUtilizador tipoUtilizador) {
         return tipoUtilizador.getUtilizadorList();
+    }
+
+    public TipoUtilizador findByDescricao(String tipoUtilizador) {
+        return tipoUtilizadorRepository.findByDescricao(tipoUtilizador);
     }
 
 }

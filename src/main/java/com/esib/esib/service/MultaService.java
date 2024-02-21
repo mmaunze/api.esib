@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esib.esib.modelo.Emprestimo;
@@ -14,22 +13,26 @@ import com.esib.esib.modelo.Multa;
 import com.esib.esib.modelo.PagamentoMulta;
 import com.esib.esib.repository.MultaRepository;
 
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
+@Data
 public class MultaService {
 
-    @Autowired
-    private MultaRepository multaRepository;
+    private final MultaRepository multaRepository;
 
     // CRUD methods
 
     @Transactional
-    public Multa criarMulta(Multa multa) {
+    public Multa create(Multa multa) {
         // Verifique se as entidades associadas existem
         Emprestimo emprestimo = multa.getEmprestimo();
         Estado estado = multa.getEstado();
 
         if (emprestimo == null || estado == null) {
-            throw new RuntimeException("Entidades associadas à multa não informadas");
+            throw new IllegalArgumentException("Entidades associadas à multa não informadas");
         }
 
         // Verifique se o empréstimo ainda está ativo
@@ -41,43 +44,43 @@ public class MultaService {
         return multaRepository.save(multa);
     }
 
-    public Optional<Multa> buscarMultaPorId(Long id) {
+    public Optional<Multa> findById(Long id) {
         return multaRepository.findById(id);
     }
 
-    public List<Multa> buscarTodasMultas() {
+    public List<Multa> findAll() {
         return multaRepository.findAll();
     }
 
-    public List<Multa> buscarMultasPorEmprestimo(Long emprestimo) {
+    public List<Multa> findMultasPorEmprestimo(Long emprestimo) {
         return multaRepository.findByEmprestimo(emprestimo);
     }
 
-    public List<Multa> buscarMultasPorEstado(Long estado) {
+    public List<Multa> findByEstado(String estado) {
         return multaRepository.findByEstado(estado);
     }
 
     @Transactional
-    public Multa atualizarMulta(Multa multa) {
+    public Multa update(Multa multa) {
         return multaRepository.save(multa);
     }
 
     @Transactional
-    public void excluirMulta(Long id) {
+    public void delete(Long id) {
         multaRepository.deleteById(id);
     }
 
     // Methods related to relationships
 
-    public Emprestimo buscarEmprestimoPorMulta(Multa multa) {
+    public Emprestimo findEmprestimoPorMulta(Multa multa) {
         return multa.getEmprestimo();
     }
 
-    public Estado buscarEstadoPorMulta(Multa multa) {
+    public Estado findEstadoPorMulta(Multa multa) {
         return multa.getEstado();
     }
 
-    public List<PagamentoMulta> buscarPagamentosPorMulta(Multa multa) {
+    public List<PagamentoMulta> findPagamentosPorMulta(Multa multa) {
         return multa.getPagamentoMultaList();
     }
 }

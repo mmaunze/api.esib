@@ -1,4 +1,4 @@
-package com.esib.esib.dto;
+package com.esib.esib.modelo.dto;
 
 import lombok.Data;
 

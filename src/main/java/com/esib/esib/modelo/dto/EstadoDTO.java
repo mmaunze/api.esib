@@ -1,11 +1,9 @@
-
-package com.esib.esib.dto;
+package com.esib.esib.modelo.dto;
 
 import lombok.Data;
 
 @Data
-
-public class CargoDTO {
+public class EstadoDTO {
     private Long id;
     private String descricao;
 }

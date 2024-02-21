@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esib.esib.modelo.Devolucao;
@@ -14,19 +13,22 @@ import com.esib.esib.modelo.Emprestimo;
 import com.esib.esib.repository.DevolucaoRepository;
 import com.esib.esib.repository.EmprestimoRepository;
 
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
+@Data
 public class DevolucaoService {
 
-    @Autowired
-    private DevolucaoRepository devolucaoRepository;
+    private final DevolucaoRepository devolucaoRepository;
 
-    @Autowired
-    private EmprestimoRepository emprestimoRepository;
+    private final EmprestimoRepository emprestimoRepository;
 
     // CRUD methods
 
     @Transactional
-    public Devolucao criarDevolucao(Devolucao devolucao) {
+    public Devolucao create(Devolucao devolucao) {
         // Verifique se o emprestimo associado existe e está ativo
         Emprestimo emprestimo = devolucao.getEmprestimo();
         if (emprestimo == null || !emprestimo.isAtivo()) {
@@ -47,25 +49,25 @@ public class DevolucaoService {
         return devolucao;
     }
 
-    public Optional<Devolucao> buscarDevolucaoPorId(Long id) {
+    public Optional<Devolucao> findById(Long id) {
         return devolucaoRepository.findById(id);
     }
 
-    public List<Devolucao> buscarTodasDevolucoes() {
+    public List<Devolucao> findAll() {
         return devolucaoRepository.findAll();
     }
 
-    public List<Devolucao> buscarDevolucoesPorBibliotecario(Long bibliotecario) {
+    public List<Devolucao> findDevolucoesPorBibliotecario(Long bibliotecario) {
         return devolucaoRepository.findByBibliotecario(bibliotecario);
     }
 
     @Transactional
-    public Devolucao atualizarDevolucao(Devolucao devolucao) {
+    public Devolucao update(Devolucao devolucao) {
         return devolucaoRepository.save(devolucao);
     }
 
     @Transactional
-    public void excluirDevolucao(Long id) {
+    public void delete(Long id) {
         devolucaoRepository.deleteById(id);
     }
 
@@ -73,6 +75,31 @@ public class DevolucaoService {
     private long calcularDiasAtraso(Date dataEmprestimo, Date dataDevolucao) {
         long milisegundosNoDia = 24 * 60 * 60 * 1000;
         return (dataDevolucao.getTime() - dataEmprestimo.getTime()) / milisegundosNoDia;
+    }
+
+    public List<Devolucao> findByBibliotecario(Long bibliotecario) {
+        return devolucaoRepository.findByBibliotecario(bibliotecario);
+    }
+
+    public List<Devolucao> findByUtilizador(Long utilizador) {
+        return devolucaoRepository.findByUtilizador(utilizador);
+    }
+
+    public List<Devolucao> findByObra(Long obra) {
+        return devolucaoRepository.findByObra(obra);
+    }
+
+    public List<Devolucao> findByTitulo(String estado) {
+        return devolucaoRepository.findByTitulo(estado);
+    }
+
+    public List<Devolucao> findByIdioma(String estado) {
+        return devolucaoRepository.findByIdioma(estado);
+    }
+
+    public List<Devolucao> findByAreaCientifica(String areacientifica) {
+        return devolucaoRepository.findByAreaCientifica(areacientifica);
+
     }
 
 }

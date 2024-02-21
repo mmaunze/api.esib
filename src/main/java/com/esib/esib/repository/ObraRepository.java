@@ -24,4 +24,10 @@ public interface ObraRepository extends JpaRepository<Obra, Long> {
     @Query(value = "SELECT o from Obra o where o.areaCientifica.descricao =: areaCientifica")
     List<Obra> findByAreaCientifica(@Param("areaCientifica") String areaCientifica);
 
+    @Query(value = "SELECT o from Obra o where o.idioma.descricao =: descricao")
+    List<Obra> findByIdioma(@Param("idioma") String descricao);
+
+    @Query(value = "SELECT o from Obra o where o.titulo =: titulo")
+    List<Obra> findByTitulo(@Param("titulo") String titulo);
+
 }
