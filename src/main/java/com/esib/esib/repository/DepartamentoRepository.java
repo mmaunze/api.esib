@@ -10,7 +10,7 @@ import com.esib.esib.modelo.Departamento;
 @Repository
 public interface DepartamentoRepository extends JpaRepository<Departamento, Long> {
 
-    @Query(value = "SELECT d from Departamento d where d.descricao = :descricao")
+    @Query(value = "SELECT d from Departamento d where d.sigla = :descricao")
     Departamento findByDescricao(@Param("descricao") String descricao);
 
 }

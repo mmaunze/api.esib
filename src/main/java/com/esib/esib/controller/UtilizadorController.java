@@ -183,7 +183,7 @@ public class UtilizadorController {
         utilizadorDTO.setContacto(utilizador.getContacto());
         utilizadorDTO.setUsername(utilizador.getUsername());
         utilizadorDTO.setAreaCientifica(utilizador.getAreaCientifica().getDescricao());
-        utilizadorDTO.setDepartamento(utilizador.getDepartamento().getDescricao());
+        utilizadorDTO.setDepartamento(utilizador.getDepartamento().getSigla());
         utilizadorDTO.setTipoUtilizador(utilizador.getTipoUtilizador().getDescricao());
 
         return utilizadorDTO;
