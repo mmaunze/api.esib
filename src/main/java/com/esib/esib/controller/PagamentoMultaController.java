@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.esib.esib.modelo.Multa;
 import com.esib.esib.modelo.PagamentoMulta;
 import com.esib.esib.modelo.dto.PagamentoMultaDTO;
 import com.esib.esib.service.BibliotecarioService;
@@ -111,12 +112,16 @@ public class PagamentoMultaController {
 
     private PagamentoMulta convertToEntity(PagamentoMultaDTO pagamentoDTO) {
 
+        Optional<Multa> optionalMulta = multaService.findById(pagamentoDTO.getMulta());
+
         PagamentoMulta pagamento = new PagamentoMulta();
 
         pagamento.setId(pagamentoDTO.getId());
-        pagamento.setMulta(multaService.findById(pagamentoDTO.getMulta()).get());
+        if (optionalMulta.isPresent())
+            pagamento.setMulta((multaService.findById(pagamentoDTO.getMulta()).get()));
         pagamento.setDataPagamento(pagamentoDTO.getDataPagamento());
-        pagamento.setBibliotecario(bibliotecarioService.findById(pagamentoDTO.getBibliotecario()).get());
+        if ((bibliotecarioService.findById(pagamentoDTO.getBibliotecario())).isPresent())
+            pagamento.setBibliotecario(bibliotecarioService.findById(pagamentoDTO.getBibliotecario()).get());
         pagamento.setValorPago(pagamentoDTO.getValorPago());
 
         return pagamento;

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.esib.esib.modelo.AreaCientifica;
@@ -21,7 +22,10 @@ public class AreaCientificaService {
     private final AreaCientificaRepository areaCientificaRepository;
 
     // CRUD methods
-
+    
+    public Optional<AreaCientifica> findById(@NonNull Long id) {
+        return areaCientificaRepository.findById(id);
+    }
     @Transactional
     public AreaCientifica create(AreaCientifica areaCientifica) {
 
@@ -30,9 +34,7 @@ public class AreaCientificaService {
         return areaCientificaRepository.save(areaCientifica);
     }
 
-    public Optional<AreaCientifica> findById(Long id) {
-        return areaCientificaRepository.findById(id);
-    }
+   
 
     public List<AreaCientifica> findAll() {
         return areaCientificaRepository.findAll();

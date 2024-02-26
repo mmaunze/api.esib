@@ -57,7 +57,7 @@ public class Utilizador implements Serializable {
         private String username;
 
         @Column(length = 70)
-        private String senha;
+        private String password;
 
         @OneToMany(cascade = ALL, mappedBy = "utilizador", fetch = LAZY)
         private List<Emprestimo> emprestimoList;

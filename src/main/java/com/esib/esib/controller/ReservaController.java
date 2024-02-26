@@ -125,9 +125,9 @@ public class ReservaController {
     }
 
     @PostMapping()
-    public ResponseEntity<Void> create(@RequestBody ReservaDTO ReservaDTO) {
+    public ResponseEntity<Void> create(@RequestBody ReservaDTO reservaDTO) {
         try {
-            Reserva newReserva = reservaService.create(convertToEntity(ReservaDTO));
+            Reserva newReserva = reservaService.create(convertToEntity(reservaDTO));
             ReservaDTO newReservaDTO = convertToDTO(newReserva);
 
             URI location = ServletUriComponentsBuilder
@@ -184,7 +184,8 @@ public class ReservaController {
         reserva.setId(reservaDTO.getId());
 
         reserva.setId(reservaDTO.getId());
-        reserva.setUtilizador(utilizadorService.findById(reservaDTO.getUtilizador()).get());
+        if (utilizadorService.findById(reservaDTO.getUtilizador()).isPresent())
+            reserva.setUtilizador(utilizadorService.findById(reservaDTO.getUtilizador()).get());
         reserva.setDataReserva(reservaDTO.getDataReserva());
         reserva.setEstado(estadoService.findByDescricao(reservaDTO.getEstado()));
 
