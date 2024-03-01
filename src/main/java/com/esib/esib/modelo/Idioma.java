@@ -26,19 +26,37 @@ import lombok.Data;
 @XmlRootElement
 @Data
 public class Idioma implements Serializable {
+
+    /**
+     *
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(Idioma.class.getName());
+
+    /**
+     *
+     */
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_idioma", nullable = false)
     private Long id;
 
+    /**
+     *
+     */
     @Basic(optional = false)
     @Column(nullable = false, length = 100)
     private String descricao;
 
+    /**
+     *
+     */
     @OneToMany(cascade = ALL, mappedBy = "idioma", fetch = LAZY)
     private List<Obra> obraList;
-    private static final Logger LOG = Logger.getLogger(Idioma.class.getName());
+
 
 }

@@ -31,28 +31,54 @@ import lombok.Data;
 
 public class Faculdade implements Serializable {
 
+    /**
+     *
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(Faculdade.class.getName());
+
+    /**
+     *
+     */
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_faculdade", nullable = false)
     private Long id;
 
+    /**
+     *
+     */
     @Basic(optional = false)
     @Column(name = "descricao", nullable = false, length = 255)
     private String descricao;
 
+    /**
+     *
+     */
     @Basic(optional = false)
     @Column(nullable = false, length = 10)
     private String sigla;
 
+    /**
+     *
+     */
     @OneToMany(cascade = ALL, mappedBy = "faculdade", fetch = LAZY)
     private List<Curso> cursoList;
 
+    /**
+     *
+     */
     @OneToMany(cascade = ALL, mappedBy = "faculdade", fetch = LAZY)
     private List<Monografia> monografiaList;
 
+    /**
+     *
+     */
     @OneToMany(cascade = ALL, mappedBy = "faculdade", fetch = LAZY)
     private List<Bibliotecario> bibliotecarioList;
-    private static final Logger LOG = Logger.getLogger(Faculdade.class.getName());
+
 }

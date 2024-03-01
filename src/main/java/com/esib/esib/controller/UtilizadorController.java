@@ -36,10 +36,29 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequestMapping("/utilizadores")
 @RequiredArgsConstructor
 public class UtilizadorController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(UtilizadorController.class.getName());
 
+    /**
+     *
+     */
     private final UtilizadorService utilizadorService;
+
+    /**
+     *
+     */
     private final DepartamentoService departamentoService;
+
+    /**
+     *
+     */
     private final TipoUtilizadorService tipoUtilizadorService;
+
+    /**
+     *
+     */
     private final AreaCientificaService areaCientificaService;
 
     /**
@@ -234,6 +253,13 @@ public class UtilizadorController {
      * Métodos auxiliares para conversão entre Entidade e DTO
      */
 
+    /**
+     *
+     * @param utilizador
+     * @return
+     */
+
+
     private UtilizadorDTO convertToDTO(Utilizador utilizador) {
         var utilizadorDTO = new UtilizadorDTO();
         utilizadorDTO.setId(utilizador.getId());
@@ -249,6 +275,11 @@ public class UtilizadorController {
         return utilizadorDTO;
     }
 
+    /**
+     *
+     * @param utilizadorDTO
+     * @return
+     */
     private Utilizador convertToEntity(UtilizadorDTO utilizadorDTO) {
 
         var utilizador = new Utilizador();
@@ -264,5 +295,5 @@ public class UtilizadorController {
 
         return utilizador;
     }
-    private static final Logger LOG = Logger.getLogger(UtilizadorController.class.getName());
+
 }

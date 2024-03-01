@@ -9,7 +9,19 @@ import lombok.Data;
  */
 @Data
 public class EstadoDTO {
-    private Long id;
-    private String descricao;
+    /**
+     *
+     */
     private static final Logger LOG = Logger.getLogger(EstadoDTO.class.getName());
+
+    /**
+     *
+     */
+    private Long id;
+
+    /**
+     *
+     */
+    private String descricao;
+
 }

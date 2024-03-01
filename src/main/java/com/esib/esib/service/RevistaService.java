@@ -19,7 +19,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class RevistaService {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(RevistaService.class.getName());
 
+    /**
+     *
+     */
     private final RevistaRepository revistaPeriodicaRepository;
 
     // CRUD methods
@@ -183,6 +190,6 @@ public class RevistaService {
     public List<Revista> findByNumero(Integer numero) {
         return revistaPeriodicaRepository.findByNumero(numero);
     }
-    private static final Logger LOG = Logger.getLogger(RevistaService.class.getName());
+
 
 }

@@ -21,9 +21,19 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class DevolucaoService {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(DevolucaoService.class.getName());
 
+    /**
+     *
+     */
     private final DevolucaoRepository devolucaoRepository;
 
+    /**
+     *
+     */
     private final EmprestimoRepository emprestimoRepository;
 
     // CRUD methods
@@ -102,6 +112,13 @@ public class DevolucaoService {
     }
 
     // Method to calculate delay in days
+
+    /**
+     *
+     * @param dataEmprestimo
+     * @param dataDevolucao
+     * @return
+     */
     private long calcularDiasAtraso(Date dataEmprestimo, Date dataDevolucao) {
         long milisegundosNoDia = 24 * 60 * 60 * 1_000;
         return (dataDevolucao.getTime() - dataEmprestimo.getTime()) / milisegundosNoDia;
@@ -161,6 +178,6 @@ public class DevolucaoService {
         return devolucaoRepository.findByAreaCientifica(areacientifica);
 
     }
-    private static final Logger LOG = Logger.getLogger(DevolucaoService.class.getName());
+
 
 }

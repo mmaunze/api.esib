@@ -27,22 +27,42 @@ import lombok.Data;
 @Data
 public class Cta implements Serializable {
 
+    /**
+     *
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(Cta.class.getName());
+
+    /**
+     *
+     */
     @Id
     @Basic(optional = false)
     @Column(name = "id_utilizador", nullable = false)
     private Long id;
 
+    /**
+     *
+     */
     @Column(length = 50)
     private String grau;
 
+    /**
+     *
+     */
     @JoinColumn(name = "id_cargo", referencedColumnName = "id_cargo", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Cargo cargo;
 
+    /**
+     *
+     */
     @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Utilizador utilizador;
-    private static final Logger LOG = Logger.getLogger(Cta.class.getName());
+
 
 }

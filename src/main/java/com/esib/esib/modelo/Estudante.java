@@ -27,23 +27,43 @@ import lombok.Data;
 @Data
 public class Estudante implements Serializable {
 
+    /**
+     *
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(Estudante.class.getName());
+
+    /**
+     *
+     */
     @Id
     @Basic(optional = false)
     @Column(name = "id_utilizador", nullable = false)
     private Long id;
 
+    /**
+     *
+     */
     @Basic(optional = false)
     @Column(nullable = false)
     private int nivel;
 
+    /**
+     *
+     */
     @JoinColumn(name = "id_curso", referencedColumnName = "id_curso", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Curso curso;
 
+    /**
+     *
+     */
     @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Utilizador utilizador;
-    private static final Logger LOG = Logger.getLogger(Estudante.class.getName());
+
 
 }

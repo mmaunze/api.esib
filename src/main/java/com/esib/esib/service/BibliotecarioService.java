@@ -22,9 +22,19 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class BibliotecarioService {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(BibliotecarioService.class.getName());
 
+    /**
+     *
+     */
     private final BibliotecarioRepository bibliotecarioRepository;
 
+    /**
+     *
+     */
     private final EstadoRepository estadoRepository;
 
     // CRUD methods
@@ -168,6 +178,6 @@ public class BibliotecarioService {
         return bibliotecarioRepository.findBibliotecarioPorUsername(username);
 
     }
-    private static final Logger LOG = Logger.getLogger(BibliotecarioService.class.getName());
+
 
 }

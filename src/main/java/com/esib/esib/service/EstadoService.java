@@ -22,7 +22,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class EstadoService {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(EstadoService.class.getName());
 
+    /**
+     *
+     */
     private final EstadoRepository estadoRepository;
 
     // CRUD methods
@@ -134,6 +141,6 @@ public class EstadoService {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findByDescricao'");
     }
-    private static final Logger LOG = Logger.getLogger(EstadoService.class.getName());
+
 
 }

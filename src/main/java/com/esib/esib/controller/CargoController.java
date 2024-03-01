@@ -34,6 +34,14 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class CargoController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(CargoController.class.getName());
+
+    /**
+     *
+     */
     private final CargoService cargoService;
 
     /**
@@ -122,6 +130,12 @@ public class CargoController {
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
+
+    /**
+     *
+     * @param cargo
+     * @return
+     */
     private CargoDTO convertToDTO(Cargo cargo) {
 
         var cargoDTO = new CargoDTO();
@@ -131,6 +145,11 @@ public class CargoController {
         return cargoDTO;
     }
 
+    /**
+     *
+     * @param cargoDTO
+     * @return
+     */
     private Cargo convertToEntity(CargoDTO cargoDTO) {
 
         var cargo = new Cargo();
@@ -139,5 +158,5 @@ public class CargoController {
 
         return cargo;
     }
-    private static final Logger LOG = Logger.getLogger(CargoController.class.getName());
+
 }

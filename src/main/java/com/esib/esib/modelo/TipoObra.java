@@ -29,19 +29,36 @@ import lombok.Data;
 @Data
 public class TipoObra implements Serializable {
 
+    /**
+     *
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(TipoObra.class.getName());
+
+    /**
+     *
+     */
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_tipo_obra", nullable = false)
     private Long id;
 
+    /**
+     *
+     */
     @Basic(optional = false)
     @Column(nullable = false, length = 100)
     private String descricao;
     
+    /**
+     *
+     */
     @OneToMany(cascade = ALL, mappedBy = "tipoObra", fetch = LAZY)
     private List<Obra> obraList;
-    private static final Logger LOG = Logger.getLogger(TipoObra.class.getName());
+
 
 }

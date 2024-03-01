@@ -14,6 +14,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
+
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(WebConfig.class.getName());
     /**
      *
      * @param registry
@@ -25,6 +30,5 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedHeaders("*")
                 .allowedMethods("GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS");
     }
-    private static final Logger LOG = Logger.getLogger(WebConfig.class.getName());
 
 }

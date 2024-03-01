@@ -18,9 +18,19 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
  * @author Meldo Maunze
  */
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(JWTAuthorizationFilter.class.getName());
 
+    /**
+     *
+     */
     private final JWTUtil jwtUtil;
 
+    /**
+     *
+     */
     private final UserDetailsService userDetailsService;
 
     /**
@@ -59,6 +69,11 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         filterChain.doFilter(request, response);
     }
 
+    /**
+     *
+     * @param token
+     * @return
+     */
     private UsernamePasswordAuthenticationToken getAuthentication(String token) {
         if (this.jwtUtil.isValidToken(token)) {
             var username = this.jwtUtil.getUsername(token);
@@ -70,6 +85,6 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         }
         return null;
     }
-    private static final Logger LOG = Logger.getLogger(JWTAuthorizationFilter.class.getName());
+
 
 }

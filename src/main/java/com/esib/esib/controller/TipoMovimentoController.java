@@ -34,6 +34,14 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class TipoMovimentoController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(TipoMovimentoController.class.getName());
+
+    /**
+     *
+     */
     private final TipoMovimentoService tipoMovimentoService;
 
     /**
@@ -122,6 +130,12 @@ public class TipoMovimentoController {
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
+
+    /**
+     *
+     * @param tipoMovimento
+     * @return
+     */
     private TipoMovimentoDTO convertToDTO(TipoMovimento tipoMovimento) {
 
         var tipoMovimentoDTO = new TipoMovimentoDTO();
@@ -131,6 +145,11 @@ public class TipoMovimentoController {
         return tipoMovimentoDTO;
     }
 
+    /**
+     *
+     * @param tipoMovimentoDTO
+     * @return
+     */
     private TipoMovimento convertToEntity(TipoMovimentoDTO tipoMovimentoDTO) {
 
         var tipoMovimento = new TipoMovimento();
@@ -139,5 +158,5 @@ public class TipoMovimentoController {
 
         return tipoMovimento;
     }
-    private static final Logger LOG = Logger.getLogger(TipoMovimentoController.class.getName());
+
 }

@@ -36,10 +36,29 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequestMapping("/utilizadores/estudantes")
 @RequiredArgsConstructor
 public class EstudanteController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(EstudanteController.class.getName());
 
+    /**
+     *
+     */
     private final EstudanteService estudanteService;
+
+    /**
+     *
+     */
     private final DepartamentoService departamentoService;
+
+    /**
+     *
+     */
     private final CursoService cursoService;
+
+    /**
+     *
+     */
     private final AreaCientificaService areaCientificaService;
 
     /**
@@ -180,6 +199,13 @@ public class EstudanteController {
      * Métodos auxiliares para conversão entre Entidade e DTO
      */
 
+    /**
+     *
+     * @param estudante
+     * @return
+     */
+
+
     private EstudanteDTO convertToDTO(Estudante estudante) {
 
         var estudanteDTO = new EstudanteDTO();
@@ -200,6 +226,11 @@ public class EstudanteController {
         return estudanteDTO;
     }
 
+    /**
+     *
+     * @param estudanteDTO
+     * @return
+     */
     private Estudante convertToEntity(EstudanteDTO estudanteDTO) {
 
         var estudante = new Estudante();
@@ -220,5 +251,5 @@ public class EstudanteController {
 
         return estudante;
     }
-    private static final Logger LOG = Logger.getLogger(EstudanteController.class.getName());
+
 }

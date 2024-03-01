@@ -34,6 +34,14 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class IdiomaController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(IdiomaController.class.getName());
+
+    /**
+     *
+     */
     private final IdiomaService idiomaService;
 
     /**
@@ -122,6 +130,12 @@ public class IdiomaController {
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
+
+    /**
+     *
+     * @param idioma
+     * @return
+     */
     private IdiomaDTO convertToDTO(Idioma idioma) {
 
         var idiomaDTO = new IdiomaDTO();
@@ -131,6 +145,11 @@ public class IdiomaController {
         return idiomaDTO;
     }
 
+    /**
+     *
+     * @param idiomaDTO
+     * @return
+     */
     private Idioma convertToEntity(IdiomaDTO idiomaDTO) {
 
         var idioma = new Idioma();
@@ -139,5 +158,5 @@ public class IdiomaController {
 
         return idioma;
     }
-    private static final Logger LOG = Logger.getLogger(IdiomaController.class.getName());
+
 }

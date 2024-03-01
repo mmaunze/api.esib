@@ -36,9 +36,24 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class DevolucaoController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(DevolucaoController.class.getName());
 
+    /**
+     *
+     */
     private final DevolucaoService devolucaoService;
+
+    /**
+     *
+     */
     private final EmprestimoService emprestimoService;
+
+    /**
+     *
+     */
     private final BibliotecarioService bibliotecarioService;
 
     /**
@@ -235,6 +250,11 @@ public class DevolucaoController {
         }
     }
 
+    /**
+     *
+     * @param devolucao
+     * @return
+     */
     private DevolucaoDTO convertToDTO(Devolucao devolucao) {
 
         var devolucaoDTO = new DevolucaoDTO();
@@ -255,6 +275,11 @@ public class DevolucaoController {
         return devolucaoDTO;
     }
 
+    /**
+     *
+     * @param devolucaoDTO
+     * @return
+     */
     private Devolucao convertToEntity(DevolucaoDTO devolucaoDTO) {
         var devolucao = new Devolucao();
         devolucao.setId(devolucaoDTO.getId());
@@ -267,5 +292,5 @@ public class DevolucaoController {
 
         return devolucao;
     }
-    private static final Logger LOG = Logger.getLogger(DevolucaoController.class.getName());
+
 }

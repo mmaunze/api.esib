@@ -34,6 +34,14 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class EstadoController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(EstadoController.class.getName());
+
+    /**
+     *
+     */
     private final EstadoService estadoService;
 
     /**
@@ -122,6 +130,12 @@ public class EstadoController {
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
+
+    /**
+     *
+     * @param estado
+     * @return
+     */
     private EstadoDTO convertToDTO(Estado estado) {
 
         var estadoDTO = new EstadoDTO();
@@ -131,6 +145,11 @@ public class EstadoController {
         return estadoDTO;
     }
 
+    /**
+     *
+     * @param estadoDTO
+     * @return
+     */
     private Estado convertToEntity(EstadoDTO estadoDTO) {
 
         var estado = new Estado();
@@ -139,5 +158,5 @@ public class EstadoController {
 
         return estado;
     }
-    private static final Logger LOG = Logger.getLogger(EstadoController.class.getName());
+
 }

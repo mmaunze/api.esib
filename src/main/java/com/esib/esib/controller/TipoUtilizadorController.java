@@ -34,6 +34,14 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class TipoUtilizadorController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(TipoUtilizadorController.class.getName());
+
+    /**
+     *
+     */
     private final TipoUtilizadorService tipoUtilizadorService;
 
     /**
@@ -122,6 +130,12 @@ public class TipoUtilizadorController {
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
+
+    /**
+     *
+     * @param tipoUtilizador
+     * @return
+     */
     private TipoUtilizadorDTO convertToDTO(TipoUtilizador tipoUtilizador) {
 
         var tipoUtilizadorDTO = new TipoUtilizadorDTO();
@@ -131,6 +145,11 @@ public class TipoUtilizadorController {
         return tipoUtilizadorDTO;
     }
 
+    /**
+     *
+     * @param tipoUtilizadorDTO
+     * @return
+     */
     private TipoUtilizador convertToEntity(TipoUtilizadorDTO tipoUtilizadorDTO) {
 
         var tipoUtilizador = new TipoUtilizador();
@@ -139,5 +158,5 @@ public class TipoUtilizadorController {
 
         return tipoUtilizador;
     }
-    private static final Logger LOG = Logger.getLogger(TipoUtilizadorController.class.getName());
+
 }

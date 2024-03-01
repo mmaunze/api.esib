@@ -10,9 +10,29 @@ import lombok.Data;
 @Data
 
 public class MultaDTO {
-private Long id;
-private Double valor;
-private Long emprestimo;
-private String estado;
+    /**
+     *
+     */
     private static final Logger LOG = Logger.getLogger(MultaDTO.class.getName());
+
+    /**
+     *
+     */
+    private Long id;
+
+    /**
+     *
+     */
+    private Double valor;
+
+    /**
+     *
+     */
+    private Long emprestimo;
+
+    /**
+     *
+     */
+    private String estado;
+
 }

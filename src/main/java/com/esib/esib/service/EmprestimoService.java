@@ -21,8 +21,19 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class EmprestimoService {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(EmprestimoService.class.getName());
 
+    /**
+     *
+     */
     private final EmprestimoRepository emprestimoRepository;
+
+    /**
+     *
+     */
     private final ObraRepository obraRepository;
 
     // CRUD methods
@@ -170,6 +181,12 @@ public class EmprestimoService {
     }
 
     // Method to calculate due date
+
+    /**
+     *
+     * @param prazoEmprestimo
+     * @return
+     */
     private Date calcularDataParaDevolucao(int prazoEmprestimo) {
         long milisegundosPorDia = 24 * 60 * 60 * 1_000;
         var dataEmprestimo = new Date();
@@ -184,7 +201,7 @@ public class EmprestimoService {
     public List<Emprestimo> findByEstado(String estado) {
         return emprestimoRepository.findByEstado(estado);
     }
-    private static final Logger LOG = Logger.getLogger(EmprestimoService.class.getName());
+
 
 
 }

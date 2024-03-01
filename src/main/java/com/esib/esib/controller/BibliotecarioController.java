@@ -36,10 +36,29 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequestMapping("/bibliotecarios")
 @RequiredArgsConstructor
 public class BibliotecarioController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(BibliotecarioController.class.getName());
 
+    /**
+     *
+     */
     private final BibliotecarioService bibliotecarioService;
+
+    /**
+     *
+     */
     private final DepartamentoService departamentoService;
+
+    /**
+     *
+     */
     private final FaculdadeService faculdadeService;
+
+    /**
+     *
+     */
     private final AreaCientificaService areaCientificaService;
 
     /**
@@ -180,6 +199,13 @@ public class BibliotecarioController {
      * Métodos auxiliares para conversão entre Entidade e DTO
      */
 
+    /**
+     *
+     * @param bibliotecario
+     * @return
+     */
+
+
     private BibliotecarioDTO convertToDTO(Bibliotecario bibliotecario) {
 
         var bibliotecarioDTO = new BibliotecarioDTO();
@@ -197,6 +223,12 @@ public class BibliotecarioController {
         return bibliotecarioDTO;
     }
 
+    /**
+     *
+     * @param bibliotecarioDTO
+     * @return
+     */
+    
     private Bibliotecario convertToEntity(BibliotecarioDTO bibliotecarioDTO) {
 
         var bibliotecario = new Bibliotecario();
@@ -214,5 +246,5 @@ public class BibliotecarioController {
 
         return bibliotecario;
     }
-    private static final Logger LOG = Logger.getLogger(BibliotecarioController.class.getName());
+
 }

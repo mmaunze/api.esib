@@ -28,31 +28,57 @@ import lombok.Data;
 @Data
 public class Livro implements Serializable {
 
+    /**
+     *
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(Livro.class.getName());
+
+    /**
+     *
+     */
     @Id
     @Basic(optional = false)
     @Column(name = "id_obra", nullable = false)
     private Long id;
 
+    /**
+     *
+     */
     @Basic(optional = false)
     @Column(nullable = false, length = 20)
     private String isbn;
 
+    /**
+     *
+     */
     @Basic(optional = false)
     @Column(nullable = false)
     private int edicao;
 
+    /**
+     *
+     */
     @Basic(optional = false)
     @Column(nullable = false)
     private int volume;
 
+    /**
+     *
+     */
     @Basic(optional = false)
     @Column(nullable = false, length = 70)
     private String editora;
 
+    /**
+     *
+     */
     @JoinColumn(name = "id_obra", referencedColumnName = "id_obra", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Obra obra;
-    private static final Logger LOG = Logger.getLogger(Livro.class.getName());
+
 
 }

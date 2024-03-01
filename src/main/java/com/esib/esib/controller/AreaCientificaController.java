@@ -1,5 +1,7 @@
 package com.esib.esib.controller;
 
+import com.esib.esib.exceptions.IllegalOrphanException;
+import com.esib.esib.exceptions.NonexistentEntityException;
 import com.esib.esib.modelo.AreaCientifica;
 import com.esib.esib.modelo.dto.AreaCientificaDTO;
 import com.esib.esib.service.AreaCientificaService;
@@ -34,6 +36,14 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class AreaCientificaController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(AreaCientificaController.class.getName());
+
+    /**
+     *
+     */
     private final AreaCientificaService areaCientificaService;
 
     /**
@@ -116,12 +126,18 @@ public class AreaCientificaController {
         try {
             areaCientificaService.delete(id);
             return noContent().build();
-        } catch (Exception e) {
+        } catch (IllegalOrphanException | NonexistentEntityException e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
+
+    /**
+     *
+     * @param areaCientifica
+     * @return
+     */
     private AreaCientificaDTO convertToDTO(AreaCientifica areaCientifica) {
 
         var areaCientificaDTO = new AreaCientificaDTO();
@@ -131,6 +147,11 @@ public class AreaCientificaController {
         return areaCientificaDTO;
     }
 
+    /**
+     *
+     * @param areaCientificaDTO
+     * @return
+     */
     private AreaCientifica convertToEntity(AreaCientificaDTO areaCientificaDTO) {
 
         var areaCientifica = new AreaCientifica();
@@ -139,5 +160,5 @@ public class AreaCientificaController {
 
         return areaCientifica;
     }
-    private static final Logger LOG = Logger.getLogger(AreaCientificaController.class.getName());
+
 }

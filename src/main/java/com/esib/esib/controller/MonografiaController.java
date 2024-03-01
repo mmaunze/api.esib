@@ -39,13 +39,39 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class MonografiaController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(MonografiaController.class.getName());
 
+    /**
+     *
+     */
     private final MonografiaService monografiaService;
+
+    /**
+     *
+     */
     private final FaculdadeService faculdadeService;
+
+    /**
+     *
+     */
     private final CursoService cursoService;
 
+    /**
+     *
+     */
     private final IdiomaService idiomaService;
+
+    /**
+     *
+     */
     private final AreaCientificaService areaCientificaService;
+
+    /**
+     *
+     */
     private final EstadoService estadoService;
 
     /**
@@ -242,6 +268,11 @@ public class MonografiaController {
         }
     }
 
+    /**
+     *
+     * @param monografia
+     * @return
+     */
     private MonografiaDTO convertToDTO(Monografia monografia) {
         var monografiaDTO = new MonografiaDTO();
 
@@ -265,6 +296,11 @@ public class MonografiaController {
         return monografiaDTO;
     }
 
+    /**
+     *
+     * @param monografiaDTO
+     * @return
+     */
     private Monografia convertToEntity(MonografiaDTO monografiaDTO) {
 
         var monografia = new Monografia();
@@ -291,5 +327,5 @@ public class MonografiaController {
                 faculdadeService.findByDescricao(monografiaDTO.getFaculdade()));
         return monografia;
     }
-    private static final Logger LOG = Logger.getLogger(MonografiaController.class.getName());
+
 }

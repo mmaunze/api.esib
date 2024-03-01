@@ -19,7 +19,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class TipoMovimentoService {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(TipoMovimentoService.class.getName());
 
+    /**
+     *
+     */
     private final TipoMovimentoRepository tipoMovimentoRepository;
 
     // CRUD methods
@@ -130,6 +137,6 @@ public class TipoMovimentoService {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findByDescricao'");
     }
-    private static final Logger LOG = Logger.getLogger(TipoMovimentoService.class.getName());
+
 
 }

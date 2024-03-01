@@ -37,11 +37,29 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class RevistaController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(RevistaController.class.getName());
 
+    /**
+     *
+     */
     private final RevistaService revistaService;
 
+    /**
+     *
+     */
     private final IdiomaService idiomaService;
+
+    /**
+     *
+     */
     private final AreaCientificaService areaCientificaService;
+
+    /**
+     *
+     */
     private final EstadoService estadoService;
 
     /**
@@ -256,6 +274,11 @@ public class RevistaController {
         }
     }
 
+    /**
+     *
+     * @param revista
+     * @return
+     */
     private RevistaDTO convertToDTO(Revista revista) {
         var revistaDTO = new RevistaDTO();
 
@@ -281,6 +304,11 @@ public class RevistaController {
         return revistaDTO;
     }
 
+    /**
+     *
+     * @param revistaDTO
+     * @return
+     */
     private Revista convertToEntity(RevistaDTO revistaDTO) {
 
         var revista = new Revista();
@@ -306,5 +334,5 @@ public class RevistaController {
 
         return revista;
     }
-    private static final Logger LOG = Logger.getLogger(RevistaController.class.getName());
+
 }

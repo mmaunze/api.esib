@@ -19,7 +19,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class TipoObraService {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(TipoObraService.class.getName());
 
+    /**
+     *
+     */
     private final TipoObraRepository tipoObraRepository;
 
     // CRUD methods
@@ -118,6 +125,6 @@ public class TipoObraService {
     public List<Obra> findObrasPorTipoObra(TipoObra tipoObra) {
         return tipoObra.getObraList();
     }
-    private static final Logger LOG = Logger.getLogger(TipoObraService.class.getName());
+
 
 }

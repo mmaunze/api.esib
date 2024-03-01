@@ -19,7 +19,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class DepartamentoService {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(DepartamentoService.class.getName());
 
+    /**
+     *
+     */
     private final DepartamentoRepository departamentoRepository;
 
     // CRUD methods
@@ -91,6 +98,6 @@ public class DepartamentoService {
     public Departamento findByDescricao(String departamento) {
         return departamentoRepository.findByDescricao(departamento);
     }
-    private static final Logger LOG = Logger.getLogger(DepartamentoService.class.getName());
+
 
 }

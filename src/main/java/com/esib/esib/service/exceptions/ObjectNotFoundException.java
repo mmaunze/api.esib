@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = NOT_FOUND)
 public class ObjectNotFoundException extends EntityNotFoundException {
 
+
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(ObjectNotFoundException.class.getName());
     /**
      *
      * @param message
@@ -19,6 +24,5 @@ public class ObjectNotFoundException extends EntityNotFoundException {
     public ObjectNotFoundException(String message) {
         super(message);
     }
-    private static final Logger LOG = Logger.getLogger(ObjectNotFoundException.class.getName());
 
 }

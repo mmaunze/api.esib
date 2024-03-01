@@ -1,7 +1,10 @@
 package com.esib.esib.config;
 
+import com.esib.esib.security.JWTAuthenticationFilter;
+import com.esib.esib.security.JWTAuthorizationFilter;
+import com.esib.esib.security.JWTUtil;
 import java.util.Arrays;
-
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,37 +22,62 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.esib.esib.security.JWTAuthenticationFilter;
-import com.esib.esib.security.JWTAuthorizationFilter;
-import com.esib.esib.security.JWTUtil;
-
+/**
+ *
+ * @author Meldo Maunze
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
-    private JWTUtil jwtUtil;
-
+    /**
+     *
+     */
     private static final String[] PUBLIC_MATCHERS = {
         "/",
     };
+    /**
+     *
+     */
     private static final String[] PUBLIC_MATCHERS_POST = {
         "/utilizadores",
         "/login"
     };
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(SecurityConfig.class.getName());
 
+    /**
+     *
+     */
+    private AuthenticationManager authenticationManager;
+
+    /**
+     *
+     */
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    /**
+     *
+     */
+    @Autowired
+    private JWTUtil jwtUtil;
+
+
+    /**
+     *
+     * @param http
+     * @return
+     * @throws Exception
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.cors().and().csrf().disable();
 
-        AuthenticationManagerBuilder authenticationManagerBuilder = http
+        var authenticationManagerBuilder = http
                 .getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(this.userDetailsService)
                 .passwordEncoder(bCryptPasswordEncoder());
@@ -70,18 +98,27 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     *
+     * @return
+     */
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
+        var configuration = new CorsConfiguration().applyPermitDefaultValues();
         configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE"));
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        final var source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 
+    /**
+     *
+     * @return
+     */
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     
 }

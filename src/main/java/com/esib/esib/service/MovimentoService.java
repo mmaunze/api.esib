@@ -21,7 +21,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class MovimentoService {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(MovimentoService.class.getName());
 
+    /**
+     *
+     */
     private final MovimentoRepository movimentoRepository;
 
     // CRUD methods
@@ -151,6 +158,6 @@ public class MovimentoService {
     public List<Movimento> findByAreaCientifica(String estado) {
         return movimentoRepository.findByAcientifica(estado);
     }
-    private static final Logger LOG = Logger.getLogger(MovimentoService.class.getName());
+
 
 }

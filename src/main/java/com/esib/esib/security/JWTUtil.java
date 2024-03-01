@@ -22,10 +22,20 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class JWTUtil {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(JWTUtil.class.getName());
 
+    /**
+     *
+     */
     @Value("${jwt.secret}")
     private String secret;
 
+    /**
+     *
+     */
     @Value("${jwt.expiration}")
     private Long expiration;
 
@@ -43,6 +53,10 @@ public class JWTUtil {
                 .compact();
     }
 
+    /**
+     *
+     * @return
+     */
     private SecretKey getKeyBySecret() {
         var key = hmacShaKeyFor(this.secret.getBytes());
         return key;
@@ -79,6 +93,11 @@ public class JWTUtil {
         return null;
     }
 
+    /**
+     *
+     * @param token
+     * @return
+     */
     private Claims getClaims(String token) {
         var key = getKeyBySecret();
         try {
@@ -87,6 +106,6 @@ public class JWTUtil {
             return null;
         }
     }
-    private static final Logger LOG = Logger.getLogger(JWTUtil.class.getName());
+
 
 }

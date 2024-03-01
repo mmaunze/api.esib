@@ -30,21 +30,41 @@ import lombok.Data;
 @Data
 public class Departamento implements Serializable {
 
+    /**
+     *
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(Departamento.class.getName());
+
+    /**
+     *
+     */
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_departamento", nullable = false)
     private Long id;
 
+    /**
+     *
+     */
     @Basic(optional = false)
     @Column(name = "descricao", nullable = false, length = 255)
     private String descricao;
 
+    /**
+     *
+     */
     @Column(name = "sigla", length = 10)
     private String sigla;
 
+    /**
+     *
+     */
     @OneToMany(cascade = ALL, mappedBy = "departamento", fetch = LAZY)
     private List<Utilizador> utilizadorList;
-    private static final Logger LOG = Logger.getLogger(Departamento.class.getName());
+
 }

@@ -29,17 +29,34 @@ import lombok.Data;
 @Data
 public class TipoMovimento implements Serializable {
 
+    /**
+     *
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(TipoMovimento.class.getName());
+
+    /**
+     *
+     */
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_tipo_movimento", nullable = false)
     private Long id;
 
+    /**
+     *
+     */
     @Basic(optional = false)
     @Column(nullable = false, length = 100)
     private String descricao;
 
+    /**
+     *
+     */
     @OneToMany(cascade = ALL, mappedBy = "tipoMovimento", fetch = LAZY)
     private List<Movimento> movimentoList;
 
@@ -51,6 +68,6 @@ public class TipoMovimento implements Serializable {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getPermiteEmprestimo'");
     }
-    private static final Logger LOG = Logger.getLogger(TipoMovimento.class.getName());
+
 
 }

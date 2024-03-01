@@ -21,7 +21,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class FaculdadeService {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(FaculdadeService.class.getName());
 
+    /**
+     *
+     */
     private final FaculdadeRepository faculdadeRepository;
 
     // CRUD methods
@@ -121,5 +128,5 @@ public class FaculdadeService {
     public Faculdade findByDescricao(String faculdade) {
         return faculdadeRepository.findByDescricao(faculdade);
     }
-    private static final Logger LOG = Logger.getLogger(FaculdadeService.class.getName());
+
 }

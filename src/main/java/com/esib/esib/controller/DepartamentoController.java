@@ -34,6 +34,14 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class DepartamentoController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(DepartamentoController.class.getName());
+
+    /**
+     *
+     */
     private final DepartamentoService departamentoService;
 
     /**
@@ -122,6 +130,12 @@ public class DepartamentoController {
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
+
+    /**
+     *
+     * @param departamento
+     * @return
+     */
     private DepartamentoDTO convertToDTO(Departamento departamento) {
 
         var departamentoDTO = new DepartamentoDTO();
@@ -133,6 +147,11 @@ public class DepartamentoController {
         return departamentoDTO;
     }
 
+    /**
+     *
+     * @param departamentoDTO
+     * @return
+     */
     private Departamento convertToEntity(DepartamentoDTO departamentoDTO) {
 
         var departamento = new Departamento();
@@ -142,5 +161,5 @@ public class DepartamentoController {
 
         return departamento;
     }
-    private static final Logger LOG = Logger.getLogger(DepartamentoController.class.getName());
+
 }

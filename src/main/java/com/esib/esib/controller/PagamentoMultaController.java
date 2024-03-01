@@ -38,8 +38,24 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class PagamentoMultaController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(PagamentoMultaController.class.getName());
+
+    /**
+     *
+     */
     private final PagamentoMultaService pagamentoPagamentoMultaService;
+
+    /**
+     *
+     */
     private final BibliotecarioService bibliotecarioService;
+
+    /**
+     *
+     */
     private final MultaService multaService;
 
     /**
@@ -128,6 +144,12 @@ public class PagamentoMultaController {
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
+
+    /**
+     *
+     * @param pagamento
+     * @return
+     */
     private PagamentoMultaDTO convertToDTO(PagamentoMulta pagamento) {
 
         var pagamentoDTO = new PagamentoMultaDTO();
@@ -141,6 +163,11 @@ public class PagamentoMultaController {
         return pagamentoDTO;
     }
 
+    /**
+     *
+     * @param pagamentoDTO
+     * @return
+     */
     private PagamentoMulta convertToEntity(PagamentoMultaDTO pagamentoDTO) {
 
         Optional<Multa> optionalMulta = multaService.findById(pagamentoDTO.getMulta());
@@ -159,5 +186,5 @@ public class PagamentoMultaController {
 
         return pagamento;
     }
-    private static final Logger LOG = Logger.getLogger(PagamentoMultaController.class.getName());
+
 }

@@ -10,7 +10,19 @@ import lombok.Data;
 @Data
 
 public class TipoMovimentoDTO {
-    private Long id;
-    private String descricao;
+    /**
+     *
+     */
     private static final Logger LOG = Logger.getLogger(TipoMovimentoDTO.class.getName());
+
+    /**
+     *
+     */
+    private Long id;
+
+    /**
+     *
+     */
+    private String descricao;
+
 }

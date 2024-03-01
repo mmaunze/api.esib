@@ -27,30 +27,56 @@ import lombok.Data;
 @Data
 public class Monografia implements Serializable {
 
+    /**
+     *
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(Monografia.class.getName());
+
+    /**
+     *
+     */
     @Id
     @Basic(optional = false)
     @Column(name = "id_obra", nullable = false)
     private Long id;
 
+    /**
+     *
+     */
     @Basic(optional = false)
     @Column(nullable = false, length = 70)
     private String supervisor;
 
+    /**
+     *
+     */
     @Column(name = "co_supervisor", length = 70)
     private String coSupervisor;
 
+    /**
+     *
+     */
     @JoinColumn(name = "id_curso", referencedColumnName = "id_curso", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Curso curso;
 
+    /**
+     *
+     */
     @JoinColumn(name = "id_faculdade", referencedColumnName = "id_faculdade", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Faculdade faculdade;
 
+    /**
+     *
+     */
     @JoinColumn(name = "id_obra", referencedColumnName = "id_obra", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Obra obra;
-    private static final Logger LOG = Logger.getLogger(Monografia.class.getName());
+
 
 }

@@ -38,10 +38,29 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class EmprestimoController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(EmprestimoController.class.getName());
 
+    /**
+     *
+     */
     private final EmprestimoService emprestimoService;
+
+    /**
+     *
+     */
     private final UtilizadorService utilizadorService;
+
+    /**
+     *
+     */
     private final BibliotecarioService bibliotecarioService;
+
+    /**
+     *
+     */
     private final EstadoService estadoService;
 
     /**
@@ -256,6 +275,11 @@ public class EmprestimoController {
         }
     }
 
+    /**
+     *
+     * @param emprestimo
+     * @return
+     */
     private EmprestimoDTO convertToDTO(Emprestimo emprestimo) {
 
         var listaAutores = new ArrayList<String>();
@@ -289,6 +313,11 @@ public class EmprestimoController {
         return emprestimoDTO;
     }
 
+    /**
+     *
+     * @param emprestimoDTO
+     * @return
+     */
     private Emprestimo convertToEntity(EmprestimoDTO emprestimoDTO) {
         var emprestimo = new Emprestimo();
         emprestimo.setId(emprestimoDTO.getId());
@@ -303,5 +332,5 @@ public class EmprestimoController {
 
         return emprestimo;
     }
-    private static final Logger LOG = Logger.getLogger(EmprestimoController.class.getName());
+
 }

@@ -71,6 +71,11 @@ public interface LivroRepository extends JpaRepository<Livro, Long> {
     @Query(" SELECT l from Livro l where l.isbn =: isbn")
     Optional<Livro> findByIsbn(@Param("isbn") String isbn);
 
+    /**
+     *
+     * @param isbn
+     * @return
+     */
     @Query(" SELECT l from Livro l where l.isbn =: isbn")
     boolean existsByIsbn(@Param("isbn") String isbn);
 

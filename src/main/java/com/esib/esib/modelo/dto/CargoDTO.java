@@ -11,7 +11,19 @@ import lombok.Data;
 @Data
 
 public class CargoDTO {
-    private Long id;
-    private String descricao;
+    /**
+     *
+     */
     private static final Logger LOG = Logger.getLogger(CargoDTO.class.getName());
+
+    /**
+     *
+     */
+    private Long id;
+
+    /**
+     *
+     */
+    private String descricao;
+
 }

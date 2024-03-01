@@ -38,11 +38,34 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class ObraController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(ObraController.class.getName());
 
+    /**
+     *
+     */
     private final ObraService obraService;
+
+    /**
+     *
+     */
     private final IdiomaService idiomaService;
+
+    /**
+     *
+     */
     private final TipoObraService tipoObraService;
+
+    /**
+     *
+     */
     private final AreaCientificaService areaCientificaService;
+
+    /**
+     *
+     */
     private final EstadoService estadoService;
 
     /**
@@ -185,6 +208,11 @@ public class ObraController {
         }
     }
 
+    /**
+     *
+     * @param obra
+     * @return
+     */
     private ObraDTO convertToDTO(Obra obra) {
         var obraDTO = new ObraDTO();
         obraDTO.setId(obra.getId());
@@ -202,6 +230,11 @@ public class ObraController {
         return obraDTO;
     }
 
+    /**
+     *
+     * @param obraDTO
+     * @return
+     */
     private Obra convertToEntity(ObraDTO obraDTO) {
 
         var obra = new Obra();
@@ -219,5 +252,5 @@ public class ObraController {
 
         return obra;
     }
-    private static final Logger LOG = Logger.getLogger(ObraController.class.getName());
+
 }

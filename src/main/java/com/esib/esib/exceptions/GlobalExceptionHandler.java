@@ -1,22 +1,23 @@
 package com.esib.esib.exceptions;
 
-import static org.apache.commons.lang3.exception.ExceptionUtils.*;
-import static org.springframework.http.HttpStatus.*;
-import static org.springframework.http.ResponseEntity.*;
-
+import com.esib.esib.service.exceptions.AuthorizationException;
+import com.esib.esib.service.exceptions.DataBindingViolationException;
+import com.esib.esib.service.exceptions.ObjectNotFoundException;
 import java.io.IOException;
 import java.util.logging.Logger;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
-
+import lombok.extern.slf4j.Slf4j;
+import static org.apache.commons.lang3.exception.ExceptionUtils.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import static org.springframework.http.HttpStatus.*;
 import org.springframework.http.ResponseEntity;
+import static org.springframework.http.ResponseEntity.*;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -27,12 +28,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.esib.esib.service.exceptions.AuthorizationException;
-import com.esib.esib.service.exceptions.DataBindingViolationException;
-import com.esib.esib.service.exceptions.ObjectNotFoundException;
-
-import lombok.extern.slf4j.Slf4j;
-
 /**
  *
  * @author Meldo Maunze
@@ -40,7 +35,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j(topic = "GLOBAL_EXCEPTION_HANDLER")
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler implements AuthenticationFailureHandler {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(GlobalExceptionHandler.class.getName());
 
+    /**
+     *
+     */
     @Value("${server.error.include-exception}")
     private boolean printStackTrace;
 
@@ -200,6 +202,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler imple
                 request);
     }
 
+    /**
+     *
+     * @param exception
+     * @param httpStatus
+     * @param request
+     * @return
+     */
     private ResponseEntity<Object> buildErrorResponse(
             Exception exception,
             HttpStatus httpStatus,
@@ -207,6 +216,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler imple
         return buildErrorResponse(exception, exception.getMessage(), httpStatus, request);
     }
 
+    /**
+     *
+     * @param exception
+     * @param message
+     * @param httpStatus
+     * @param request
+     * @return
+     */
     private ResponseEntity<Object> buildErrorResponse(
             Exception exception,
             String message,
@@ -236,6 +253,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler imple
         ErrorResponse errorResponse = new ErrorResponse(status, "Username or password are invalid");
         response.getWriter().append(errorResponse.toJson());
     }
-    private static final Logger LOG = Logger.getLogger(GlobalExceptionHandler.class.getName());
+
 
 }

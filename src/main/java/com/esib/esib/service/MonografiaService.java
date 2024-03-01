@@ -19,7 +19,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class MonografiaService {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(MonografiaService.class.getName());
 
+    /**
+     *
+     */
     private final MonografiaRepository monografiaRepository;
 
     // CRUD methods
@@ -165,6 +172,6 @@ public class MonografiaService {
     public List<Monografia> findBySupervisor(String supervisor) {
         return monografiaRepository.findBySupervisor(supervisor);
     }
-    private static final Logger LOG = Logger.getLogger(MonografiaService.class.getName());
+
 
 }

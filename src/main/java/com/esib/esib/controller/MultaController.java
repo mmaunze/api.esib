@@ -35,7 +35,19 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class MultaController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(MultaController.class.getName());
+
+    /**
+     *
+     */
     private final MultaService multaService;
+
+    /**
+     *
+     */
     private final EstadoService estadoService;
 
     /**
@@ -142,6 +154,12 @@ public class MultaController {
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
+
+    /**
+     *
+     * @param multa
+     * @return
+     */
     private MultaDTO convertToDTO(Multa multa) {
 
         var multaDTO = new MultaDTO();
@@ -153,6 +171,11 @@ public class MultaController {
         return multaDTO;
     }
 
+    /**
+     *
+     * @param multaDTO
+     * @return
+     */
     private Multa convertToEntity(MultaDTO multaDTO) {
 
         var multa = new Multa();
@@ -163,5 +186,5 @@ public class MultaController {
 
         return multa;
     }
-    private static final Logger LOG = Logger.getLogger(MultaController.class.getName());
+
 }

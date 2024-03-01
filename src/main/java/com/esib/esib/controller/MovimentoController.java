@@ -38,11 +38,34 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class MovimentoController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(MovimentoController.class.getName());
 
+    /**
+     *
+     */
     private final MovimentoService movimentoService;
+
+    /**
+     *
+     */
     private final TipoMovimentoService tipoMovimentoService;
+
+    /**
+     *
+     */
     private final BibliotecarioService bibliotecarioService;
+
+    /**
+     *
+     */
     private final UtilizadorService utilizadorService;
+
+    /**
+     *
+     */
     private final ObraService obraService;
 
     /**
@@ -239,6 +262,11 @@ public class MovimentoController {
         }
     }
 
+    /**
+     *
+     * @param movimento
+     * @return
+     */
     private MovimentoDTO convertToDTO(Movimento movimento) {
 
         var movimentoDTO = new MovimentoDTO();
@@ -259,6 +287,11 @@ public class MovimentoController {
         return movimentoDTO;
     }
 
+    /**
+     *
+     * @param movimentoDTO
+     * @return
+     */
     private Movimento convertToEntity(MovimentoDTO movimentoDTO) {
         var movimento = new Movimento();
 
@@ -272,5 +305,5 @@ public class MovimentoController {
 
         return movimento;
     }
-    private static final Logger LOG = Logger.getLogger(MovimentoController.class.getName());
+
 }

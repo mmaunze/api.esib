@@ -37,10 +37,29 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class LivroController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(LivroController.class.getName());
 
+    /**
+     *
+     */
     private final LivroService livroService;
+
+    /**
+     *
+     */
     private final IdiomaService idiomaService;
+
+    /**
+     *
+     */
     private final AreaCientificaService areaCientificaService;
+
+    /**
+     *
+     */
     private final EstadoService estadoService;
 
     /**
@@ -237,6 +256,11 @@ public class LivroController {
         }
     }
 
+    /**
+     *
+     * @param livro
+     * @return
+     */
     private LivroDTO convertToDTO(Livro livro) {
         var livroDTO = new LivroDTO();
 
@@ -261,6 +285,11 @@ public class LivroController {
         return livroDTO;
     }
 
+    /**
+     *
+     * @param livroDTO
+     * @return
+     */
     private Livro convertToEntity(LivroDTO livroDTO) {
 
         var livro = new Livro();
@@ -285,5 +314,5 @@ public class LivroController {
 
         return livro;
     }
-    private static final Logger LOG = Logger.getLogger(LivroController.class.getName());
+
 }

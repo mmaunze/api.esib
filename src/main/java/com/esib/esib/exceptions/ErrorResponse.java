@@ -20,9 +20,29 @@ import lombok.Setter;
 
 @JsonInclude(NON_NULL)
 public class ErrorResponse {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(ErrorResponse.class.getName());
+
+    /**
+     *
+     */
     private final int status;
+
+    /**
+     *
+     */
     private final String message;
+
+    /**
+     *
+     */
     private String stackTrace;
+
+    /**
+     *
+     */
     private List<ValidationError> errors;
 
     /**
@@ -45,13 +65,25 @@ public class ErrorResponse {
         return "{\"status\": " + getStatus() + ", " +
                 "\"message\": \"" + getMessage() + "\"}";
     }
+
+    /**
+     *
+     */
     @Getter
     @Setter
     @RequiredArgsConstructor
     private static class ValidationError {
+
+        /**
+         *
+         */
         private final String field;
+
+        /**
+         *
+         */
         private final String message;
     }
-    private static final Logger LOG = Logger.getLogger(ErrorResponse.class.getName());
+
 
 }

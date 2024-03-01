@@ -31,29 +31,52 @@ import lombok.Data;
 @Data
 public class Reserva implements Serializable {
 
+    /**
+     *
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(Reserva.class.getName());
+
+    /**
+     *
+     */
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_reserva", nullable = false)
     private Long id;
 
+    /**
+     *
+     */
     @Basic(optional = false)
     @Column(name = "data_reserva", nullable = false)
     @Temporal(TIMESTAMP)
     private Date dataReserva;
 
+    /**
+     *
+     */
     @JoinColumn(name = "id_estado", referencedColumnName = "id_estado", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Estado estado;
 
+    /**
+     *
+     */
     @JoinColumn(name = "id_obra", referencedColumnName = "id_obra", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Obra obra;
 
+    /**
+     *
+     */
     @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Utilizador utilizador;
-    private static final Logger LOG = Logger.getLogger(Reserva.class.getName());
+
 
 }

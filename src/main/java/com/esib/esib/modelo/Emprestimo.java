@@ -32,46 +32,84 @@ import lombok.Data;
 @Data
 public class Emprestimo implements Serializable {
 
+    /**
+     *
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(Emprestimo.class.getName());
+
+    /**
+     *
+     */
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_emprestimo", nullable = false)
     private Long id;
 
+    /**
+     *
+     */
     @Basic(optional = false)
     @Column(name = "data_emprestimo", nullable = false)
     @Temporal(TIMESTAMP)
     private Date dataEmprestimo;
 
+    /**
+     *
+     */
     @Basic(optional = false)
     @Column(name = "data_para_devolucao", nullable = false)
     @Temporal(TIMESTAMP)
     private Date dataParaDevolucao;
 
+    /**
+     *
+     */
     @Basic(optional = false)
     @Column(nullable = false)
     private int atraso;
 
+    /**
+     *
+     */
     @JoinColumn(name = "id_bibliotecario", referencedColumnName = "id_bibliotecario", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Bibliotecario bibliotecario;
 
+    /**
+     *
+     */
     @JoinColumn(name = "id_estado", referencedColumnName = "id_estado", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Estado estado;
 
+    /**
+     *
+     */
     @JoinColumn(name = "id_obra", referencedColumnName = "id_obra", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Obra obra;
 
+    /**
+     *
+     */
     @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Utilizador utilizador;
 
+    /**
+     *
+     */
     @OneToMany(cascade = ALL, mappedBy = "emprestimo", fetch = LAZY)
     private List<Multa> multaList;
 
+    /**
+     *
+     */
     @OneToMany(cascade = ALL, mappedBy = "emprestimo", fetch = LAZY)
     private List<Devolucao> devolucaoList;
 
@@ -94,6 +132,6 @@ public class Emprestimo implements Serializable {
             this.estado.setDisponivel();
         }
     }
-    private static final Logger LOG = Logger.getLogger(Emprestimo.class.getName());
+
 
 }

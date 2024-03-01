@@ -21,7 +21,23 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class ReservaService {
+    // Additional methods
+    /*
+    * public boolean verificarDisponibilidadeObra(Obra obra) {
+    * return reservaRepository.findByObraAndIdEstado(obra, new
+    * Estado().isAciva()).isEmpty(); // Estado da reserva = Ativa
+    * }
+    */
+    
+    /**
+     *
+     */
+    
+    private static final Logger LOG = Logger.getLogger(ReservaService.class.getName());
 
+    /**
+     *
+     */
     private final ReservaRepository reservaRepository;
 
     // CRUD methods
@@ -199,12 +215,4 @@ public class ReservaService {
         return reservaRepository.findByAcientifica(estado);
     }
 
-    // Additional methods
-    /*
-     * public boolean verificarDisponibilidadeObra(Obra obra) {
-     * return reservaRepository.findByObraAndIdEstado(obra, new
-     * Estado().isAciva()).isEmpty(); // Estado da reserva = Ativa
-     * }
-     */
-    private static final Logger LOG = Logger.getLogger(ReservaService.class.getName());
 }

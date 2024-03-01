@@ -10,9 +10,25 @@ import lombok.Data;
 @Data
 
 public class CursoDTO {
-    private Long id;
-    private String descricao;
-    private String faculdade;
+    /**
+     *
+     */
     private static final Logger LOG = Logger.getLogger(CursoDTO.class.getName());
+
+    /**
+     *
+     */
+    private Long id;
+
+    /**
+     *
+     */
+    private String descricao;
+
+    /**
+     *
+     */
+    private String faculdade;
+
 
 }

@@ -19,7 +19,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class IdiomaService {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(IdiomaService.class.getName());
 
+    /**
+     *
+     */
     private final IdiomaRepository idiomaRepository;
 
     // CRUD methods
@@ -107,6 +114,6 @@ public class IdiomaService {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findByDescricao'");
     }
-    private static final Logger LOG = Logger.getLogger(IdiomaService.class.getName());
+
 
 }

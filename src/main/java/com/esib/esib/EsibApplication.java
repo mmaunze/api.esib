@@ -11,13 +11,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class EsibApplication {
 
+
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(EsibApplication.class.getName());
     /**
      *
      * @param args
      */
     public static void main(String[] args) {
-		run(EsibApplication.class, args);
-	}
-    private static final Logger LOG = Logger.getLogger(EsibApplication.class.getName());
+        run(EsibApplication.class, args);
+    }
 
 }

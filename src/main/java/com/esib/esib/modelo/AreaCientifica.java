@@ -29,25 +29,48 @@ import lombok.Data;
 @XmlRootElement
 public class AreaCientifica implements Serializable {
 
+    /**
+     *
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(AreaCientifica.class.getName());
+
+    /**
+     *
+     */
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_area", nullable = false)
     private Long id;
 
+    /**
+     *
+     */
     @Basic(optional = false)
     @Column(name = "descricao", nullable = false, length = 255)
     private String descricao;
 
+    /**
+     *
+     */
     @OneToMany(cascade = ALL, mappedBy = "areaCientifica", fetch = LAZY)
     private List<Obra> obraList;
 
+    /**
+     *
+     */
     @OneToMany(cascade = ALL, mappedBy = "areaCientifica", fetch = LAZY)
     private List<Curso> cursoList;
 
+    /**
+     *
+     */
     @OneToMany(cascade = ALL, mappedBy = "areaCientifica", fetch = LAZY)
     private List<Utilizador> utilizadorList;
-    private static final Logger LOG = Logger.getLogger(AreaCientifica.class.getName());
+
 
 }

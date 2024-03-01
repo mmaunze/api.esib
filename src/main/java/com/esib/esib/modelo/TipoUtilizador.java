@@ -30,18 +30,35 @@ import lombok.Data;
 
 public class TipoUtilizador implements Serializable {
 
+    /**
+     *
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(TipoUtilizador.class.getName());
+
+    /**
+     *
+     */
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_tipo_utilizador", nullable = false)
     private Long id;
 
+    /**
+     *
+     */
     @Column(length = 100)
     private String descricao;
 
+    /**
+     *
+     */
     @OneToMany(cascade = ALL, mappedBy = "tipoUtilizador", fetch = LAZY)
     private List<Utilizador> utilizadorList;
-    private static final Logger LOG = Logger.getLogger(TipoUtilizador.class.getName());
+
 
 }

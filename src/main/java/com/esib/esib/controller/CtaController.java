@@ -36,10 +36,29 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequestMapping("/ctas")
 @RequiredArgsConstructor
 public class CtaController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(CtaController.class.getName());
 
+    /**
+     *
+     */
     private final CtaService ctaService;
+
+    /**
+     *
+     */
     private final DepartamentoService departamentoService;
+
+    /**
+     *
+     */
     private final CargoService cargoService;
+
+    /**
+     *
+     */
     private final AreaCientificaService areaCientificaService;
 
     /**
@@ -180,6 +199,13 @@ public class CtaController {
      * Métodos auxiliares para conversão entre Entidade e DTO
      */
 
+    /**
+     *
+     * @param cta
+     * @return
+     */
+
+
     private CtaDTO convertToDTO(Cta cta) {
 
         var ctaDTO = new CtaDTO();
@@ -197,6 +223,11 @@ public class CtaController {
         return ctaDTO;
     }
 
+    /**
+     *
+     * @param ctaDTO
+     * @return
+     */
     private Cta convertToEntity(CtaDTO ctaDTO) {
 
         var cta = new Cta();
@@ -214,5 +245,5 @@ public class CtaController {
 
         return cta;
     }
-    private static final Logger LOG = Logger.getLogger(CtaController.class.getName());
+
 }

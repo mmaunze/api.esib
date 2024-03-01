@@ -36,9 +36,24 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class ReservaController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(ReservaController.class.getName());
 
+    /**
+     *
+     */
     private final ReservaService reservaService;
+
+    /**
+     *
+     */
     private final UtilizadorService utilizadorService;
+
+    /**
+     *
+     */
     private final EstadoService estadoService;
 
     /**
@@ -217,6 +232,11 @@ public class ReservaController {
         }
     }
 
+    /**
+     *
+     * @param reserva
+     * @return
+     */
     private ReservaDTO convertToDTO(Reserva reserva) {
 
         var reservaDTO = new ReservaDTO();
@@ -234,6 +254,11 @@ public class ReservaController {
         return reservaDTO;
     }
 
+    /**
+     *
+     * @param reservaDTO
+     * @return
+     */
     private Reserva convertToEntity(ReservaDTO reservaDTO) {
         var reserva = new Reserva();
         reserva.setId(reservaDTO.getId());
@@ -247,5 +272,5 @@ public class ReservaController {
 
         return reserva;
     }
-    private static final Logger LOG = Logger.getLogger(ReservaController.class.getName());
+
 }

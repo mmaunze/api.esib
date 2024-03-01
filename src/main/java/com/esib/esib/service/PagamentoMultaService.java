@@ -20,7 +20,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class PagamentoMultaService {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(PagamentoMultaService.class.getName());
 
+    /**
+     *
+     */
     private final PagamentoMultaRepository pagamentoMultaRepository;
 
     // CRUD methods
@@ -159,6 +166,6 @@ public class PagamentoMultaService {
     public Bibliotecario findBibliotecarioPorPagamentoMulta(PagamentoMulta pagamentoMulta) {
         return pagamentoMulta.getBibliotecario();
     }
-    private static final Logger LOG = Logger.getLogger(PagamentoMultaService.class.getName());
+
 
 }

@@ -1,15 +1,5 @@
 package com.esib.esib.service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.esib.esib.modelo.AreaCientifica;
 import com.esib.esib.modelo.Departamento;
 import com.esib.esib.modelo.Emprestimo;
@@ -18,9 +8,16 @@ import com.esib.esib.modelo.TipoUtilizador;
 import com.esib.esib.modelo.Utilizador;
 import com.esib.esib.modelo.enums.ProfileEnum;
 import com.esib.esib.repository.UtilizadorRepository;
-
+import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -30,9 +27,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Data
 public class UtilizadorService {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(UtilizadorService.class.getName());
 
+    /**
+     *
+     */
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    /**
+     *
+     */
     private final UtilizadorRepository utilizadorRepository;
 
     /**
@@ -199,6 +206,6 @@ public class UtilizadorService {
         return utilizadorRepository.findByTipoUtilizador(tipoutilizador);
 
     }
-    private static final Logger LOG = Logger.getLogger(UtilizadorService.class.getName());
+
 
 }

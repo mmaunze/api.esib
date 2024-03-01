@@ -34,6 +34,14 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class FaculdadeController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(FaculdadeController.class.getName());
+
+    /**
+     *
+     */
     private final FaculdadeService faculdadeService;
 
     /**
@@ -122,6 +130,12 @@ public class FaculdadeController {
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
+
+    /**
+     *
+     * @param faculdade
+     * @return
+     */
     private FaculdadeDTO convertToDTO(Faculdade faculdade) {
 
         var faculdadeDTO = new FaculdadeDTO();
@@ -133,6 +147,11 @@ public class FaculdadeController {
         return faculdadeDTO;
     }
 
+    /**
+     *
+     * @param faculdadeDTO
+     * @return
+     */
     private Faculdade convertToEntity(FaculdadeDTO faculdadeDTO) {
 
         var faculdade = new Faculdade();
@@ -142,5 +161,5 @@ public class FaculdadeController {
 
         return faculdade;
     }
-    private static final Logger LOG = Logger.getLogger(FaculdadeController.class.getName());
+
 }

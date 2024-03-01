@@ -29,26 +29,52 @@ import lombok.Data;
 @Data
 public class Estado implements Serializable {
 
+    /**
+     *
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(Estado.class.getName());
+
+    /**
+     *
+     */
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_estado", nullable = false)
     private Long id;
 
+    /**
+     *
+     */
     @Basic(optional = false)
     @Column(nullable = false, length = 100)
     private String descricao;
 
+    /**
+     *
+     */
     @OneToMany(cascade = ALL, mappedBy = "estado", fetch = LAZY)
     private List<Emprestimo> emprestimoList;
 
+    /**
+     *
+     */
     @OneToMany(cascade = ALL, mappedBy = "estado", fetch = LAZY)
     private List<Multa> multaList;
 
+    /**
+     *
+     */
     @OneToMany(cascade = ALL, mappedBy = "estado", fetch = LAZY)
     private List<Obra> obraList;
 
+    /**
+     *
+     */
     @OneToMany(cascade = ALL, mappedBy = "estado", fetch = LAZY)
     private List<Reserva> reservaList;
 
@@ -81,6 +107,6 @@ public class Estado implements Serializable {
         this.setDescricao("disponivel");
 
     }
-    private static final Logger LOG = Logger.getLogger(Estado.class.getName());
+
 
 }

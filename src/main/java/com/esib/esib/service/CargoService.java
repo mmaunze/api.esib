@@ -18,7 +18,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class CargoService {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(CargoService.class.getName());
 
+    /**
+     *
+     */
     private final CargoRepository cargoRepository;
 
     // CRUD methods
@@ -82,6 +89,6 @@ public class CargoService {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findByDescricao'");
     }
-    private static final Logger LOG = Logger.getLogger(CargoService.class.getName());
+
 
 }

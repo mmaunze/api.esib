@@ -35,7 +35,19 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class CursoController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(CursoController.class.getName());
+
+    /**
+     *
+     */
     private final CursoService cursoService;
+
+    /**
+     *
+     */
     private final FaculdadeService faculdadeService;
 
     /**
@@ -124,6 +136,12 @@ public class CursoController {
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
+
+    /**
+     *
+     * @param curso
+     * @return
+     */
     private CursoDTO convertToDTO(Curso curso) {
 
         var cursoDTO = new CursoDTO();
@@ -134,6 +152,11 @@ public class CursoController {
         return cursoDTO;
     }
 
+    /**
+     *
+     * @param cursoDTO
+     * @return
+     */
     private Curso convertToEntity(CursoDTO cursoDTO) {
 
         var curso = new Curso();
@@ -143,5 +166,5 @@ public class CursoController {
 
         return curso;
     }
-    private static final Logger LOG = Logger.getLogger(CursoController.class.getName());
+
 }

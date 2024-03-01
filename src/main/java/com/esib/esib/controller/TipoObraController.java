@@ -34,6 +34,14 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class TipoObraController {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(TipoObraController.class.getName());
+
+    /**
+     *
+     */
     private final TipoObraService tipoObraService;
 
     /**
@@ -122,6 +130,12 @@ public class TipoObraController {
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
+
+    /**
+     *
+     * @param tipoObra
+     * @return
+     */
     private TipoObraDTO convertToDTO(TipoObra tipoObra) {
 
         var tipoObraDTO = new TipoObraDTO();
@@ -131,6 +145,11 @@ public class TipoObraController {
         return tipoObraDTO;
     }
 
+    /**
+     *
+     * @param tipoObraDTO
+     * @return
+     */
     private TipoObra convertToEntity(TipoObraDTO tipoObraDTO) {
 
         var tipoObra = new TipoObra();
@@ -139,5 +158,5 @@ public class TipoObraController {
 
         return tipoObra;
     }
-    private static final Logger LOG = Logger.getLogger(TipoObraController.class.getName());
+
 }

@@ -26,7 +26,16 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class ObraService {
+    // Methods related
+    
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(ObraService.class.getName());
 
+    /**
+     *
+     */
     private final ObraRepository obraRepository;
 
     // CRUD methods
@@ -141,6 +150,4 @@ public class ObraService {
         return obraRepository.findByTitulo(titulo);
     }
 
-    // Methods related
-    private static final Logger LOG = Logger.getLogger(ObraService.class.getName());
 }

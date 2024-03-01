@@ -31,26 +31,50 @@ import lombok.Data;
 @Data
 public class Devolucao implements Serializable {
 
+    /**
+     *
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(Devolucao.class.getName());
+
+    /**
+     *
+     */
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_devolucao", nullable = false)
     private Long id;
 
+    /**
+     *
+     */
     @Basic(optional = false)
     @Column(name = "data_devolucao", nullable = false)
     @Temporal(TIMESTAMP)
     private Date dataDevolucao;
 
+    /**
+     *
+     */
     private Long atraso;
+
+    /**
+     *
+     */
     @JoinColumn(name = "id_bibliotecario", referencedColumnName = "id_bibliotecario", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Bibliotecario bibliotecario;
 
+    /**
+     *
+     */
     @JoinColumn(name = "id_emprestimo", referencedColumnName = "id_emprestimo", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Emprestimo emprestimo;
-    private static final Logger LOG = Logger.getLogger(Devolucao.class.getName());
+
 
 }

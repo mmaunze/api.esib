@@ -31,28 +31,51 @@ import lombok.Data;
 @Data
 public class PagamentoMulta implements Serializable {
 
+    /**
+     *
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(PagamentoMulta.class.getName());
+
+    /**
+     *
+     */
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_pagamento", nullable = false)
     private Long id;
 
+    /**
+     *
+     */
     @Basic(optional = false)
     @Column(name = "valor_pago", nullable = false)
     private double valorPago;
 
+    /**
+     *
+     */
     @Column(name = "data_pagamento")
     @Temporal(TIMESTAMP)
     private Date dataPagamento;
 
+    /**
+     *
+     */
     @JoinColumn(name = "id_bibliotecario", referencedColumnName = "id_bibliotecario", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Bibliotecario bibliotecario;
 
+    /**
+     *
+     */
     @JoinColumn(name = "id_multa", referencedColumnName = "id_multa", nullable = false)
     @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Multa multa;
-    private static final Logger LOG = Logger.getLogger(PagamentoMulta.class.getName());
+
 
 }

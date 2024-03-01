@@ -1,25 +1,21 @@
 package com.esib.esib.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.logging.Logger;
-
-import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
-
-import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Service;
-
 import com.esib.esib.exceptions.IllegalOrphanException;
 import com.esib.esib.exceptions.NonexistentEntityException;
 import com.esib.esib.modelo.AreaCientifica;
 import com.esib.esib.modelo.Obra;
 import com.esib.esib.modelo.Utilizador;
 import com.esib.esib.repository.AreaCientificaRepository;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Service;
 
 /**
  *
@@ -29,7 +25,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Data
 public class AreaCientificaService {
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(AreaCientificaService.class.getName());
 
+    /**
+     *
+     */
     private final AreaCientificaRepository areaCientificaRepository;
 
     // CRUD methods
@@ -83,6 +86,7 @@ public class AreaCientificaService {
     @Transactional
     public AreaCientifica update(Long id, AreaCientifica areaCientifica) {
         var newAreaCientifica = new AreaCientifica();
+        
         areaCientifica.setId(id);
         newAreaCientifica.setId(id);
         newAreaCientifica.setDescricao(areaCientifica.getDescricao());
@@ -92,6 +96,8 @@ public class AreaCientificaService {
     /**
      *
      * @param id
+     * @throws com.esib.esib.exceptions.IllegalOrphanException
+     * @throws com.esib.esib.exceptions.NonexistentEntityException
      */
     @Transactional
     public void delete(Long id) throws IllegalOrphanException, NonexistentEntityException {
@@ -112,7 +118,7 @@ public class AreaCientificaService {
         }
 
         if (obraListOrphanCheck != null) {
-            for (Obra obraListOrphanCheckObra : obraListOrphanCheck) {
+            for (var obraListOrphanCheckObra : obraListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<>();
                 }
@@ -124,7 +130,7 @@ public class AreaCientificaService {
             utilizadorListOrphanCheck = areaCientifica.get().getUtilizadorList();
         }
         if (utilizadorListOrphanCheck != null) {
-            for (Utilizador utilizadorListOrphanCheckUtilizador : utilizadorListOrphanCheck) {
+            for (var utilizadorListOrphanCheckUtilizador : utilizadorListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<>();
                 }
@@ -146,6 +152,6 @@ public class AreaCientificaService {
     public AreaCientifica findByDescricao(String descricao) {
         return areaCientificaRepository.findByDescricao(descricao);
     }
-    private static final Logger LOG = Logger.getLogger(AreaCientificaService.class.getName());
+
 
 }

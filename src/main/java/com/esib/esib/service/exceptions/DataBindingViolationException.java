@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = NOT_FOUND)
 public class DataBindingViolationException extends DataIntegrityViolationException {
 
+
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(DataBindingViolationException.class.getName());
     /**
      *
      * @param message
@@ -19,6 +24,5 @@ public class DataBindingViolationException extends DataIntegrityViolationExcepti
     public DataBindingViolationException(String message) {
         super(message);
     }
-    private static final Logger LOG = Logger.getLogger(DataBindingViolationException.class.getName());
 
 }
