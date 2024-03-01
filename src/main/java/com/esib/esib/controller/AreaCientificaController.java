@@ -1,12 +1,20 @@
 package com.esib.esib.controller;
 
+import com.esib.esib.modelo.AreaCientifica;
+import com.esib.esib.modelo.dto.AreaCientificaDTO;
+import com.esib.esib.service.AreaCientificaService;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.http.HttpStatus;
+import java.util.logging.Logger;
+import static java.util.stream.Collectors.toList;
+import lombok.RequiredArgsConstructor;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 import org.springframework.http.ResponseEntity;
+import static org.springframework.http.ResponseEntity.created;
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.ok;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,14 +23,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
-import com.esib.esib.modelo.AreaCientifica;
-import com.esib.esib.modelo.dto.AreaCientificaDTO;
-import com.esib.esib.service.AreaCientificaService;
-
-import lombok.RequiredArgsConstructor;
-
+/**
+ *
+ * @author Meldo Maunze
+ */
 @RestController
 @RequestMapping("/areascientificas")
 @RequiredArgsConstructor
@@ -30,71 +36,95 @@ import lombok.RequiredArgsConstructor;
 public class AreaCientificaController {
     private final AreaCientificaService areaCientificaService;
 
+    /**
+     *
+     * @return
+     */
     @GetMapping()
     public ResponseEntity<List<AreaCientificaDTO>> findAll() {
         try {
-            List<AreaCientifica> areaCientifica = areaCientificaService.findAll();
-            List<AreaCientificaDTO> areaCientificaDTO = areaCientifica.stream()
+            var areaCientifica = areaCientificaService.findAll();
+            var areaCientificaDTO = areaCientifica.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(areaCientificaDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(areaCientificaDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/area/{id}")
     public ResponseEntity<AreaCientificaDTO> findById(@PathVariable Long id) {
         try {
-            Optional<AreaCientifica> areaCientifica = areaCientificaService.findById(id);
-            return areaCientifica.map(a -> ResponseEntity.ok(convertToDTO(a)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var areaCientifica = areaCientificaService.findById(id);
+            return areaCientifica.map(a -> ok(convertToDTO(a)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param areaCientificaDTO
+     * @return
+     */
     @PostMapping()
     public ResponseEntity<Void> create(@RequestBody AreaCientificaDTO areaCientificaDTO) {
         try {
-            AreaCientifica newAreaCientifica = areaCientificaService.create(convertToEntity(areaCientificaDTO));
-            AreaCientificaDTO newAreaCientificaDTO = convertToDTO(newAreaCientifica);
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
+            var newAreaCientifica = areaCientificaService.create(convertToEntity(areaCientificaDTO));
+            var newAreaCientificaDTO = convertToDTO(newAreaCientifica);
+            URI location = fromCurrentRequest()
                     .path("/{id}")
                     .buildAndExpand(newAreaCientificaDTO.getId())
                     .toUri();
 
-            return ResponseEntity.created(location).build();
+            return created(location).build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param areaCientificaDTO
+     * @param id
+     * @return
+     */
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Void> update(@RequestBody AreaCientificaDTO areaCientificaDTO, @PathVariable Long id) {
         try {
             areaCientificaService.update(id, convertToEntity(areaCientificaDTO));
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @DeleteMapping("/remover/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             areaCientificaService.delete(id);
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
     private AreaCientificaDTO convertToDTO(AreaCientifica areaCientifica) {
 
-        AreaCientificaDTO areaCientificaDTO = new AreaCientificaDTO();
+        var areaCientificaDTO = new AreaCientificaDTO();
         areaCientificaDTO.setId(areaCientifica.getId());
         areaCientificaDTO.setDescricao(areaCientifica.getDescricao());
 
@@ -103,10 +133,11 @@ public class AreaCientificaController {
 
     private AreaCientifica convertToEntity(AreaCientificaDTO areaCientificaDTO) {
 
-        AreaCientifica areaCientifica = new AreaCientifica();
+        var areaCientifica = new AreaCientifica();
         areaCientifica.setId(areaCientificaDTO.getId());
         areaCientifica.setDescricao(areaCientificaDTO.getDescricao());
 
         return areaCientifica;
     }
+    private static final Logger LOG = Logger.getLogger(AreaCientificaController.class.getName());
 }

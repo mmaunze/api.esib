@@ -1,12 +1,23 @@
 package com.esib.esib.controller;
 
+import com.esib.esib.modelo.Utilizador;
+import com.esib.esib.modelo.dto.UtilizadorDTO;
+import com.esib.esib.service.AreaCientificaService;
+import com.esib.esib.service.DepartamentoService;
+import com.esib.esib.service.TipoUtilizadorService;
+import com.esib.esib.service.UtilizadorService;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.http.HttpStatus;
+import java.util.logging.Logger;
+import static java.util.stream.Collectors.toList;
+import lombok.RequiredArgsConstructor;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 import org.springframework.http.ResponseEntity;
+import static org.springframework.http.ResponseEntity.created;
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.ok;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,17 +26,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
-import com.esib.esib.modelo.Utilizador;
-import com.esib.esib.modelo.dto.UtilizadorDTO;
-import com.esib.esib.service.AreaCientificaService;
-import com.esib.esib.service.DepartamentoService;
-import com.esib.esib.service.TipoUtilizadorService;
-import com.esib.esib.service.UtilizadorService;
-
-import lombok.RequiredArgsConstructor;
-
+/**
+ *
+ * @author Meldo Maunze
+ */
 @RestController
 @RequestMapping("/utilizadores")
 @RequiredArgsConstructor
@@ -36,137 +42,191 @@ public class UtilizadorController {
     private final TipoUtilizadorService tipoUtilizadorService;
     private final AreaCientificaService areaCientificaService;
 
+    /**
+     *
+     * @return
+     */
     @GetMapping()
     public ResponseEntity<List<UtilizadorDTO>> findAll() {
         try {
-            List<Utilizador> utilizadores = utilizadorService.findAll();
-            List<UtilizadorDTO> utilizadoresDTO = utilizadores.stream()
+            var utilizadores = utilizadorService.findAll();
+            var utilizadoresDTO = utilizadores.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(utilizadoresDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(utilizadoresDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param areacientifica
+     * @return
+     */
     @GetMapping("/areacientifica/{areacientifica}")
     public ResponseEntity<List<UtilizadorDTO>> findByAreaCientifica(@PathVariable String areacientifica) {
         try {
-            List<Utilizador> utilizadores = utilizadorService.findByAreaCientifica(areacientifica);
-            List<UtilizadorDTO> obrasDTO = utilizadores.stream()
+            var utilizadores = utilizadorService.findByAreaCientifica(areacientifica);
+            var obrasDTO = utilizadores.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(obrasDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(obrasDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param departamento
+     * @return
+     */
     @GetMapping("/departamento/{departamento}")
     public ResponseEntity<List<UtilizadorDTO>> findByDepartamento(@PathVariable String departamento) {
         try {
-            List<Utilizador> utilizadores = utilizadorService.findByDepartamento(departamento);
-            List<UtilizadorDTO> utilizadoresDTO = utilizadores.stream()
+            var utilizadores = utilizadorService.findByDepartamento(departamento);
+            var utilizadoresDTO = utilizadores.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(utilizadoresDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(utilizadoresDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param tipoutilizador
+     * @return
+     */
     @GetMapping("/tipoutilizador/{tipoutilizador}")
     public ResponseEntity<List<UtilizadorDTO>> findByTipoUtilizador(@PathVariable String tipoutilizador) {
         try {
-            List<Utilizador> utilizadores = utilizadorService.findByTipoUtilizador(tipoutilizador);
-            List<UtilizadorDTO> utilizadoresDTO = utilizadores.stream()
+            var utilizadores = utilizadorService.findByTipoUtilizador(tipoutilizador);
+            var utilizadoresDTO = utilizadores.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(utilizadoresDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(utilizadoresDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/utilizador/{id}")
     public ResponseEntity<UtilizadorDTO> findById(@PathVariable Long id) {
         try {
-            Optional<Utilizador> utilizador = utilizadorService.findById(id);
-            return utilizador.map(u -> ResponseEntity.ok(convertToDTO(u)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var utilizador = utilizadorService.findById(id);
+            return utilizador.map(u -> ok(convertToDTO(u)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param username
+     * @return
+     */
     @GetMapping("/username/{username}")
     public ResponseEntity<UtilizadorDTO> findByUsername(@PathVariable String username) {
         try {
-            Optional<Utilizador> utilizador = utilizadorService.findUtilizadorPorUsername(username);
-            return utilizador.map(u -> ResponseEntity.ok(convertToDTO(u)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var utilizador = utilizadorService.findUtilizadorPorUsername(username);
+            return utilizador.map(u -> ok(convertToDTO(u)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param contacto
+     * @return
+     */
     @GetMapping("/contacto/{contacto}")
     public ResponseEntity<UtilizadorDTO> findByContacto(@PathVariable String contacto) {
         try {
-            Optional<Utilizador> utilizador = utilizadorService.findUtilizadorPorContacto(contacto);
-            return utilizador.map(u -> ResponseEntity.ok(convertToDTO(u)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var utilizador = utilizadorService.findUtilizadorPorContacto(contacto);
+            return utilizador.map(u -> ok(convertToDTO(u)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param email
+     * @return
+     */
     @GetMapping("/email/{email}")
     public ResponseEntity<UtilizadorDTO> findByEmail(@PathVariable String email) {
         try {
-            Optional<Utilizador> utilizador = utilizadorService.findUtilizadorPorEmail(email);
-            return utilizador.map(u -> ResponseEntity.ok(convertToDTO(u)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var utilizador = utilizadorService.findUtilizadorPorEmail(email);
+            return utilizador.map(u -> ok(convertToDTO(u)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param utilizadorDTO
+     * @return
+     */
     @PostMapping()
     public ResponseEntity<Void> create(@RequestBody UtilizadorDTO utilizadorDTO) {
         try {
-            Utilizador newUtilizador = utilizadorService.create(convertToEntity(utilizadorDTO));
-            UtilizadorDTO newUtilizadorDTO = convertToDTO(newUtilizador);
+            var newUtilizador = utilizadorService.create(convertToEntity(utilizadorDTO));
+            var newUtilizadorDTO = convertToDTO(newUtilizador);
 
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
+            URI location = fromCurrentRequest()
                     .path("/{id}")
                     .buildAndExpand(newUtilizadorDTO.getId())
                     .toUri();
 
-            return ResponseEntity.created(location).build();
+            return created(location).build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param utilizadorDTO
+     * @param id
+     * @return
+     */
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Void> update(@RequestBody UtilizadorDTO utilizadorDTO, @PathVariable Long id) {
         try {
             utilizadorService.update(convertToEntity(utilizadorDTO));
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @DeleteMapping("/remover/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             utilizadorService.delete(id);
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -175,7 +235,7 @@ public class UtilizadorController {
      */
 
     private UtilizadorDTO convertToDTO(Utilizador utilizador) {
-        UtilizadorDTO utilizadorDTO = new UtilizadorDTO();
+        var utilizadorDTO = new UtilizadorDTO();
         utilizadorDTO.setId(utilizador.getId());
         utilizadorDTO.setNome(utilizador.getNome());
         utilizadorDTO.setEmail(utilizador.getEmail());
@@ -191,7 +251,7 @@ public class UtilizadorController {
 
     private Utilizador convertToEntity(UtilizadorDTO utilizadorDTO) {
 
-        Utilizador utilizador = new Utilizador();
+        var utilizador = new Utilizador();
         utilizador.setId(utilizadorDTO.getId());
         utilizador.setNome(utilizadorDTO.getNome());
         utilizador.setEmail(utilizadorDTO.getEmail());
@@ -204,4 +264,5 @@ public class UtilizadorController {
 
         return utilizador;
     }
+    private static final Logger LOG = Logger.getLogger(UtilizadorController.class.getName());
 }

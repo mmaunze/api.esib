@@ -1,7 +1,12 @@
 package com.esib.esib.modelo.dto;
 
+import java.util.logging.Logger;
 import lombok.Data;
 
+/**
+ *
+ * @author Meldo Maunze
+ */
 @Data
 
 public class UtilizadorDTO {
@@ -15,5 +20,6 @@ public class UtilizadorDTO {
     private String areaCientifica;
     private String tipoUtilizador;
     private String departamento;
+    private static final Logger LOG = Logger.getLogger(UtilizadorDTO.class.getName());
 
 }

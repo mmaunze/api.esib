@@ -1,12 +1,23 @@
 package com.esib.esib.controller;
 
+import com.esib.esib.modelo.Cta;
+import com.esib.esib.modelo.dto.CtaDTO;
+import com.esib.esib.service.AreaCientificaService;
+import com.esib.esib.service.CargoService;
+import com.esib.esib.service.CtaService;
+import com.esib.esib.service.DepartamentoService;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.http.HttpStatus;
+import java.util.logging.Logger;
+import static java.util.stream.Collectors.toList;
+import lombok.RequiredArgsConstructor;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 import org.springframework.http.ResponseEntity;
+import static org.springframework.http.ResponseEntity.created;
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.ok;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,17 +26,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
-import com.esib.esib.modelo.Cta;
-import com.esib.esib.modelo.dto.CtaDTO;
-import com.esib.esib.service.AreaCientificaService;
-import com.esib.esib.service.CargoService;
-import com.esib.esib.service.CtaService;
-import com.esib.esib.service.DepartamentoService;
-
-import lombok.RequiredArgsConstructor;
-
+/**
+ *
+ * @author Meldo Maunze
+ */
 @RestController
 @RequestMapping("/ctas")
 @RequiredArgsConstructor
@@ -36,98 +42,137 @@ public class CtaController {
     private final CargoService cargoService;
     private final AreaCientificaService areaCientificaService;
 
+    /**
+     *
+     * @return
+     */
     @GetMapping()
     public ResponseEntity<List<CtaDTO>> findAll() {
         try {
-            List<Cta> ctas = ctaService.findAll();
-            List<CtaDTO> ctasDTO = ctas.stream()
+            var ctas = ctaService.findAll();
+            var ctasDTO = ctas.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(ctasDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(ctasDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/cta/{id}")
     public ResponseEntity<CtaDTO> findById(@PathVariable Long id) {
         try {
-            Optional<Cta> cta = ctaService.findById(id);
-            return cta.map(b -> ResponseEntity.ok(convertToDTO(b)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var cta = ctaService.findById(id);
+            return cta.map(b -> ok(convertToDTO(b)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param username
+     * @return
+     */
     @GetMapping("/username/{username}")
     public ResponseEntity<CtaDTO> findByUsername(@PathVariable String username) {
         try {
-            Optional<Cta> cta = ctaService.findCtaPorUsername(username);
-            return cta.map(b -> ResponseEntity.ok(convertToDTO(b)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var cta = ctaService.findCtaPorUsername(username);
+            return cta.map(b -> ok(convertToDTO(b)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param contacto
+     * @return
+     */
     @GetMapping("/contacto/{contacto}")
     public ResponseEntity<CtaDTO> findByContacto(@PathVariable String contacto) {
         try {
-            Optional<Cta> cta = ctaService.findByContacto(contacto);
-            return cta.map(b -> ResponseEntity.ok(convertToDTO(b)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var cta = ctaService.findByContacto(contacto);
+            return cta.map(b -> ok(convertToDTO(b)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param email
+     * @return
+     */
     @GetMapping("/email/{email}")
     public ResponseEntity<CtaDTO> findByEmail(@PathVariable String email) {
         try {
-            Optional<Cta> cta = ctaService.findByEmail(email);
-            return cta.map(b -> ResponseEntity.ok(convertToDTO(b)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var cta = ctaService.findByEmail(email);
+            return cta.map(b -> ok(convertToDTO(b)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param ctaDTO
+     * @return
+     */
     @PostMapping()
     public ResponseEntity<Void> create(@RequestBody CtaDTO ctaDTO) {
         try {
-            Cta newCta = ctaService.create(convertToEntity(ctaDTO));
-            CtaDTO newCtaDTO = convertToDTO(newCta);
+            var newCta = ctaService.create(convertToEntity(ctaDTO));
+            var newCtaDTO = convertToDTO(newCta);
 
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
+            URI location = fromCurrentRequest()
                     .path("/{id}")
                     .buildAndExpand(newCtaDTO.getId())
                     .toUri();
 
-            return ResponseEntity.created(location).build();
+            return created(location).build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param ctaDTO
+     * @param id
+     * @return
+     */
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Void> update(@RequestBody CtaDTO ctaDTO, @PathVariable Long id) {
         try {
             ctaService.update(convertToEntity(ctaDTO));
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @DeleteMapping("/remover/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             ctaService.delete(id);
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -137,7 +182,7 @@ public class CtaController {
 
     private CtaDTO convertToDTO(Cta cta) {
 
-        CtaDTO ctaDTO = new CtaDTO();
+        var ctaDTO = new CtaDTO();
 
         ctaDTO.setId(cta.getUtilizador().getId());
         ctaDTO.setNome(cta.getUtilizador().getNome());
@@ -154,7 +199,7 @@ public class CtaController {
 
     private Cta convertToEntity(CtaDTO ctaDTO) {
 
-        Cta cta = new Cta();
+        var cta = new Cta();
         cta.setId(ctaDTO.getId());
         cta.getUtilizador().setNome(ctaDTO.getNome());
         cta.getUtilizador().setEmail(ctaDTO.getEmail());
@@ -169,4 +214,5 @@ public class CtaController {
 
         return cta;
     }
+    private static final Logger LOG = Logger.getLogger(CtaController.class.getName());
 }

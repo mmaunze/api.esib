@@ -1,14 +1,24 @@
 package com.esib.esib.service.exceptions;
 
+import java.util.logging.Logger;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value = HttpStatus.NOT_FOUND)
+/**
+ *
+ * @author Meldo Maunze
+ */
+@ResponseStatus(value = NOT_FOUND)
 public class DataBindingViolationException extends DataIntegrityViolationException {
 
+    /**
+     *
+     * @param message
+     */
     public DataBindingViolationException(String message) {
         super(message);
     }
+    private static final Logger LOG = Logger.getLogger(DataBindingViolationException.class.getName());
 
 }

@@ -1,12 +1,23 @@
 package com.esib.esib.controller;
 
+import com.esib.esib.modelo.Livro;
+import com.esib.esib.modelo.dto.LivroDTO;
+import com.esib.esib.service.AreaCientificaService;
+import com.esib.esib.service.EstadoService;
+import com.esib.esib.service.IdiomaService;
+import com.esib.esib.service.LivroService;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.http.HttpStatus;
+import java.util.logging.Logger;
+import static java.util.stream.Collectors.toList;
+import lombok.RequiredArgsConstructor;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 import org.springframework.http.ResponseEntity;
+import static org.springframework.http.ResponseEntity.created;
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.ok;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,17 +26,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
-import com.esib.esib.modelo.Livro;
-import com.esib.esib.modelo.dto.LivroDTO;
-import com.esib.esib.service.AreaCientificaService;
-import com.esib.esib.service.EstadoService;
-import com.esib.esib.service.IdiomaService;
-import com.esib.esib.service.LivroService;
-
-import lombok.RequiredArgsConstructor;
-
+/**
+ *
+ * @author Meldo Maunze
+ */
 @RestController
 @RequestMapping("/obras/livros")
 @RequiredArgsConstructor
@@ -37,148 +43,202 @@ public class LivroController {
     private final AreaCientificaService areaCientificaService;
     private final EstadoService estadoService;
 
+    /**
+     *
+     * @return
+     */
     @GetMapping()
     public ResponseEntity<List<LivroDTO>> findAll() {
         try {
-            List<Livro> livros = livroService.findAll();
-            List<LivroDTO> livrosDTO = livros.stream()
+            var livros = livroService.findAll();
+            var livrosDTO = livros.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(livrosDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(livrosDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/livro/{id}")
     public ResponseEntity<LivroDTO> findById(@PathVariable Long id) {
         try {
-            Optional<Livro> livros = livroService.findById(id);
-            return livros.map(r -> ResponseEntity.ok(convertToDTO(r)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var livros = livroService.findById(id);
+            return livros.map(r -> ok(convertToDTO(r)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param titulo
+     * @return
+     */
     @GetMapping("/titulo/{titulo}")
     public ResponseEntity<List<LivroDTO>> findByTitulo(@PathVariable String titulo) {
         try {
-            List<Livro> livros = livroService.findByTitulo(titulo);
-            List<LivroDTO> livrosDTO = livros.stream()
+            var livros = livroService.findByTitulo(titulo);
+            var livrosDTO = livros.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(livrosDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(livrosDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param idioma
+     * @return
+     */
     @GetMapping("/idioma/{idioma}")
     public ResponseEntity<List<LivroDTO>> findByIdioma(@PathVariable String idioma) {
         try {
-            List<Livro> livros = livroService.findByIdioma(idioma);
-            List<LivroDTO> livrosDTO = livros.stream()
+            var livros = livroService.findByIdioma(idioma);
+            var livrosDTO = livros.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(livrosDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(livrosDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param areacientifica
+     * @return
+     */
     @GetMapping("/areacientifica/{areacientifica}")
     public ResponseEntity<List<LivroDTO>> findByAreaCientifica(@PathVariable String areacientifica) {
         try {
-            List<Livro> livros = livroService.findByAreaCientifica(areacientifica);
-            List<LivroDTO> livrosDTO = livros.stream()
+            var livros = livroService.findByAreaCientifica(areacientifica);
+            var livrosDTO = livros.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(livrosDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(livrosDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param volume
+     * @return
+     */
     @GetMapping("/volume/{volume}")
     public ResponseEntity<List<LivroDTO>> findByVolume(@PathVariable Long volume) {
         try {
-            List<Livro> livros = livroService.findByVolume(volume);
-            List<LivroDTO> livrosDTO = livros.stream()
+            var livros = livroService.findByVolume(volume);
+            var livrosDTO = livros.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(livrosDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(livrosDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param editora
+     * @return
+     */
     @GetMapping("/editora/{editora}")
     public ResponseEntity<List<LivroDTO>> findByEditora(@PathVariable String editora) {
         try {
-            List<Livro> livros = livroService.findByEditora(editora);
-            List<LivroDTO> livrosDTO = livros.stream()
+            var livros = livroService.findByEditora(editora);
+            var livrosDTO = livros.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(livrosDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(livrosDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param edicao
+     * @return
+     */
     @GetMapping("/edicao/{edicao}")
     public ResponseEntity<List<LivroDTO>> findByNumero(@PathVariable Integer edicao) {
         try {
-            List<Livro> livros = livroService.findByEdicao(edicao);
-            List<LivroDTO> livrosDTO = livros.stream()
+            var livros = livroService.findByEdicao(edicao);
+            var livrosDTO = livros.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(livrosDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(livrosDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param livroDTO
+     * @return
+     */
     @PostMapping()
     public ResponseEntity<Void> create(@RequestBody LivroDTO livroDTO) {
         try {
-            Livro newLivro = livroService.create(convertToEntity(livroDTO));
-            LivroDTO newLivroDTO = convertToDTO(newLivro);
+            var newLivro = livroService.create(convertToEntity(livroDTO));
+            var newLivroDTO = convertToDTO(newLivro);
 
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
+            URI location = fromCurrentRequest()
                     .path("/{id}")
                     .buildAndExpand(newLivroDTO.getId())
                     .toUri();
 
-            return ResponseEntity.created(location).build();
+            return created(location).build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param livroDTO
+     * @param id
+     * @return
+     */
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Void> update(@RequestBody LivroDTO livroDTO, @PathVariable Long id) {
         try {
             livroService.update(convertToEntity(livroDTO));
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @DeleteMapping("/remover/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             livroService.delete(id);
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     private LivroDTO convertToDTO(Livro livro) {
-        LivroDTO livroDTO = new LivroDTO();
+        var livroDTO = new LivroDTO();
 
         livroDTO.setId(livro.getId());
         livroDTO.setTitulo(livro.getObra().getTitulo());
@@ -203,7 +263,7 @@ public class LivroController {
 
     private Livro convertToEntity(LivroDTO livroDTO) {
 
-        Livro livro = new Livro();
+        var livro = new Livro();
         livro.setId(livroDTO.getId());
         livro.getObra().setTitulo(livroDTO.getTitulo());
         livro.getObra().setAutor1(livroDTO.getAutores());
@@ -225,4 +285,5 @@ public class LivroController {
 
         return livro;
     }
+    private static final Logger LOG = Logger.getLogger(LivroController.class.getName());
 }

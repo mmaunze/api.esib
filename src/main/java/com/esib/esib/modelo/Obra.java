@@ -1,16 +1,14 @@
 
 package com.esib.esib.modelo;
 
-import static javax.persistence.CascadeType.*;
-import static javax.persistence.FetchType.*;
-
 import java.io.Serializable;
 import java.util.List;
-
+import java.util.logging.Logger;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
+import static javax.persistence.CascadeType.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import static javax.persistence.FetchType.*;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,9 +18,12 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import lombok.Data;
 
+/**
+ *
+ * @author Meldo Maunze
+ */
 @Entity
 @Table(catalog = "esib", schema = "public", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "localizacao" }) })
@@ -79,19 +80,19 @@ public class Obra implements Serializable {
     private List<Emprestimo> emprestimoList;
 
     @JoinColumn(name = "id_area", referencedColumnName = "id_area", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private AreaCientifica areaCientifica;
 
     @JoinColumn(name = "id_estado", referencedColumnName = "id_estado", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Estado estado;
 
     @JoinColumn(name = "id_idioma", referencedColumnName = "id_idioma", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Idioma idioma;
 
     @JoinColumn(name = "id_tipo_obra", referencedColumnName = "id_tipo_obra", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private TipoObra tipoObra;
 
     @OneToOne(cascade = ALL, mappedBy = "obra", fetch = LAZY)
@@ -108,14 +109,24 @@ public class Obra implements Serializable {
     @OneToMany(cascade = ALL, mappedBy = "obra", fetch = LAZY)
     private List<Movimento> movimentoList;
 
+    /**
+     *
+     * @return
+     */
     public boolean getDisponivel() {
         return this.getEstado().getDescricao().equalsIgnoreCase("disponivel");
     }
 
+    /**
+     *
+     * @param b
+     */
     public void setDisponivel(boolean b) {
-        if (b)
+        if (b) {
             this.estado.setDisponivel();
-        else
+        } else {
             this.estado.isAciva();
+        }
     }
+    private static final Logger LOG = Logger.getLogger(Obra.class.getName());
 }

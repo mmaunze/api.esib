@@ -1,7 +1,12 @@
 package com.esib.esib.modelo.dto;
 
+import java.util.logging.Logger;
 import lombok.Data;
 
+/**
+ *
+ * @author Meldo Maunze
+ */
 @Data
 public class CtaDTO {
     private Long id;
@@ -13,4 +18,5 @@ public class CtaDTO {
     private String areaCientifica;
     private String departamento;
     private String cargo;
+    private static final Logger LOG = Logger.getLogger(CtaDTO.class.getName());
 }

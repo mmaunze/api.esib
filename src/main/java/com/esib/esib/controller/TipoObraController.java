@@ -1,12 +1,20 @@
 package com.esib.esib.controller;
 
+import com.esib.esib.modelo.TipoObra;
+import com.esib.esib.modelo.dto.TipoObraDTO;
+import com.esib.esib.service.TipoObraService;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.http.HttpStatus;
+import java.util.logging.Logger;
+import static java.util.stream.Collectors.toList;
+import lombok.RequiredArgsConstructor;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 import org.springframework.http.ResponseEntity;
+import static org.springframework.http.ResponseEntity.created;
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.ok;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,14 +23,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
-import com.esib.esib.modelo.TipoObra;
-import com.esib.esib.modelo.dto.TipoObraDTO;
-import com.esib.esib.service.TipoObraService;
-
-import lombok.RequiredArgsConstructor;
-
+/**
+ *
+ * @author Meldo Maunze
+ */
 @RestController
 @RequestMapping("/tiposobras")
 @RequiredArgsConstructor
@@ -30,71 +36,95 @@ import lombok.RequiredArgsConstructor;
 public class TipoObraController {
     private final TipoObraService tipoObraService;
 
+    /**
+     *
+     * @return
+     */
     @GetMapping()
     public ResponseEntity<List<TipoObraDTO>> findAll() {
         try {
-            List<TipoObra> tipoObra = tipoObraService.findAll();
-            List<TipoObraDTO> tipoObraDTO = tipoObra.stream()
+            var tipoObra = tipoObraService.findAll();
+            var tipoObraDTO = tipoObra.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(tipoObraDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(tipoObraDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/tipo/{id}")
     public ResponseEntity<TipoObraDTO> findById(@PathVariable Long id) {
         try {
-            Optional<TipoObra> tipoObra = tipoObraService.findById(id);
-            return tipoObra.map(to -> ResponseEntity.ok(convertToDTO(to)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var tipoObra = tipoObraService.findById(id);
+            return tipoObra.map(to -> ok(convertToDTO(to)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param tipoObraDTO
+     * @return
+     */
     @PostMapping()
     public ResponseEntity<Void> create(@RequestBody TipoObraDTO tipoObraDTO) {
         try {
-            TipoObra newtipoObra = tipoObraService.create(convertToEntity(tipoObraDTO));
-            TipoObraDTO newtipoObraDTO = convertToDTO(newtipoObra);
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
+            var newtipoObra = tipoObraService.create(convertToEntity(tipoObraDTO));
+            var newtipoObraDTO = convertToDTO(newtipoObra);
+            URI location = fromCurrentRequest()
                     .path("/{id}")
                     .buildAndExpand(newtipoObraDTO.getId())
                     .toUri();
 
-            return ResponseEntity.created(location).build();
+            return created(location).build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param tipoObraDTO
+     * @param id
+     * @return
+     */
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Void> update(@RequestBody TipoObraDTO tipoObraDTO, @PathVariable Long id) {
         try {
             tipoObraService.update(convertToEntity(tipoObraDTO));
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @DeleteMapping("/remover/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             tipoObraService.delete(id);
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
     private TipoObraDTO convertToDTO(TipoObra tipoObra) {
 
-        TipoObraDTO tipoObraDTO = new TipoObraDTO();
+        var tipoObraDTO = new TipoObraDTO();
         tipoObraDTO.setId(tipoObra.getId());
         tipoObraDTO.setDescricao(tipoObra.getDescricao());
 
@@ -103,10 +133,11 @@ public class TipoObraController {
 
     private TipoObra convertToEntity(TipoObraDTO tipoObraDTO) {
 
-        TipoObra tipoObra = new TipoObra();
+        var tipoObra = new TipoObra();
         tipoObra.setId(tipoObraDTO.getId());
         tipoObra.setDescricao(tipoObraDTO.getDescricao());
 
         return tipoObra;
     }
+    private static final Logger LOG = Logger.getLogger(TipoObraController.class.getName());
 }

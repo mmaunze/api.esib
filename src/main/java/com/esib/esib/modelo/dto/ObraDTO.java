@@ -1,6 +1,11 @@
 package com.esib.esib.modelo.dto;
+import java.util.logging.Logger;
 import lombok.Data;
 
+/**
+ *
+ * @author Meldo Maunze
+ */
 @Data
 public class ObraDTO {
     private Long id;
@@ -15,5 +20,6 @@ public class ObraDTO {
     private String fotografia;
     private String idioma;
     private String estado;
+    private static final Logger LOG = Logger.getLogger(ObraDTO.class.getName());
 
 }

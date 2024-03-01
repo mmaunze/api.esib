@@ -1,12 +1,20 @@
 package com.esib.esib.controller;
 
+import com.esib.esib.modelo.Departamento;
+import com.esib.esib.modelo.dto.DepartamentoDTO;
+import com.esib.esib.service.DepartamentoService;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.http.HttpStatus;
+import java.util.logging.Logger;
+import static java.util.stream.Collectors.toList;
+import lombok.RequiredArgsConstructor;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 import org.springframework.http.ResponseEntity;
+import static org.springframework.http.ResponseEntity.created;
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.ok;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,14 +23,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
-import com.esib.esib.modelo.Departamento;
-import com.esib.esib.modelo.dto.DepartamentoDTO;
-import com.esib.esib.service.DepartamentoService;
-
-import lombok.RequiredArgsConstructor;
-
+/**
+ *
+ * @author Meldo Maunze
+ */
 @RestController
 @RequestMapping("/departamentos")
 @RequiredArgsConstructor
@@ -30,71 +36,95 @@ import lombok.RequiredArgsConstructor;
 public class DepartamentoController {
     private final DepartamentoService departamentoService;
 
+    /**
+     *
+     * @return
+     */
     @GetMapping()
     public ResponseEntity<List<DepartamentoDTO>> findAll() {
         try {
-            List<Departamento> departamento = departamentoService.findAll();
-            List<DepartamentoDTO> departamentoDTO = departamento.stream()
+            var departamento = departamentoService.findAll();
+            var departamentoDTO = departamento.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(departamentoDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(departamentoDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/departamento/{id}")
     public ResponseEntity<DepartamentoDTO> findById(@PathVariable Long id) {
         try {
-            Optional<Departamento> departamento = departamentoService.findById(id);
-            return departamento.map(d -> ResponseEntity.ok(convertToDTO(d)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var departamento = departamentoService.findById(id);
+            return departamento.map(d -> ok(convertToDTO(d)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param departamentoDTO
+     * @return
+     */
     @PostMapping()
     public ResponseEntity<Void> create(@RequestBody DepartamentoDTO departamentoDTO) {
         try {
-            Departamento newDepartamento = departamentoService.create(convertToEntity(departamentoDTO));
-            DepartamentoDTO newDepartamentoDTO = convertToDTO(newDepartamento);
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
+            var newDepartamento = departamentoService.create(convertToEntity(departamentoDTO));
+            var newDepartamentoDTO = convertToDTO(newDepartamento);
+            URI location = fromCurrentRequest()
                     .path("/{id}")
                     .buildAndExpand(newDepartamentoDTO.getId())
                     .toUri();
 
-            return ResponseEntity.created(location).build();
+            return created(location).build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param departamentoDTO
+     * @param id
+     * @return
+     */
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Void> update(@RequestBody DepartamentoDTO departamentoDTO, @PathVariable Long id) {
         try {
             departamentoService.update(convertToEntity(departamentoDTO));
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @DeleteMapping("/remover/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             departamentoService.delete(id);
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
     private DepartamentoDTO convertToDTO(Departamento departamento) {
 
-        DepartamentoDTO departamentoDTO = new DepartamentoDTO();
+        var departamentoDTO = new DepartamentoDTO();
         departamentoDTO.setId(departamento.getId());
         departamentoDTO.setDescricao(departamento.getDescricao());
         departamentoDTO.setSigla(departamento.getSigla());
@@ -105,11 +135,12 @@ public class DepartamentoController {
 
     private Departamento convertToEntity(DepartamentoDTO departamentoDTO) {
 
-        Departamento departamento = new Departamento();
+        var departamento = new Departamento();
         departamento.setId(departamentoDTO.getId());
         departamento.setDescricao(departamentoDTO.getDescricao());
         departamento.setSigla(departamentoDTO.getSigla());
 
         return departamento;
     }
+    private static final Logger LOG = Logger.getLogger(DepartamentoController.class.getName());
 }

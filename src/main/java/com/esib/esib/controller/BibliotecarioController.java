@@ -1,12 +1,23 @@
 package com.esib.esib.controller;
 
+import com.esib.esib.modelo.Bibliotecario;
+import com.esib.esib.modelo.dto.BibliotecarioDTO;
+import com.esib.esib.service.AreaCientificaService;
+import com.esib.esib.service.BibliotecarioService;
+import com.esib.esib.service.DepartamentoService;
+import com.esib.esib.service.FaculdadeService;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.http.HttpStatus;
+import java.util.logging.Logger;
+import static java.util.stream.Collectors.toList;
+import lombok.RequiredArgsConstructor;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 import org.springframework.http.ResponseEntity;
+import static org.springframework.http.ResponseEntity.created;
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.ok;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,17 +26,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
-import com.esib.esib.modelo.Bibliotecario;
-import com.esib.esib.modelo.dto.BibliotecarioDTO;
-import com.esib.esib.service.AreaCientificaService;
-import com.esib.esib.service.BibliotecarioService;
-import com.esib.esib.service.DepartamentoService;
-import com.esib.esib.service.FaculdadeService;
-
-import lombok.RequiredArgsConstructor;
-
+/**
+ *
+ * @author Meldo Maunze
+ */
 @RestController
 @RequestMapping("/bibliotecarios")
 @RequiredArgsConstructor
@@ -36,98 +42,137 @@ public class BibliotecarioController {
     private final FaculdadeService faculdadeService;
     private final AreaCientificaService areaCientificaService;
 
+    /**
+     *
+     * @return
+     */
     @GetMapping()
     public ResponseEntity<List<BibliotecarioDTO>> findAll() {
         try {
-            List<Bibliotecario> bibliotecarios = bibliotecarioService.findAll();
-            List<BibliotecarioDTO> bibliotecariosDTO = bibliotecarios.stream()
+            var bibliotecarios = bibliotecarioService.findAll();
+            var bibliotecariosDTO = bibliotecarios.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(bibliotecariosDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(bibliotecariosDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/bibliotecario/{id}")
     public ResponseEntity<BibliotecarioDTO> findById(@PathVariable Long id) {
         try {
-            Optional<Bibliotecario> bibliotecario = bibliotecarioService.findById(id);
-            return bibliotecario.map(b -> ResponseEntity.ok(convertToDTO(b)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var bibliotecario = bibliotecarioService.findById(id);
+            return bibliotecario.map(b -> ok(convertToDTO(b)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param username
+     * @return
+     */
     @GetMapping("/username/{username}")
     public ResponseEntity<BibliotecarioDTO> findByUsername(@PathVariable String username) {
         try {
-            Optional<Bibliotecario> bibliotecario = bibliotecarioService.findBibliotecarioPorUsername(username);
-            return bibliotecario.map(b -> ResponseEntity.ok(convertToDTO(b)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var bibliotecario = bibliotecarioService.findBibliotecarioPorUsername(username);
+            return bibliotecario.map(b -> ok(convertToDTO(b)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param contacto
+     * @return
+     */
     @GetMapping("/contacto/{contacto}")
     public ResponseEntity<BibliotecarioDTO> findByContacto(@PathVariable String contacto) {
         try {
-            Optional<Bibliotecario> bibliotecario = bibliotecarioService.findBibliotecarioPorContacto(contacto);
-            return bibliotecario.map(b -> ResponseEntity.ok(convertToDTO(b)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var bibliotecario = bibliotecarioService.findBibliotecarioPorContacto(contacto);
+            return bibliotecario.map(b -> ok(convertToDTO(b)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param email
+     * @return
+     */
     @GetMapping("/email/{email}")
     public ResponseEntity<BibliotecarioDTO> findByEmail(@PathVariable String email) {
         try {
-            Optional<Bibliotecario> bibliotecario = bibliotecarioService.findBibliotecarioPorEmail(email);
-            return bibliotecario.map(b -> ResponseEntity.ok(convertToDTO(b)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var bibliotecario = bibliotecarioService.findBibliotecarioPorEmail(email);
+            return bibliotecario.map(b -> ok(convertToDTO(b)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param bibliotecarioDTO
+     * @return
+     */
     @PostMapping()
     public ResponseEntity<Void> create(@RequestBody BibliotecarioDTO bibliotecarioDTO) {
         try {
-            Bibliotecario newBibliotecario = bibliotecarioService.create(convertToEntity(bibliotecarioDTO));
-            BibliotecarioDTO newBibliotecarioDTO = convertToDTO(newBibliotecario);
+            var newBibliotecario = bibliotecarioService.create(convertToEntity(bibliotecarioDTO));
+            var newBibliotecarioDTO = convertToDTO(newBibliotecario);
 
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
+            URI location = fromCurrentRequest()
                     .path("/{id}")
                     .buildAndExpand(newBibliotecarioDTO.getId())
                     .toUri();
 
-            return ResponseEntity.created(location).build();
+            return created(location).build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param bibliotecarioDTO
+     * @param id
+     * @return
+     */
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Void> update(@RequestBody BibliotecarioDTO bibliotecarioDTO, @PathVariable Long id) {
         try {
             bibliotecarioService.update(convertToEntity(bibliotecarioDTO));
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @DeleteMapping("/remover/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             bibliotecarioService.delete(id);
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -137,7 +182,7 @@ public class BibliotecarioController {
 
     private BibliotecarioDTO convertToDTO(Bibliotecario bibliotecario) {
 
-        BibliotecarioDTO bibliotecarioDTO = new BibliotecarioDTO();
+        var bibliotecarioDTO = new BibliotecarioDTO();
 
         bibliotecarioDTO.setId(bibliotecario.getUtilizador().getId());
         bibliotecarioDTO.setNome(bibliotecario.getUtilizador().getNome());
@@ -154,7 +199,7 @@ public class BibliotecarioController {
 
     private Bibliotecario convertToEntity(BibliotecarioDTO bibliotecarioDTO) {
 
-        Bibliotecario bibliotecario = new Bibliotecario();
+        var bibliotecario = new Bibliotecario();
         bibliotecario.setId(bibliotecarioDTO.getId());
         bibliotecario.getUtilizador().setNome(bibliotecarioDTO.getNome());
         bibliotecario.getUtilizador().setEmail(bibliotecarioDTO.getEmail());
@@ -169,4 +214,5 @@ public class BibliotecarioController {
 
         return bibliotecario;
     }
+    private static final Logger LOG = Logger.getLogger(BibliotecarioController.class.getName());
 }

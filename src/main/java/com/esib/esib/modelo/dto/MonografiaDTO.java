@@ -1,7 +1,12 @@
 package com.esib.esib.modelo.dto;
 
+import java.util.logging.Logger;
 import lombok.Data;
 
+/**
+ *
+ * @author Meldo Maunze
+ */
 @Data
 public class MonografiaDTO {
     private Long id;
@@ -20,5 +25,6 @@ public class MonografiaDTO {
     private String coSupervisor;
     private String curso;
     private String faculdade;
+    private static final Logger LOG = Logger.getLogger(MonografiaDTO.class.getName());
 
 }

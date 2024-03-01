@@ -1,19 +1,20 @@
 package com.esib.esib.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Service;
-
 import com.esib.esib.modelo.Movimento;
 import com.esib.esib.modelo.TipoMovimento;
 import com.esib.esib.repository.TipoMovimentoRepository;
-
+import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
+import javax.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+/**
+ *
+ * @author Meldo Maunze
+ */
 @Service
 @RequiredArgsConstructor
 @Data
@@ -22,6 +23,12 @@ public class TipoMovimentoService {
     private final TipoMovimentoRepository tipoMovimentoRepository;
 
     // CRUD methods
+
+    /**
+     *
+     * @param tipoMovimento
+     * @return
+     */
 
     @Transactional
     public TipoMovimento create(TipoMovimento tipoMovimento) {
@@ -37,18 +44,37 @@ public class TipoMovimentoService {
         return tipoMovimentoRepository.save(tipoMovimento);
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public Optional<TipoMovimento> findById(Long id) {
         return tipoMovimentoRepository.findById(id);
     }
 
+    /**
+     *
+     * @return
+     */
     public List<TipoMovimento> findAll() {
         return tipoMovimentoRepository.findAll();
     }
 
+    /**
+     *
+     * @param descricao
+     * @return
+     */
     public TipoMovimento findTipoMovimentoPorDescricao(String descricao) {
         return tipoMovimentoRepository.findByDescricao(descricao);
     }
 
+    /**
+     *
+     * @param tipoMovimento
+     * @return
+     */
     @Transactional
     public TipoMovimento update(TipoMovimento tipoMovimento) {
         // Verifique se a descrição do tipo de movimento já existe (se alterada)
@@ -65,6 +91,10 @@ public class TipoMovimentoService {
         return tipoMovimentoRepository.save(tipoMovimento);
     }
 
+    /**
+     *
+     * @param id
+     */
     @Transactional
     public void delete(Long id) {
         // Verifique se o tipo de movimento está associado a algum movimento antes de
@@ -81,13 +111,25 @@ public class TipoMovimentoService {
 
     // Methods related to relationships
 
+    /**
+     *
+     * @param tipoMovimento
+     * @return
+     */
+
     public List<Movimento> findMovimentosPorTipoMovimento(TipoMovimento tipoMovimento) {
         return tipoMovimento.getMovimentoList();
     }
 
+    /**
+     *
+     * @param tipoMovimento
+     * @return
+     */
     public TipoMovimento findByDescricao(String tipoMovimento) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findByDescricao'");
     }
+    private static final Logger LOG = Logger.getLogger(TipoMovimentoService.class.getName());
 
 }

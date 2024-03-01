@@ -1,12 +1,20 @@
 package com.esib.esib.controller;
 
+import com.esib.esib.modelo.TipoUtilizador;
+import com.esib.esib.modelo.dto.TipoUtilizadorDTO;
+import com.esib.esib.service.TipoUtilizadorService;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.http.HttpStatus;
+import java.util.logging.Logger;
+import static java.util.stream.Collectors.toList;
+import lombok.RequiredArgsConstructor;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 import org.springframework.http.ResponseEntity;
+import static org.springframework.http.ResponseEntity.created;
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.ok;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,14 +23,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
-import com.esib.esib.modelo.TipoUtilizador;
-import com.esib.esib.modelo.dto.TipoUtilizadorDTO;
-import com.esib.esib.service.TipoUtilizadorService;
-
-import lombok.RequiredArgsConstructor;
-
+/**
+ *
+ * @author Meldo Maunze
+ */
 @RestController
 @RequestMapping("/tiposutilizadores")
 @RequiredArgsConstructor
@@ -30,71 +36,95 @@ import lombok.RequiredArgsConstructor;
 public class TipoUtilizadorController {
     private final TipoUtilizadorService tipoUtilizadorService;
 
+    /**
+     *
+     * @return
+     */
     @GetMapping()
     public ResponseEntity<List<TipoUtilizadorDTO>> findAll() {
         try {
-            List<TipoUtilizador> tipoUtilizador = tipoUtilizadorService.findAll();
-            List<TipoUtilizadorDTO> tipoUtilizadorDTO = tipoUtilizador.stream()
+            var tipoUtilizador = tipoUtilizadorService.findAll();
+            var tipoUtilizadorDTO = tipoUtilizador.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(tipoUtilizadorDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(tipoUtilizadorDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/tipo/{id}")
     public ResponseEntity<TipoUtilizadorDTO> findById(@PathVariable Long id) {
         try {
-            Optional<TipoUtilizador> tipoUtilizador = tipoUtilizadorService.findById(id);
-            return tipoUtilizador.map(to -> ResponseEntity.ok(convertToDTO(to)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var tipoUtilizador = tipoUtilizadorService.findById(id);
+            return tipoUtilizador.map(to -> ok(convertToDTO(to)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param tipoUtilizadorDTO
+     * @return
+     */
     @PostMapping()
     public ResponseEntity<Void> create(@RequestBody TipoUtilizadorDTO tipoUtilizadorDTO) {
         try {
-            TipoUtilizador newtipoUtilizador = tipoUtilizadorService.create(convertToEntity(tipoUtilizadorDTO));
-            TipoUtilizadorDTO newtipoUtilizadorDTO = convertToDTO(newtipoUtilizador);
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
+            var newtipoUtilizador = tipoUtilizadorService.create(convertToEntity(tipoUtilizadorDTO));
+            var newtipoUtilizadorDTO = convertToDTO(newtipoUtilizador);
+            URI location = fromCurrentRequest()
                     .path("/{id}")
                     .buildAndExpand(newtipoUtilizadorDTO.getId())
                     .toUri();
 
-            return ResponseEntity.created(location).build();
+            return created(location).build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param tipoUtilizadorDTO
+     * @param id
+     * @return
+     */
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Void> update(@RequestBody TipoUtilizadorDTO tipoUtilizadorDTO, @PathVariable Long id) {
         try {
             tipoUtilizadorService.update(convertToEntity(tipoUtilizadorDTO));
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @DeleteMapping("/remover/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             tipoUtilizadorService.delete(id);
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
     private TipoUtilizadorDTO convertToDTO(TipoUtilizador tipoUtilizador) {
 
-        TipoUtilizadorDTO tipoUtilizadorDTO = new TipoUtilizadorDTO();
+        var tipoUtilizadorDTO = new TipoUtilizadorDTO();
         tipoUtilizadorDTO.setId(tipoUtilizador.getId());
         tipoUtilizadorDTO.setDescricao(tipoUtilizador.getDescricao());
 
@@ -103,10 +133,11 @@ public class TipoUtilizadorController {
 
     private TipoUtilizador convertToEntity(TipoUtilizadorDTO tipoUtilizadorDTO) {
 
-        TipoUtilizador tipoUtilizador = new TipoUtilizador();
+        var tipoUtilizador = new TipoUtilizador();
         tipoUtilizador.setId(tipoUtilizadorDTO.getId());
         tipoUtilizador.setDescricao(tipoUtilizadorDTO.getDescricao());
 
         return tipoUtilizador;
     }
+    private static final Logger LOG = Logger.getLogger(TipoUtilizadorController.class.getName());
 }

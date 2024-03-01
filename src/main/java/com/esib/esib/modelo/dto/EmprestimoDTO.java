@@ -1,9 +1,13 @@
 package com.esib.esib.modelo.dto;
 
 import java.util.Date;
-
+import java.util.logging.Logger;
 import lombok.Data;
 
+/**
+ *
+ * @author Meldo Maunze
+ */
 @Data
 public class EmprestimoDTO {
 
@@ -21,5 +25,6 @@ public class EmprestimoDTO {
 
     private Long utilizador;
     private String utlizadorNome;
+    private static final Logger LOG = Logger.getLogger(EmprestimoDTO.class.getName());
 
 }

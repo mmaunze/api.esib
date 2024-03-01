@@ -1,12 +1,5 @@
 package com.esib.esib.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Service;
-
 import com.esib.esib.modelo.AreaCientifica;
 import com.esib.esib.modelo.Emprestimo;
 import com.esib.esib.modelo.Estado;
@@ -17,10 +10,18 @@ import com.esib.esib.modelo.Obra;
 import com.esib.esib.modelo.Reserva;
 import com.esib.esib.modelo.TipoObra;
 import com.esib.esib.repository.ObraRepository;
-
+import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
+import javax.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+/**
+ *
+ * @author Meldo Maunze
+ */
 @Service
 @RequiredArgsConstructor
 @Data
@@ -29,6 +30,12 @@ public class ObraService {
     private final ObraRepository obraRepository;
 
     // CRUD methods
+
+    /**
+     *
+     * @param obra
+     * @return
+     */
 
     @Transactional
     public Obra create(Obra obra) {
@@ -46,29 +53,57 @@ public class ObraService {
         return obraRepository.save(obra);
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public Optional<Obra> findById(Long id) {
         return obraRepository.findById(id);
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Obra> findAll() {
         return obraRepository.findAll();
     }
 
+    /**
+     *
+     * @param autor
+     * @return
+     */
     public List<Obra> findByAutor(String autor) {
         return obraRepository.findByAutor1ContainingIgnoreCaseOrAutor2ContainingIgnoreCaseOrAutor3ContainingIgnoreCase(
                 autor, autor, autor);
     }
 
+    /**
+     *
+     * @param areacientifica
+     * @return
+     */
     public List<Obra> findByAreaCientifica(String areacientifica) {
         return obraRepository.findByAreaCientifica(areacientifica);
     }
 
+    /**
+     *
+     * @param obra
+     * @return
+     */
     @Transactional
     public Obra update(Obra obra) {
 
         return obraRepository.save(obra);
     }
 
+    /**
+     *
+     * @param id
+     */
     @Transactional
     public void delete(Long id) {
         // Verifique se a obra possui empréstimos, reservas ou multas relacionadas antes
@@ -88,13 +123,24 @@ public class ObraService {
         obraRepository.deleteById(id);
     }
 
+    /**
+     *
+     * @param idioma
+     * @return
+     */
     public List<Obra> findByIdioma(String idioma) {
         return obraRepository.findByIdioma(idioma);
     }
 
+    /**
+     *
+     * @param titulo
+     * @return
+     */
     public List<Obra> findByTitulo(String titulo) {
         return obraRepository.findByTitulo(titulo);
     }
 
     // Methods related
+    private static final Logger LOG = Logger.getLogger(ObraService.class.getName());
 }

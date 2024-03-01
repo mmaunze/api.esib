@@ -1,21 +1,22 @@
 package com.esib.esib.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Service;
-
 import com.esib.esib.modelo.Emprestimo;
 import com.esib.esib.modelo.Estado;
 import com.esib.esib.modelo.Multa;
 import com.esib.esib.modelo.PagamentoMulta;
 import com.esib.esib.repository.MultaRepository;
-
+import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
+import javax.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+/**
+ *
+ * @author Meldo Maunze
+ */
 @Service
 @RequiredArgsConstructor
 @Data
@@ -24,6 +25,12 @@ public class MultaService {
     private final MultaRepository multaRepository;
 
     // CRUD methods
+
+    /**
+     *
+     * @param multa
+     * @return
+     */
 
     @Transactional
     public Multa create(Multa multa) {
@@ -44,27 +51,55 @@ public class MultaService {
         return multaRepository.save(multa);
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public Optional<Multa> findById(Long id) {
         return multaRepository.findById(id);
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Multa> findAll() {
         return multaRepository.findAll();
     }
 
+    /**
+     *
+     * @param emprestimo
+     * @return
+     */
     public List<Multa> findMultasPorEmprestimo(Long emprestimo) {
         return multaRepository.findByEmprestimo(emprestimo);
     }
 
+    /**
+     *
+     * @param estado
+     * @return
+     */
     public List<Multa> findByEstado(String estado) {
         return multaRepository.findByEstado(estado);
     }
 
+    /**
+     *
+     * @param multa
+     * @return
+     */
     @Transactional
     public Multa update(Multa multa) {
         return multaRepository.save(multa);
     }
 
+    /**
+     *
+     * @param id
+     */
     @Transactional
     public void delete(Long id) {
         multaRepository.deleteById(id);
@@ -72,15 +107,32 @@ public class MultaService {
 
     // Methods related to relationships
 
+    /**
+     *
+     * @param multa
+     * @return
+     */
+
     public Emprestimo findEmprestimoPorMulta(Multa multa) {
         return multa.getEmprestimo();
     }
 
+    /**
+     *
+     * @param multa
+     * @return
+     */
     public Estado findEstadoPorMulta(Multa multa) {
         return multa.getEstado();
     }
 
+    /**
+     *
+     * @param multa
+     * @return
+     */
     public List<PagamentoMulta> findPagamentosPorMulta(Multa multa) {
         return multa.getPagamentoMultaList();
     }
+    private static final Logger LOG = Logger.getLogger(MultaService.class.getName());
 }

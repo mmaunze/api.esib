@@ -1,19 +1,20 @@
 package com.esib.esib.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Service;
-
 import com.esib.esib.modelo.Idioma;
 import com.esib.esib.modelo.Obra;
 import com.esib.esib.repository.IdiomaRepository;
-
+import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
+import javax.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+/**
+ *
+ * @author Meldo Maunze
+ */
 @Service
 @RequiredArgsConstructor
 @Data
@@ -23,24 +24,48 @@ public class IdiomaService {
 
     // CRUD methods
 
+    /**
+     *
+     * @param idioma
+     * @return
+     */
+
     @Transactional
     public Idioma create(Idioma idioma) {
         return idiomaRepository.save(idioma);
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public Optional<Idioma> findById(Long id) {
         return idiomaRepository.findById(id);
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Idioma> findAll() {
         return idiomaRepository.findAll();
     }
 
+    /**
+     *
+     * @param idioma
+     * @return
+     */
     @Transactional
     public Idioma update(Idioma idioma) {
         return idiomaRepository.save(idioma);
     }
 
+    /**
+     *
+     * @param id
+     */
     @Transactional
     public void delete(Long id) {
         idiomaRepository.deleteById(id);
@@ -63,13 +88,25 @@ public class IdiomaService {
      */
     // Method related to relationships
 
+    /**
+     *
+     * @param idioma
+     * @return
+     */
+
     public List<Obra> findObrasByIdioma(Idioma idioma) {
         return idioma.getObraList();
     }
 
+    /**
+     *
+     * @param idioma
+     * @return
+     */
     public Idioma findByDescricao(String idioma) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findByDescricao'");
     }
+    private static final Logger LOG = Logger.getLogger(IdiomaService.class.getName());
 
 }

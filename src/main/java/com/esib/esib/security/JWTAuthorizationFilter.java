@@ -1,26 +1,34 @@
 package com.esib.esib.security;
 
 import java.io.IOException;
-import java.util.Objects;
-
+import static java.util.Objects.nonNull;
+import java.util.logging.Logger;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+/**
+ *
+ * @author Meldo Maunze
+ */
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-    private JWTUtil jwtUtil;
+    private final JWTUtil jwtUtil;
 
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
+    /**
+     *
+     * @param authenticationManager
+     * @param jwtUtil
+     * @param userDetailsService
+     */
     public JWTAuthorizationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil,
             UserDetailsService userDetailsService) {
         super(authenticationManager);
@@ -28,29 +36,40 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         this.userDetailsService = userDetailsService;
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @param filterChain
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {
 
-        String authorizationHeader = request.getHeader("Authorization");
-        if (Objects.nonNull(authorizationHeader) && authorizationHeader.startsWith("Bearer ")) {
-            String token = authorizationHeader.substring(7);
-            UsernamePasswordAuthenticationToken auth = getAuthentication(token);
-            if (Objects.nonNull(auth))
-                SecurityContextHolder.getContext().setAuthentication(auth);
+        var authorizationHeader = request.getHeader("Authorization");
+        if (nonNull(authorizationHeader) && authorizationHeader.startsWith("Bearer ")) {
+            var token = authorizationHeader.substring(7);
+            var auth = getAuthentication(token);
+            if (nonNull(auth)) {
+                getContext().setAuthentication(auth);
+            }
         }
         filterChain.doFilter(request, response);
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(String token) {
         if (this.jwtUtil.isValidToken(token)) {
-            String username = this.jwtUtil.getUsername(token);
-            UserDetails user = this.userDetailsService.loadUserByUsername(username);
-            UsernamePasswordAuthenticationToken authenticatedUser = new UsernamePasswordAuthenticationToken(user, null,
-                    user.getAuthorities());
+            var username = this.jwtUtil.getUsername(token);
+            var user = this.userDetailsService.loadUserByUsername(username);
+            var authenticatedUser = 
+                new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                
             return authenticatedUser;
         }
         return null;
     }
+    private static final Logger LOG = Logger.getLogger(JWTAuthorizationFilter.class.getName());
 
 }

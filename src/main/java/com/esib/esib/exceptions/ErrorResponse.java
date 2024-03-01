@@ -1,26 +1,50 @@
 package com.esib.esib.exceptions;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-
+import static java.util.Objects.isNull;
+import java.util.logging.Logger;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+/**
+ *
+ * @author Meldo Maunze
+ */
 @Getter
 @Setter
 @RequiredArgsConstructor
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(NON_NULL)
 public class ErrorResponse {
     private final int status;
     private final String message;
     private String stackTrace;
     private List<ValidationError> errors;
 
+    /**
+     *
+     * @param field
+     * @param message
+     */
+    public void addValidationError(String field, String message) {
+        if (isNull(errors)) {
+            this.errors = new ArrayList<>();
+        }
+        this.errors.add(new ValidationError(field, message));
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String toJson() {
+        return "{\"status\": " + getStatus() + ", " +
+                "\"message\": \"" + getMessage() + "\"}";
+    }
     @Getter
     @Setter
     @RequiredArgsConstructor
@@ -28,17 +52,6 @@ public class ErrorResponse {
         private final String field;
         private final String message;
     }
-
-    public void addValidationError(String field, String message) {
-        if (Objects.isNull(errors)) {
-            this.errors = new ArrayList<>();
-        }
-        this.errors.add(new ValidationError(field, message));
-    }
-
-    public String toJson() {
-        return "{\"status\": " + getStatus() + ", " +
-                "\"message\": \"" + getMessage() + "\"}";
-    }
+    private static final Logger LOG = Logger.getLogger(ErrorResponse.class.getName());
 
 }

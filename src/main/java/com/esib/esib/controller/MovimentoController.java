@@ -1,12 +1,24 @@
 package com.esib.esib.controller;
 
+import com.esib.esib.modelo.Movimento;
+import com.esib.esib.modelo.dto.MovimentoDTO;
+import com.esib.esib.service.BibliotecarioService;
+import com.esib.esib.service.MovimentoService;
+import com.esib.esib.service.ObraService;
+import com.esib.esib.service.TipoMovimentoService;
+import com.esib.esib.service.UtilizadorService;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.http.HttpStatus;
+import java.util.logging.Logger;
+import static java.util.stream.Collectors.toList;
+import lombok.RequiredArgsConstructor;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 import org.springframework.http.ResponseEntity;
+import static org.springframework.http.ResponseEntity.created;
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.ok;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,18 +27,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
-import com.esib.esib.modelo.Movimento;
-import com.esib.esib.modelo.dto.MovimentoDTO;
-import com.esib.esib.service.BibliotecarioService;
-import com.esib.esib.service.MovimentoService;
-import com.esib.esib.service.ObraService;
-import com.esib.esib.service.TipoMovimentoService;
-import com.esib.esib.service.UtilizadorService;
-
-import lombok.RequiredArgsConstructor;
-
+/**
+ *
+ * @author Meldo Maunze
+ */
 @RestController
 @RequestMapping("/movimentos")
 @RequiredArgsConstructor
@@ -39,149 +45,203 @@ public class MovimentoController {
     private final UtilizadorService utilizadorService;
     private final ObraService obraService;
 
+    /**
+     *
+     * @return
+     */
     @GetMapping()
     public ResponseEntity<List<MovimentoDTO>> findAll() {
         try {
-            List<Movimento> movimentos = movimentoService.findAll();
-            List<MovimentoDTO> movimentosDTO = movimentos.stream()
+            var movimentos = movimentoService.findAll();
+            var movimentosDTO = movimentos.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(movimentosDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(movimentosDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/movimento/{id}")
     public ResponseEntity<MovimentoDTO> findById(@PathVariable Long id) {
         try {
-            Optional<Movimento> movimento = movimentoService.findById(id);
-            return movimento.map(u -> ResponseEntity.ok(convertToDTO(u)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var movimento = movimentoService.findById(id);
+            return movimento.map(u -> ok(convertToDTO(u)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param titulo
+     * @return
+     */
     @GetMapping("/titulo/{titulo}")
     public ResponseEntity<List<MovimentoDTO>> findByTitulo(@PathVariable String titulo) {
         try {
-            List<Movimento> movimentos = movimentoService.findByTitulo(titulo);
-            List<MovimentoDTO> movimentosDTO = movimentos.stream()
+            var movimentos = movimentoService.findByTitulo(titulo);
+            var movimentosDTO = movimentos.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(movimentosDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(movimentosDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param utilizador
+     * @return
+     */
     @GetMapping("/utilizador/{utilizador}")
     public ResponseEntity<List<MovimentoDTO>> findByUtilizador(@PathVariable Long utilizador) {
         try {
-            List<Movimento> movimentos = movimentoService.findByUtilizador(utilizador);
-            List<MovimentoDTO> movimentosDTO = movimentos.stream()
+            var movimentos = movimentoService.findByUtilizador(utilizador);
+            var movimentosDTO = movimentos.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(movimentosDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(movimentosDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param bibliotecario
+     * @return
+     */
     @GetMapping("/bibliotecario/{bibliotecario}")
     public ResponseEntity<List<MovimentoDTO>> findByBibliotecario(@PathVariable Long bibliotecario) {
         try {
-            List<Movimento> movimentos = movimentoService.findByBibliotecario(bibliotecario);
-            List<MovimentoDTO> movimentosDTO = movimentos.stream()
+            var movimentos = movimentoService.findByBibliotecario(bibliotecario);
+            var movimentosDTO = movimentos.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(movimentosDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(movimentosDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param obra
+     * @return
+     */
     @GetMapping("/obra/{obra}")
     public ResponseEntity<List<MovimentoDTO>> findByObra(@PathVariable Long obra) {
         try {
-            List<Movimento> movimentos = movimentoService.findByObra(obra);
-            List<MovimentoDTO> movimentosDTO = movimentos.stream()
+            var movimentos = movimentoService.findByObra(obra);
+            var movimentosDTO = movimentos.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(movimentosDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(movimentosDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param idioma
+     * @return
+     */
     @GetMapping("/idioma/{idioma}")
     public ResponseEntity<List<MovimentoDTO>> findByIdioma(@PathVariable String idioma) {
         try {
-            List<Movimento> movimentos = movimentoService.findByIdioma(idioma);
-            List<MovimentoDTO> movimentosDTO = movimentos.stream()
+            var movimentos = movimentoService.findByIdioma(idioma);
+            var movimentosDTO = movimentos.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(movimentosDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(movimentosDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param areacientifica
+     * @return
+     */
     @GetMapping("/areacientifica/{areacientifica}")
     public ResponseEntity<List<MovimentoDTO>> findByAreaCientifica(@PathVariable String areacientifica) {
         try {
-            List<Movimento> movimentos = movimentoService.findByAreaCientifica(areacientifica);
-            List<MovimentoDTO> movimentosDTO = movimentos.stream()
+            var movimentos = movimentoService.findByAreaCientifica(areacientifica);
+            var movimentosDTO = movimentos.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(movimentosDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(movimentosDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param movimentoDTO
+     * @return
+     */
     @PostMapping()
     public ResponseEntity<Void> create(@RequestBody MovimentoDTO movimentoDTO) {
         try {
-            Movimento newMovimento = movimentoService.create(convertToEntity(movimentoDTO));
-            MovimentoDTO newMovimentoDTO = convertToDTO(newMovimento);
+            var newMovimento = movimentoService.create(convertToEntity(movimentoDTO));
+            var newMovimentoDTO = convertToDTO(newMovimento);
 
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
+            URI location = fromCurrentRequest()
                     .path("/{id}")
                     .buildAndExpand(newMovimentoDTO.getId())
                     .toUri();
 
-            return ResponseEntity.created(location).build();
+            return created(location).build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param movimentoDTO
+     * @param id
+     * @return
+     */
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Void> update(@RequestBody MovimentoDTO movimentoDTO, @PathVariable Long id) {
         try {
             movimentoService.update(convertToEntity(movimentoDTO));
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @DeleteMapping("/remover/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             movimentoService.delete(id);
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     private MovimentoDTO convertToDTO(Movimento movimento) {
 
-        MovimentoDTO movimentoDTO = new MovimentoDTO();
+        var movimentoDTO = new MovimentoDTO();
 
         movimentoDTO.setId(movimento.getId());
 
@@ -200,7 +260,7 @@ public class MovimentoController {
     }
 
     private Movimento convertToEntity(MovimentoDTO movimentoDTO) {
-        Movimento movimento = new Movimento();
+        var movimento = new Movimento();
 
         movimento.setId(movimento.getId());
         movimento.setUtilizador(utilizadorService.findById(movimentoDTO.getUtilizador()).get());
@@ -212,4 +272,5 @@ public class MovimentoController {
 
         return movimento;
     }
+    private static final Logger LOG = Logger.getLogger(MovimentoController.class.getName());
 }

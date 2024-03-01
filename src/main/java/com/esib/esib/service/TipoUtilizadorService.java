@@ -1,19 +1,20 @@
 package com.esib.esib.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Service;
-
 import com.esib.esib.modelo.TipoUtilizador;
 import com.esib.esib.modelo.Utilizador;
 import com.esib.esib.repository.TipoUtilizadorRepository;
-
+import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
+import javax.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+/**
+ *
+ * @author Meldo Maunze
+ */
 @Service
 @RequiredArgsConstructor
 @Data
@@ -22,6 +23,12 @@ public class TipoUtilizadorService {
     private final TipoUtilizadorRepository tipoUtilizadorRepository;
 
     // CRUD methods
+
+    /**
+     *
+     * @param tipoUtilizador
+     * @return
+     */
 
     @Transactional
     public TipoUtilizador create(TipoUtilizador tipoUtilizador) {
@@ -37,14 +44,28 @@ public class TipoUtilizadorService {
         return tipoUtilizadorRepository.save(tipoUtilizador);
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public Optional<TipoUtilizador> findById(Long id) {
         return tipoUtilizadorRepository.findById(id);
     }
 
+    /**
+     *
+     * @return
+     */
     public List<TipoUtilizador> findAll() {
         return tipoUtilizadorRepository.findAll();
     }
 
+    /**
+     *
+     * @param tipoUtilizador
+     * @return
+     */
     @Transactional
     public TipoUtilizador update(TipoUtilizador tipoUtilizador) {
         // Verifique se a descrição do tipo de utilizador já existe (se alterada)
@@ -62,6 +83,10 @@ public class TipoUtilizadorService {
         return tipoUtilizadorRepository.save(tipoUtilizador);
     }
 
+    /**
+     *
+     * @param id
+     */
     @Transactional
     public void delete(Long id) {
         // Verifique se o tipo de utilizador está associado a algum utilizador antes de
@@ -78,12 +103,24 @@ public class TipoUtilizadorService {
 
     // Methods related to relationships
 
+    /**
+     *
+     * @param tipoUtilizador
+     * @return
+     */
+
     public List<Utilizador> findUtilizadoresPorTipoUtilizador(TipoUtilizador tipoUtilizador) {
         return tipoUtilizador.getUtilizadorList();
     }
 
+    /**
+     *
+     * @param tipoUtilizador
+     * @return
+     */
     public TipoUtilizador findByDescricao(String tipoUtilizador) {
         return tipoUtilizadorRepository.findByDescricao(tipoUtilizador);
     }
+    private static final Logger LOG = Logger.getLogger(TipoUtilizadorService.class.getName());
 
 }

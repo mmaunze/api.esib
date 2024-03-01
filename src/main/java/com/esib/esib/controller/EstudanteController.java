@@ -1,12 +1,23 @@
 package com.esib.esib.controller;
 
+import com.esib.esib.modelo.Estudante;
+import com.esib.esib.modelo.dto.EstudanteDTO;
+import com.esib.esib.service.AreaCientificaService;
+import com.esib.esib.service.CursoService;
+import com.esib.esib.service.DepartamentoService;
+import com.esib.esib.service.EstudanteService;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.http.HttpStatus;
+import java.util.logging.Logger;
+import static java.util.stream.Collectors.toList;
+import lombok.RequiredArgsConstructor;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 import org.springframework.http.ResponseEntity;
+import static org.springframework.http.ResponseEntity.created;
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.ok;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,17 +26,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
-import com.esib.esib.modelo.Estudante;
-import com.esib.esib.modelo.dto.EstudanteDTO;
-import com.esib.esib.service.AreaCientificaService;
-import com.esib.esib.service.CursoService;
-import com.esib.esib.service.DepartamentoService;
-import com.esib.esib.service.EstudanteService;
-
-import lombok.RequiredArgsConstructor;
-
+/**
+ *
+ * @author Meldo Maunze
+ */
 @RestController
 @RequestMapping("/utilizadores/estudantes")
 @RequiredArgsConstructor
@@ -36,98 +42,137 @@ public class EstudanteController {
     private final CursoService cursoService;
     private final AreaCientificaService areaCientificaService;
 
+    /**
+     *
+     * @return
+     */
     @GetMapping()
     public ResponseEntity<List<EstudanteDTO>> findAll() {
         try {
-            List<Estudante> estudantes = estudanteService.findAll();
-            List<EstudanteDTO> estudantesDTO = estudantes.stream()
+            var estudantes = estudanteService.findAll();
+            var estudantesDTO = estudantes.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(estudantesDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(estudantesDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/estudante/{id}")
     public ResponseEntity<EstudanteDTO> findById(@PathVariable Long id) {
         try {
-            Optional<Estudante> estudante = estudanteService.findById(id);
-            return estudante.map(b -> ResponseEntity.ok(convertToDTO(b)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var estudante = estudanteService.findById(id);
+            return estudante.map(b -> ok(convertToDTO(b)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param username
+     * @return
+     */
     @GetMapping("/username/{username}")
     public ResponseEntity<EstudanteDTO> findByUsername(@PathVariable String username) {
         try {
-            Optional<Estudante> estudante = estudanteService.findByUsername(username);
-            return estudante.map(b -> ResponseEntity.ok(convertToDTO(b)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var estudante = estudanteService.findByUsername(username);
+            return estudante.map(b -> ok(convertToDTO(b)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param contacto
+     * @return
+     */
     @GetMapping("/contacto/{contacto}")
     public ResponseEntity<EstudanteDTO> findByContacto(@PathVariable String contacto) {
         try {
-            Optional<Estudante> estudante = estudanteService.findByContacto(contacto);
-            return estudante.map(b -> ResponseEntity.ok(convertToDTO(b)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var estudante = estudanteService.findByContacto(contacto);
+            return estudante.map(b -> ok(convertToDTO(b)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param email
+     * @return
+     */
     @GetMapping("/email/{email}")
     public ResponseEntity<EstudanteDTO> findByEmail(@PathVariable String email) {
         try {
-            Optional<Estudante> estudante = estudanteService.findByEmail(email);
-            return estudante.map(b -> ResponseEntity.ok(convertToDTO(b)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var estudante = estudanteService.findByEmail(email);
+            return estudante.map(b -> ok(convertToDTO(b)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param estudanteDTO
+     * @return
+     */
     @PostMapping()
     public ResponseEntity<Void> create(@RequestBody EstudanteDTO estudanteDTO) {
         try {
-            Estudante newEstudante = estudanteService.create(convertToEntity(estudanteDTO));
-            EstudanteDTO newEstudanteDTO = convertToDTO(newEstudante);
+            var newEstudante = estudanteService.create(convertToEntity(estudanteDTO));
+            var newEstudanteDTO = convertToDTO(newEstudante);
 
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
+            URI location = fromCurrentRequest()
                     .path("/{id}")
                     .buildAndExpand(newEstudanteDTO.getId())
                     .toUri();
 
-            return ResponseEntity.created(location).build();
+            return created(location).build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param estudanteDTO
+     * @param id
+     * @return
+     */
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Void> update(@RequestBody EstudanteDTO estudanteDTO, @PathVariable Long id) {
         try {
             estudanteService.update(convertToEntity(estudanteDTO));
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @DeleteMapping("/remover/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             estudanteService.delete(id);
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -137,7 +182,7 @@ public class EstudanteController {
 
     private EstudanteDTO convertToDTO(Estudante estudante) {
 
-        EstudanteDTO estudanteDTO = new EstudanteDTO();
+        var estudanteDTO = new EstudanteDTO();
 
         estudanteDTO.setId(estudante.getUtilizador().getId());
         estudanteDTO.setNome(estudante.getUtilizador().getNome());
@@ -157,7 +202,7 @@ public class EstudanteController {
 
     private Estudante convertToEntity(EstudanteDTO estudanteDTO) {
 
-        Estudante estudante = new Estudante();
+        var estudante = new Estudante();
         estudante.setId(estudanteDTO.getId());
         estudante.getUtilizador().setNome(estudanteDTO.getNome());
         estudante.getUtilizador().setEmail(estudanteDTO.getEmail());
@@ -175,4 +220,5 @@ public class EstudanteController {
 
         return estudante;
     }
+    private static final Logger LOG = Logger.getLogger(EstudanteController.class.getName());
 }

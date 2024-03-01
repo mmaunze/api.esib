@@ -1,5 +1,6 @@
 package com.esib.esib.modelo.enums;
 
+
 import java.util.Objects;
 
 import lombok.AllArgsConstructor;
@@ -9,8 +10,11 @@ import lombok.Getter;
 @Getter
 public enum ProfileEnum {
 
-    ADMIN(1, "ROLE_ADMIN"),
-    USER(2, "ROLE_USER");
+    BIBLIOTECARIO(1,"ROLE_BIBLIOTECARIO"),
+    ESTUDANTE(2,"ROLE_ESTUDANTE"),
+    DOCENTE(3,"ROLE_DOCENTE"),
+    CTA(4,"ROLE_CTA"),
+    ADMINISTRADOR(5,"ROLE_ADMINISTRADOR");
 
     private Integer code;
     private String description;

@@ -1,23 +1,26 @@
 
 package com.esib.esib.modelo;
 
-import static javax.persistence.FetchType.*;
-
 import java.io.Serializable;
-
+import java.util.logging.Logger;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import static javax.persistence.FetchType.*;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import lombok.Data;
 
+/**
+ *
+ * @author Meldo Maunze
+ */
 @Entity
 @Table(catalog = "esib", schema = "public", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "isbn" }) })
@@ -48,7 +51,8 @@ public class Livro implements Serializable {
     private String editora;
 
     @JoinColumn(name = "id_obra", referencedColumnName = "id_obra", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @OneToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
     private Obra obra;
+    private static final Logger LOG = Logger.getLogger(Livro.class.getName());
 
 }

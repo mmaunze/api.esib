@@ -1,20 +1,21 @@
 package com.esib.esib.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Service;
-
 import com.esib.esib.modelo.Bibliotecario;
 import com.esib.esib.modelo.Multa;
 import com.esib.esib.modelo.PagamentoMulta;
 import com.esib.esib.repository.PagamentoMultaRepository;
-
+import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
+import javax.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+/**
+ *
+ * @author Meldo Maunze
+ */
 @Service
 @RequiredArgsConstructor
 @Data
@@ -23,6 +24,12 @@ public class PagamentoMultaService {
     private final PagamentoMultaRepository pagamentoMultaRepository;
 
     // CRUD methods
+
+    /**
+     *
+     * @param pagamentoMulta
+     * @return
+     */
 
     @Transactional
     public PagamentoMulta create(PagamentoMulta pagamentoMulta) {
@@ -48,27 +55,55 @@ public class PagamentoMultaService {
         return pagamentoMultaRepository.save(pagamentoMulta);
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public Optional<PagamentoMulta> findById(Long id) {
         return pagamentoMultaRepository.findById(id);
     }
 
+    /**
+     *
+     * @return
+     */
     public List<PagamentoMulta> findAll() {
         return pagamentoMultaRepository.findAll();
     }
 
+    /**
+     *
+     * @param multa
+     * @return
+     */
     public List<PagamentoMulta> findByMulta(Long multa) {
         return pagamentoMultaRepository.findByMulta(multa);
     }
 
+    /**
+     *
+     * @param bibliotecario
+     * @return
+     */
     public List<PagamentoMulta> findByBibliotecario(Long bibliotecario) {
         return pagamentoMultaRepository.findByBibliotecario(bibliotecario);
     }
 
+    /**
+     *
+     * @param utilizador
+     * @return
+     */
     public List<PagamentoMulta> findByUtilizador(Long utilizador) {
         return pagamentoMultaRepository.findByUtilizador(utilizador);
     }
 
-
+    /**
+     *
+     * @param pagamentoMulta
+     * @return
+     */
     @Transactional
     public PagamentoMulta update(PagamentoMulta pagamentoMulta) {
         // Verifique se a multa associada existe
@@ -93,6 +128,10 @@ public class PagamentoMultaService {
         return pagamentoMultaRepository.save(pagamentoMulta);
     }
 
+    /**
+     *
+     * @param id
+     */
     @Transactional
     public void delete(Long id) {
 
@@ -102,12 +141,24 @@ public class PagamentoMultaService {
 
     // Methods related to relationships
 
+    /**
+     *
+     * @param pagamentoMulta
+     * @return
+     */
+
     public Multa findMultaPorPagamentoMulta(PagamentoMulta pagamentoMulta) {
         return pagamentoMulta.getMulta();
     }
 
+    /**
+     *
+     * @param pagamentoMulta
+     * @return
+     */
     public Bibliotecario findBibliotecarioPorPagamentoMulta(PagamentoMulta pagamentoMulta) {
         return pagamentoMulta.getBibliotecario();
     }
+    private static final Logger LOG = Logger.getLogger(PagamentoMultaService.class.getName());
 
 }

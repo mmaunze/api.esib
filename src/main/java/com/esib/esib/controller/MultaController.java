@@ -1,12 +1,21 @@
 package com.esib.esib.controller;
 
+import com.esib.esib.modelo.Multa;
+import com.esib.esib.modelo.dto.MultaDTO;
+import com.esib.esib.service.EstadoService;
+import com.esib.esib.service.MultaService;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.http.HttpStatus;
+import java.util.logging.Logger;
+import static java.util.stream.Collectors.toList;
+import lombok.RequiredArgsConstructor;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 import org.springframework.http.ResponseEntity;
+import static org.springframework.http.ResponseEntity.created;
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.ok;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,15 +24,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
-import com.esib.esib.modelo.Multa;
-import com.esib.esib.modelo.dto.MultaDTO;
-import com.esib.esib.service.EstadoService;
-import com.esib.esib.service.MultaService;
-
-import lombok.RequiredArgsConstructor;
-
+/**
+ *
+ * @author Meldo Maunze
+ */
 @RestController
 @RequestMapping("/multas")
 @RequiredArgsConstructor
@@ -32,84 +38,113 @@ public class MultaController {
     private final MultaService multaService;
     private final EstadoService estadoService;
 
+    /**
+     *
+     * @return
+     */
     @GetMapping()
     public ResponseEntity<List<MultaDTO>> findAll() {
         try {
-            List<Multa> multas = multaService.findAll();
-            List<MultaDTO> multaDTO = multas.stream()
+            var multas = multaService.findAll();
+            var multaDTO = multas.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(multaDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(multaDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/multa/{id}")
     public ResponseEntity<MultaDTO> findById(@PathVariable Long id) {
         try {
-            Optional<Multa> multa = multaService.findById(id);
-            return multa.map(d -> ResponseEntity.ok(convertToDTO(d)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var multa = multaService.findById(id);
+            return multa.map(d -> ok(convertToDTO(d)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param estado
+     * @return
+     */
     @GetMapping("/estado/{estado}")
     public ResponseEntity<List<MultaDTO>> findByEstado(@PathVariable String estado) {
         try {
-            List<Multa> multas = multaService.findByEstado(estado);
-            List<MultaDTO> multaDTO = multas.stream()
+            var multas = multaService.findByEstado(estado);
+            var multaDTO = multas.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(multaDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(multaDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param multaDTO
+     * @return
+     */
     @PostMapping()
     public ResponseEntity<Void> create(@RequestBody MultaDTO multaDTO) {
         try {
-            Multa newMulta = multaService.create(convertToEntity(multaDTO));
-            MultaDTO newMultaDTO = convertToDTO(newMulta);
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
+            var newMulta = multaService.create(convertToEntity(multaDTO));
+            var newMultaDTO = convertToDTO(newMulta);
+            URI location = fromCurrentRequest()
                     .path("/{id}")
                     .buildAndExpand(newMultaDTO.getId())
                     .toUri();
 
-            return ResponseEntity.created(location).build();
+            return created(location).build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param multaDTO
+     * @param id
+     * @return
+     */
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Void> update(@RequestBody MultaDTO multaDTO, @PathVariable Long id) {
         try {
             multaService.update(convertToEntity(multaDTO));
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @DeleteMapping("/remover/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             multaService.delete(id);
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
     private MultaDTO convertToDTO(Multa multa) {
 
-        MultaDTO multaDTO = new MultaDTO();
+        var multaDTO = new MultaDTO();
         multaDTO.setId(multa.getId());
         multaDTO.setValor(multa.getValorMulta());
         multaDTO.setEmprestimo(multa.getEmprestimo().getId());
@@ -120,7 +155,7 @@ public class MultaController {
 
     private Multa convertToEntity(MultaDTO multaDTO) {
 
-        Multa multa = new Multa();
+        var multa = new Multa();
         multa.setId(multaDTO.getId());
         multa.setValorMulta(multaDTO.getValor());
         multa.getEmprestimo().setId(multaDTO.getId());
@@ -128,4 +163,5 @@ public class MultaController {
 
         return multa;
     }
+    private static final Logger LOG = Logger.getLogger(MultaController.class.getName());
 }

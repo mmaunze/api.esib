@@ -1,21 +1,22 @@
 package com.esib.esib.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Service;
-
 import com.esib.esib.modelo.Estado;
 import com.esib.esib.modelo.Obra;
 import com.esib.esib.modelo.Reserva;
 import com.esib.esib.modelo.Utilizador;
 import com.esib.esib.repository.ReservaRepository;
-
+import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
+import javax.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+/**
+ *
+ * @author Meldo Maunze
+ */
 @Service
 @RequiredArgsConstructor
 @Data
@@ -24,6 +25,12 @@ public class ReservaService {
     private final ReservaRepository reservaRepository;
 
     // CRUD methods
+
+    /**
+     *
+     * @param reserva
+     * @return
+     */
 
     @Transactional
     public Reserva create(Reserva reserva) {
@@ -56,14 +63,28 @@ public class ReservaService {
         return reservaRepository.save(reserva);
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public Optional<Reserva> findById(Long id) {
         return reservaRepository.findById(id);
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Reserva> findAll() {
         return reservaRepository.findAll();
     }
 
+    /**
+     *
+     * @param reserva
+     * @return
+     */
     @Transactional
     public Reserva update(Reserva reserva) {
         // Verifique se a obra associada existe
@@ -76,6 +97,10 @@ public class ReservaService {
         return reservaRepository.save(reserva);
     }
 
+    /**
+     *
+     * @param id
+     */
     @Transactional
     public void delete(Long id) {
         // Verifique se a reserva está ativa antes de excluir
@@ -92,38 +117,84 @@ public class ReservaService {
 
     // Methods related to relationships
 
+    /**
+     *
+     * @param reserva
+     * @return
+     */
+
     public Obra findObraPorReserva(Reserva reserva) {
         return reserva.getObra();
     }
 
+    /**
+     *
+     * @param reserva
+     * @return
+     */
     public Utilizador findUtilizadorPorReserva(Reserva reserva) {
         return reserva.getUtilizador();
     }
 
+    /**
+     *
+     * @param reserva
+     * @return
+     */
     public Estado findEstadoPorReserva(Reserva reserva) {
         return reserva.getEstado();
     }
 
+    /**
+     *
+     * @param utilizador
+     * @return
+     */
     public List<Reserva> findByUtilizador(Long utilizador) {
         return reservaRepository.findByUtilizador(utilizador);
     }
 
+    /**
+     *
+     * @param obra
+     * @return
+     */
     public List<Reserva> findByObra(Long obra) {
         return reservaRepository.findByObra(obra);
     }
 
+    /**
+     *
+     * @param estado
+     * @return
+     */
     public List<Reserva> findEmprestimosPorEstado(String estado) {
         return reservaRepository.findByEstado(estado);
     }
 
+    /**
+     *
+     * @param estado
+     * @return
+     */
     public List<Reserva> findByTitulo(String estado) {
         return reservaRepository.findByTitulo(estado);
     }
 
+    /**
+     *
+     * @param estado
+     * @return
+     */
     public List<Reserva> findByIdioma(String estado) {
         return reservaRepository.findByIdioma(estado);
     }
 
+    /**
+     *
+     * @param estado
+     * @return
+     */
     public List<Reserva> findByAreaCientifica(String estado) {
         return reservaRepository.findByAcientifica(estado);
     }
@@ -135,4 +206,5 @@ public class ReservaService {
      * Estado().isAciva()).isEmpty(); // Estado da reserva = Ativa
      * }
      */
+    private static final Logger LOG = Logger.getLogger(ReservaService.class.getName());
 }

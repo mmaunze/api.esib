@@ -1,22 +1,5 @@
 package com.esib.esib.controller;
 
-import java.net.URI;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import com.esib.esib.modelo.Monografia;
 import com.esib.esib.modelo.dto.MonografiaDTO;
 import com.esib.esib.service.AreaCientificaService;
@@ -25,9 +8,32 @@ import com.esib.esib.service.EstadoService;
 import com.esib.esib.service.FaculdadeService;
 import com.esib.esib.service.IdiomaService;
 import com.esib.esib.service.MonografiaService;
-
+import java.net.URI;
+import java.util.List;
+import java.util.logging.Logger;
+import static java.util.stream.Collectors.toList;
 import lombok.RequiredArgsConstructor;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
+import org.springframework.http.ResponseEntity;
+import static org.springframework.http.ResponseEntity.created;
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.ok;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
+/**
+ *
+ * @author Meldo Maunze
+ */
 @RestController
 @RequestMapping("/monografias")
 @RequiredArgsConstructor
@@ -42,150 +48,202 @@ public class MonografiaController {
     private final AreaCientificaService areaCientificaService;
     private final EstadoService estadoService;
 
+    /**
+     *
+     * @return
+     */
     @GetMapping()
     public ResponseEntity<List<MonografiaDTO>> findAll() {
         try {
-            List<Monografia> monografias = monografiaService.findAll();
-            List<MonografiaDTO> monografiaDTO = monografias.stream()
+            var monografias = monografiaService.findAll();
+            var monografiaDTO = monografias.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(monografiaDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(monografiaDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/monografia/{id}")
     public ResponseEntity<MonografiaDTO> findById(@PathVariable Long id) {
         try {
-            Optional<Monografia> monografias = monografiaService.findById(id);
-            return monografias.map(u -> ResponseEntity.ok(convertToDTO(u)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            var monografias = monografiaService.findById(id);
+            return monografias.map(u -> ok(convertToDTO(u)))
+                    .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param titulo
+     * @return
+     */
     @GetMapping("/titulo/{titulo}")
     public ResponseEntity<List<MonografiaDTO>> findByTitulo(@PathVariable String titulo) {
         try {
-            List<Monografia> monografias = monografiaService.findByTitulo(titulo);
-            List<MonografiaDTO> monografiasDTO = monografias.stream()
+            var monografias = monografiaService.findByTitulo(titulo);
+            var monografiasDTO = monografias.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(monografiasDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(monografiasDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param idioma
+     * @return
+     */
     @GetMapping("/idioma/{idioma}")
     public ResponseEntity<List<MonografiaDTO>> findByIdioma(@PathVariable String idioma) {
         try {
-            List<Monografia> monografias = monografiaService.findByIdioma(idioma);
-            List<MonografiaDTO> monografiasDTO = monografias.stream()
+            var monografias = monografiaService.findByIdioma(idioma);
+            var monografiasDTO = monografias.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(monografiasDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(monografiasDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param areacientifica
+     * @return
+     */
     @GetMapping("/areacientifica/{areacientifica}")
     public ResponseEntity<List<MonografiaDTO>> findByAreaCientifica(@PathVariable String areacientifica) {
         try {
-            List<Monografia> monografias = monografiaService.findByAreaCientifica(areacientifica);
-            List<MonografiaDTO> monografiasDTO = monografias.stream()
+            var monografias = monografiaService.findByAreaCientifica(areacientifica);
+            var monografiasDTO = monografias.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(monografiasDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(monografiasDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param faculdade
+     * @return
+     */
     @GetMapping("/faculdade/{faculdade}")
     public ResponseEntity<List<MonografiaDTO>> findByFaculdade(@PathVariable String faculdade) {
         try {
-            List<Monografia> monografias = monografiaService.findByFaculdade(faculdade);
-            List<MonografiaDTO> monografiasDTO = monografias.stream()
+            var monografias = monografiaService.findByFaculdade(faculdade);
+            var monografiasDTO = monografias.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(monografiasDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(monografiasDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param curso
+     * @return
+     */
     @GetMapping("/curso/{curso}")
     public ResponseEntity<List<MonografiaDTO>> findByCurso(@PathVariable String curso) {
         try {
-            List<Monografia> monografias = monografiaService.findByCurso(curso);
-            List<MonografiaDTO> monografiasDTO = monografias.stream()
+            var monografias = monografiaService.findByCurso(curso);
+            var monografiasDTO = monografias.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(monografiasDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(monografiasDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
-    
+    /**
+     *
+     * @param supervisor
+     * @return
+     */
     @GetMapping("/supervisor/{supervisor}")
     public ResponseEntity<List<MonografiaDTO>> findBySupervisor(@PathVariable String supervisor) {
         try {
-            List<Monografia> monografias = monografiaService.findBySupervisor(supervisor);
-            List<MonografiaDTO> monografiasDTO = monografias.stream()
+            var monografias = monografiaService.findBySupervisor(supervisor);
+            var monografiasDTO = monografias.stream()
                     .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(monografiasDTO, HttpStatus.OK);
+                    .collect(toList());
+            return new ResponseEntity<>(monografiasDTO, OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
-
+    /**
+     *
+     * @param monografiaDTO
+     * @return
+     */
     @PostMapping()
     public ResponseEntity<Void> create(@RequestBody MonografiaDTO monografiaDTO) {
         try {
-            Monografia newMonografia = monografiaService.create(convertToEntity(monografiaDTO));
-            MonografiaDTO newMonografiaDTO = convertToDTO(newMonografia);
+            var newMonografia = monografiaService.create(convertToEntity(monografiaDTO));
+            var newMonografiaDTO = convertToDTO(newMonografia);
 
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
+            URI location = fromCurrentRequest()
                     .path("/{id}")
                     .buildAndExpand(newMonografiaDTO.getId())
                     .toUri();
 
-            return ResponseEntity.created(location).build();
+            return created(location).build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param monografiaDTO
+     * @param id
+     * @return
+     */
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Void> update(@RequestBody MonografiaDTO monografiaDTO, @PathVariable Long id) {
         try {
             monografiaService.update(convertToEntity(monografiaDTO));
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @DeleteMapping("/remover/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             monografiaService.delete(id);
-            return ResponseEntity.noContent().build();
+            return noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     private MonografiaDTO convertToDTO(Monografia monografia) {
-        MonografiaDTO monografiaDTO = new MonografiaDTO();
+        var monografiaDTO = new MonografiaDTO();
 
         monografiaDTO.setId(monografia.getId());
         monografiaDTO.setTitulo(monografia.getObra().getTitulo());
@@ -209,7 +267,7 @@ public class MonografiaController {
 
     private Monografia convertToEntity(MonografiaDTO monografiaDTO) {
 
-        Monografia monografia = new Monografia();
+        var monografia = new Monografia();
         monografia.setId(monografiaDTO.getId());
         monografia.getObra().setTitulo(monografiaDTO.getTitulo());
         monografia.getObra().setAutor1(monografiaDTO.getAutores());
@@ -233,4 +291,5 @@ public class MonografiaController {
                 faculdadeService.findByDescricao(monografiaDTO.getFaculdade()));
         return monografia;
     }
+    private static final Logger LOG = Logger.getLogger(MonografiaController.class.getName());
 }
