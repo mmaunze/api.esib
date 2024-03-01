@@ -1,4 +1,3 @@
-
 package com.esib.esib.modelo;
 
 import com.esib.esib.modelo.enums.ProfileEnum;
@@ -33,9 +32,9 @@ import lombok.Data;
  */
 @Entity
 @Table(catalog = "esib", schema = "public", uniqueConstraints = {
-                @UniqueConstraint(columnNames = { "contacto" }),
-                @UniqueConstraint(columnNames = { "email" }),
-                @UniqueConstraint(columnNames = { "username" }) })
+    @UniqueConstraint(columnNames = {"contacto"}),
+    @UniqueConstraint(columnNames = {"email"}),
+    @UniqueConstraint(columnNames = {"username"})})
 @XmlRootElement
 @Data
 public class Utilizador implements Serializable {
@@ -47,113 +46,112 @@ public class Utilizador implements Serializable {
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(Utilizador.class.getName());
+    private static final Logger logger = Logger.getLogger(Utilizador.class.getName());
 
     /**
      *
      */
     @Id
-        @Basic(optional = false)
-        @Column(name = "id_utilizador", nullable = false)
-        private Long id;
+    @Basic(optional = false)
+    @Column(name = "id_utilizador", nullable = false)
+    private Long id;
 
     /**
      *
      */
     @Basic(optional = false)
-        @Column(nullable = false, length = 255)
-        private String nome;
+    @Column(nullable = false, length = 255)
+    private String nome;
 
     /**
      *
      */
     @Basic(optional = false)
-        @Column(nullable = false)
-        private long contacto;
+    @Column(nullable = false)
+    private long contacto;
 
     /**
      *
      */
     @Basic(optional = false)
-        @Column(nullable = false, length = 255)
-        private String email;
+    @Column(nullable = false, length = 255)
+    private String email;
 
     /**
      *
      */
     @Basic(optional = false)
-        @Column(nullable = false)
-        private Character sexo;
+    @Column(nullable = false)
+    private Character sexo;
 
     /**
      *
      */
     @Column(length = 70)
-        private String username;
+    private String username;
 
     /**
      *
      */
     @Column(length = 70)
-        private String password;
+    private String password;
 
     /**
      *
      */
     @OneToMany(cascade = ALL, mappedBy = "utilizador", fetch = LAZY)
-        private List<Emprestimo> emprestimoList;
+    private List<Emprestimo> emprestimoList;
 
     /**
      *
      */
     @OneToOne(cascade = ALL, mappedBy = "utilizador", fetch = LAZY)
-        private Cta cta;
+    private Cta cta;
 
     /**
      *
      */
     @JoinColumn(name = "id_area", referencedColumnName = "id_area", nullable = false)
-        @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
-        private AreaCientifica areaCientifica;
+    @ManyToOne(optional = false, fetch = LAZY, cascade = {PERSIST, MERGE})
+    private AreaCientifica areaCientifica;
 
     /**
      *
      */
     @JoinColumn(name = "id_departamento", referencedColumnName = "id_departamento", nullable = false)
-        @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
-        private Departamento departamento;
+    @ManyToOne(optional = false, fetch = LAZY, cascade = {PERSIST, MERGE})
+    private Departamento departamento;
 
     /**
      *
      */
     @JoinColumn(name = "id_tipo_utilizador", referencedColumnName = "id_tipo_utilizador", nullable = false)
-        @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
-        private TipoUtilizador tipoUtilizador;
+    @ManyToOne(optional = false, fetch = LAZY, cascade = {PERSIST, MERGE})
+    private TipoUtilizador tipoUtilizador;
 
     /**
      *
      */
     @OneToOne(cascade = ALL, mappedBy = "utilizador", fetch = LAZY)
-        private Bibliotecario bibliotecario;
+    private Bibliotecario bibliotecario;
 
     /**
      *
      */
     @OneToOne(cascade = ALL, mappedBy = "utilizador", fetch = LAZY)
-        private Estudante estudante;
+    private Estudante estudante;
 
     /**
      *
      */
     @OneToMany(cascade = ALL, mappedBy = "utilizador", fetch = LAZY)
-        private List<Reserva> reservaList;
+    private List<Reserva> reservaList;
 
     /**
      *
      */
     @OneToMany(mappedBy = "utilizador", fetch = LAZY)
-        private List<Movimento> movimentoList;
-
+    private List<Movimento> movimentoList;
 
     /**
      *
@@ -179,6 +177,5 @@ public class Utilizador implements Serializable {
     public void addProfile(ProfileEnum profileEnum) {
         this.profiles.add(profileEnum.getCode());
     }
-
 
 }

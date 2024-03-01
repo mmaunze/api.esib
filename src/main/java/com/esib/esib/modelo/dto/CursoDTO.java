@@ -10,10 +10,11 @@ import lombok.Data;
 @Data
 
 public class CursoDTO {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(CursoDTO.class.getName());
+    private static final Logger logger = Logger.getLogger(CursoDTO.class.getName());
 
     /**
      *
@@ -29,6 +30,5 @@ public class CursoDTO {
      *
      */
     private String faculdade;
-
 
 }

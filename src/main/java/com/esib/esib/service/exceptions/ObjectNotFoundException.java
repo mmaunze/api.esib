@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = NOT_FOUND)
 public class ObjectNotFoundException extends EntityNotFoundException {
 
-
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(ObjectNotFoundException.class.getName());
+    private static final Logger logger = Logger.getLogger(ObjectNotFoundException.class.getName());
+
     /**
      *
      * @param message

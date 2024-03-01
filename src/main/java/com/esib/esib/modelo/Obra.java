@@ -1,4 +1,3 @@
-
 package com.esib.esib.modelo;
 
 import java.io.Serializable;
@@ -26,7 +25,7 @@ import lombok.Data;
  */
 @Entity
 @Table(catalog = "esib", schema = "public", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "localizacao" }) })
+    @UniqueConstraint(columnNames = {"localizacao"})})
 @XmlRootElement
 @Data
 public class Obra implements Serializable {
@@ -38,7 +37,7 @@ public class Obra implements Serializable {
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(Obra.class.getName());
+    private static final Logger logger = Logger.getLogger(Obra.class.getName());
 
     /**
      *
@@ -130,28 +129,28 @@ public class Obra implements Serializable {
      *
      */
     @JoinColumn(name = "id_area", referencedColumnName = "id_area", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
+    @ManyToOne(optional = false, fetch = LAZY, cascade = {PERSIST, MERGE})
     private AreaCientifica areaCientifica;
 
     /**
      *
      */
     @JoinColumn(name = "id_estado", referencedColumnName = "id_estado", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
+    @ManyToOne(optional = false, fetch = LAZY, cascade = {PERSIST, MERGE})
     private Estado estado;
 
     /**
      *
      */
     @JoinColumn(name = "id_idioma", referencedColumnName = "id_idioma", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
+    @ManyToOne(optional = false, fetch = LAZY, cascade = {PERSIST, MERGE})
     private Idioma idioma;
 
     /**
      *
      */
     @JoinColumn(name = "id_tipo_obra", referencedColumnName = "id_tipo_obra", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
+    @ManyToOne(optional = false, fetch = LAZY, cascade = {PERSIST, MERGE})
     private TipoObra tipoObra;
 
     /**

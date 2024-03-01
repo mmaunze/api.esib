@@ -37,10 +37,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class LivroController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(LivroController.class.getName());
+    private static final Logger logger = Logger.getLogger(LivroController.class.getName());
 
     /**
      *
@@ -235,7 +236,7 @@ public class LivroController {
     public ResponseEntity<Void> update(@RequestBody LivroDTO livroDTO, @PathVariable Long id) {
         try {
             livroService.update(convertToEntity(livroDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -250,7 +251,7 @@ public class LivroController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             livroService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -266,9 +267,9 @@ public class LivroController {
 
         livroDTO.setId(livro.getId());
         livroDTO.setTitulo(livro.getObra().getTitulo());
-        livroDTO.setAutores(livro.getObra().getAutor1() +
-                " " + livro.getObra().getAutor2() +
-                " " + livro.getObra().getAutor3());
+        livroDTO.setAutores(livro.getObra().getAutor1()
+                + " " + livro.getObra().getAutor2()
+                + " " + livro.getObra().getAutor3());
         livroDTO.setNrPaginas(livro.getObra().getNrPaginas());
         livroDTO.setLocalPublicacao(livro.getObra().getLocalPublicacao());
         livroDTO.setAnoPublicacao(livro.getObra().getAnoPublicacao());

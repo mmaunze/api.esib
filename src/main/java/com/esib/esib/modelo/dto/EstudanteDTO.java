@@ -9,10 +9,11 @@ import lombok.Data;
  */
 @Data
 public class EstudanteDTO {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(EstudanteDTO.class.getName());
+    private static final Logger logger = Logger.getLogger(EstudanteDTO.class.getName());
 
     /**
      *
@@ -63,6 +64,5 @@ public class EstudanteDTO {
      *
      */
     private int nivel;
-
 
 }

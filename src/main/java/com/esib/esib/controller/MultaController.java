@@ -35,10 +35,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class MultaController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(MultaController.class.getName());
+    private static final Logger logger = Logger.getLogger(MultaController.class.getName());
 
     /**
      *
@@ -132,7 +133,7 @@ public class MultaController {
     public ResponseEntity<Void> update(@RequestBody MultaDTO multaDTO, @PathVariable Long id) {
         try {
             multaService.update(convertToEntity(multaDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -147,14 +148,13 @@ public class MultaController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             multaService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
-
     /**
      *
      * @param multa

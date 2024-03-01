@@ -34,10 +34,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class FaculdadeController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(FaculdadeController.class.getName());
+    private static final Logger logger = Logger.getLogger(FaculdadeController.class.getName());
 
     /**
      *
@@ -108,7 +109,7 @@ public class FaculdadeController {
     public ResponseEntity<Void> update(@RequestBody FaculdadeDTO faculdadeDTO, @PathVariable Long id) {
         try {
             faculdadeService.update(convertToEntity(faculdadeDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -123,14 +124,13 @@ public class FaculdadeController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             faculdadeService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
-
     /**
      *
      * @param faculdade
@@ -142,7 +142,6 @@ public class FaculdadeController {
         faculdadeDTO.setId(faculdade.getId());
         faculdadeDTO.setDescricao(faculdade.getDescricao());
         faculdadeDTO.setSigla(faculdade.getSigla());
-
 
         return faculdadeDTO;
     }

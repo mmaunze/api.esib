@@ -36,10 +36,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequestMapping("/ctas")
 @RequiredArgsConstructor
 public class CtaController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(CtaController.class.getName());
+    private static final Logger logger = Logger.getLogger(CtaController.class.getName());
 
     /**
      *
@@ -174,7 +175,7 @@ public class CtaController {
     public ResponseEntity<Void> update(@RequestBody CtaDTO ctaDTO, @PathVariable Long id) {
         try {
             ctaService.update(convertToEntity(ctaDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -189,7 +190,7 @@ public class CtaController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             ctaService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -198,14 +199,11 @@ public class CtaController {
     /*
      * Métodos auxiliares para conversão entre Entidade e DTO
      */
-
     /**
      *
      * @param cta
      * @return
      */
-
-
     private CtaDTO convertToDTO(Cta cta) {
 
         var ctaDTO = new CtaDTO();

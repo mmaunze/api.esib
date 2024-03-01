@@ -25,10 +25,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class AreaCientificaService {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(AreaCientificaService.class.getName());
+    private static final Logger logger = Logger.getLogger(AreaCientificaService.class.getName());
 
     /**
      *
@@ -86,7 +87,7 @@ public class AreaCientificaService {
     @Transactional
     public AreaCientifica update(Long id, AreaCientifica areaCientifica) {
         var newAreaCientifica = new AreaCientifica();
-        
+
         areaCientifica.setId(id);
         newAreaCientifica.setId(id);
         newAreaCientifica.setDescricao(areaCientifica.getDescricao());
@@ -152,6 +153,5 @@ public class AreaCientificaService {
     public AreaCientifica findByDescricao(String descricao) {
         return areaCientificaRepository.findByDescricao(descricao);
     }
-
 
 }

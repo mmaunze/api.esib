@@ -21,10 +21,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * @author Meldo Maunze
  */
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(JWTAuthenticationFilter.class.getName());
+    private static final Logger logger = Logger.getLogger(JWTAuthenticationFilter.class.getName());
 
     /**
      *
@@ -87,6 +88,5 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.addHeader("Authorization", "Bearer " + token);
         response.addHeader("access-control-expose-headers", "Authorization");
     }
-
 
 }

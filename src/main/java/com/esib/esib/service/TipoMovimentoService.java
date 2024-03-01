@@ -19,10 +19,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class TipoMovimentoService {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(TipoMovimentoService.class.getName());
+    private static final Logger logger = Logger.getLogger(TipoMovimentoService.class.getName());
 
     /**
      *
@@ -30,13 +31,11 @@ public class TipoMovimentoService {
     private final TipoMovimentoRepository tipoMovimentoRepository;
 
     // CRUD methods
-
     /**
      *
      * @param tipoMovimento
      * @return
      */
-
     @Transactional
     public TipoMovimento create(TipoMovimento tipoMovimento) {
         // Verifique se a descrição do tipo de movimento já existe
@@ -117,13 +116,11 @@ public class TipoMovimentoService {
     }
 
     // Methods related to relationships
-
     /**
      *
      * @param tipoMovimento
      * @return
      */
-
     public List<Movimento> findMovimentosPorTipoMovimento(TipoMovimento tipoMovimento) {
         return tipoMovimento.getMovimentoList();
     }
@@ -137,6 +134,5 @@ public class TipoMovimentoService {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findByDescricao'");
     }
-
 
 }

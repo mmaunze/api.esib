@@ -9,10 +9,11 @@ import lombok.Data;
  */
 @Data
 public class CtaDTO {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(CtaDTO.class.getName());
+    private static final Logger logger = Logger.getLogger(CtaDTO.class.getName());
 
     /**
      *

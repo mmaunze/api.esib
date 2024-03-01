@@ -30,23 +30,29 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
+
     /**
      *
      */
     private static final String[] PUBLIC_MATCHERS = {
         "/",
+        "/utilizadores",
+        "/login",
+        "/obras"
+
     };
     /**
      *
      */
     private static final String[] PUBLIC_MATCHERS_POST = {
         "/utilizadores",
-        "/login"
+        "/login",
+        "/obras"
     };
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(SecurityConfig.class.getName());
+    private static final Logger logger = Logger.getLogger(SecurityConfig.class.getName());
 
     /**
      *
@@ -64,7 +70,6 @@ public class SecurityConfig {
      */
     @Autowired
     private JWTUtil jwtUtil;
-
 
     /**
      *
@@ -120,5 +125,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    
 }

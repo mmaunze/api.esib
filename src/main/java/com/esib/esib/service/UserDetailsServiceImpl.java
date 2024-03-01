@@ -15,10 +15,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(UserDetailsServiceImpl.class.getName());
+    private static final Logger logger = Logger.getLogger(UserDetailsServiceImpl.class.getName());
 
     /**
      *
@@ -40,6 +41,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         return new UserSpringSecurity(user.get().getId(), user.get().getUsername(), user.get().getPassword(), user.get().getProfiles());
     }
-
 
 }

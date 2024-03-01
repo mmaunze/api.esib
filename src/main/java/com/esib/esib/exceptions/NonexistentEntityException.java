@@ -7,10 +7,11 @@ import java.util.logging.Logger;
  * @author Meldo Maunze
  */
 public class NonexistentEntityException extends Exception {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(NonexistentEntityException.class.getName());
+    private static final Logger logger = Logger.getLogger(NonexistentEntityException.class.getName());
 
     /**
      *

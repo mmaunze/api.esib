@@ -27,11 +27,11 @@ import org.springframework.stereotype.Service;
 @Data
 public class ObraService {
     // Methods related
-    
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(ObraService.class.getName());
+    private static final Logger logger = Logger.getLogger(ObraService.class.getName());
 
     /**
      *
@@ -39,13 +39,11 @@ public class ObraService {
     private final ObraRepository obraRepository;
 
     // CRUD methods
-
     /**
      *
      * @param obra
      * @return
      */
-
     @Transactional
     public Obra create(Obra obra) {
 

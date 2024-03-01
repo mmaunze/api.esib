@@ -1,4 +1,3 @@
-
 package com.esib.esib.modelo.dto;
 
 import java.util.logging.Logger;
@@ -11,10 +10,11 @@ import lombok.Data;
 @Data
 
 public class CargoDTO {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(CargoDTO.class.getName());
+    private static final Logger logger = Logger.getLogger(CargoDTO.class.getName());
 
     /**
      *

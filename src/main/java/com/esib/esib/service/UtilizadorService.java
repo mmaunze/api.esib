@@ -1,5 +1,15 @@
 package com.esib.esib.service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.esib.esib.modelo.AreaCientifica;
 import com.esib.esib.modelo.Departamento;
 import com.esib.esib.modelo.Emprestimo;
@@ -8,16 +18,9 @@ import com.esib.esib.modelo.TipoUtilizador;
 import com.esib.esib.modelo.Utilizador;
 import com.esib.esib.modelo.enums.ProfileEnum;
 import com.esib.esib.repository.UtilizadorRepository;
-import java.util.List;
-import java.util.Optional;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -27,10 +30,11 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Data
 public class UtilizadorService {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(UtilizadorService.class.getName());
+    private static final Logger logger = Logger.getLogger(UtilizadorService.class.getName());
 
     /**
      *
@@ -101,13 +105,15 @@ public class UtilizadorService {
      * @param utilizador
      * @return
      */
-    public Utilizador update(Utilizador utilizador) {
+    public Utilizador update(Long id, Utilizador utilizador) {
 
-        utilizador.setId(null);
-        utilizador.setPassword(this.bCryptPasswordEncoder.encode(utilizador.getPassword()));
+        var newUtilizador = utilizadorRepository.findById(id).get();
 
-        utilizador.setProfiles(Stream.of(ProfileEnum.ADMINISTRADOR.getCode()).collect(Collectors.toSet()));
-        return utilizadorRepository.save(utilizador);
+        newUtilizador.setId(id);
+        newUtilizador.setPassword(this.bCryptPasswordEncoder.encode(utilizador.getPassword()));
+        newUtilizador.setProfiles(Stream.of(ProfileEnum.ADMINISTRADOR.getCode()).collect(Collectors.toSet()));
+
+        return utilizadorRepository.save(newUtilizador);
     }
 
     /**
@@ -206,6 +212,5 @@ public class UtilizadorService {
         return utilizadorRepository.findByTipoUtilizador(tipoutilizador);
 
     }
-
 
 }

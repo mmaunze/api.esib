@@ -9,11 +9,12 @@ import lombok.Data;
  */
 @Data
 
-public class FaculdadeDTO{
+public class FaculdadeDTO {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(FaculdadeDTO.class.getName());
+    private static final Logger logger = Logger.getLogger(FaculdadeDTO.class.getName());
 
     /**
      *

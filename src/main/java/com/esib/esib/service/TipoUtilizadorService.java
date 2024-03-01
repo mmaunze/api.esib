@@ -19,10 +19,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class TipoUtilizadorService {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(TipoUtilizadorService.class.getName());
+    private static final Logger logger = Logger.getLogger(TipoUtilizadorService.class.getName());
 
     /**
      *
@@ -30,13 +31,11 @@ public class TipoUtilizadorService {
     private final TipoUtilizadorRepository tipoUtilizadorRepository;
 
     // CRUD methods
-
     /**
      *
      * @param tipoUtilizador
      * @return
      */
-
     @Transactional
     public TipoUtilizador create(TipoUtilizador tipoUtilizador) {
         // Verifique se a descrição do tipo de utilizador já existe
@@ -109,13 +108,11 @@ public class TipoUtilizadorService {
     }
 
     // Methods related to relationships
-
     /**
      *
      * @param tipoUtilizador
      * @return
      */
-
     public List<Utilizador> findUtilizadoresPorTipoUtilizador(TipoUtilizador tipoUtilizador) {
         return tipoUtilizador.getUtilizadorList();
     }
@@ -128,6 +125,5 @@ public class TipoUtilizadorService {
     public TipoUtilizador findByDescricao(String tipoUtilizador) {
         return tipoUtilizadorRepository.findByDescricao(tipoUtilizador);
     }
-
 
 }

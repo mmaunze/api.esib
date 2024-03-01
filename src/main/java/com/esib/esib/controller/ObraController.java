@@ -38,10 +38,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class ObraController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(ObraController.class.getName());
+    private static final Logger logger = Logger.getLogger(ObraController.class.getName());
 
     /**
      *
@@ -187,7 +188,7 @@ public class ObraController {
     public ResponseEntity<Void> update(@RequestBody ObraDTO obraDTO, @PathVariable Long id) {
         try {
             obraService.update(convertToEntity(obraDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -202,7 +203,7 @@ public class ObraController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             obraService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -226,6 +227,8 @@ public class ObraController {
         obraDTO.setIdioma(obra.getIdioma().getDescricao());
         obraDTO.setEstado(obra.getEstado().getDescricao());
         obraDTO.setAreaCientifica(obra.getAreaCientifica().getDescricao());
+        obraDTO.setLocalizacao(obra.getLocalizacao());
+        obraDTO.setReferencia(obra.getReferencia());
 
         return obraDTO;
     }
@@ -249,6 +252,8 @@ public class ObraController {
         obra.setIdioma(idiomaService.findByDescricao(obraDTO.getIdioma()));
         obra.setEstado(estadoService.findByDescricao(obraDTO.getEstado()));
         obra.setAreaCientifica(areaCientificaService.findByDescricao(obraDTO.getAreaCientifica()));
+        obra.setLocalizacao(obraDTO.getLocalizacao());
+        obra.setReferencia(obraDTO.getReferencia());
 
         return obra;
     }

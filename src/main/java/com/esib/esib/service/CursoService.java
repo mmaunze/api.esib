@@ -20,10 +20,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class CursoService {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(CursoService.class.getName());
+    private static final Logger logger = Logger.getLogger(CursoService.class.getName());
 
     /**
      *
@@ -31,13 +32,11 @@ public class CursoService {
     private final CursoRepository cursoRepository;
 
     // CRUD methods
-
     /**
      *
      * @param curso
      * @return
      */
-
     @Transactional
     public Curso create(Curso curso) {
         return cursoRepository.save(curso);
@@ -89,13 +88,11 @@ public class CursoService {
     }
 
     // Methods related to relationships
-
     /**
      *
      * @param curso
      * @return
      */
-
     public List<Estudante> findEstudantesPorCurso(Curso curso) {
         return curso.getEstudanteList();
     }
@@ -118,6 +115,5 @@ public class CursoService {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findByDescricao'");
     }
-
 
 }

@@ -18,10 +18,11 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
  * @author Meldo Maunze
  */
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(JWTAuthorizationFilter.class.getName());
+    private static final Logger logger = Logger.getLogger(JWTAuthorizationFilter.class.getName());
 
     /**
      *
@@ -78,13 +79,12 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         if (this.jwtUtil.isValidToken(token)) {
             var username = this.jwtUtil.getUsername(token);
             var user = this.userDetailsService.loadUserByUsername(username);
-            var authenticatedUser = 
-                new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-                
+            var authenticatedUser
+                    = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+
             return authenticatedUser;
         }
         return null;
     }
-
 
 }

@@ -19,10 +19,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class EstudanteService {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(EstudanteService.class.getName());
+    private static final Logger logger = Logger.getLogger(EstudanteService.class.getName());
 
     /**
      *
@@ -30,13 +31,11 @@ public class EstudanteService {
     private final EstudanteRepository estudanteRepository;
 
     // CRUD methods
-
     /**
      *
      * @param estudante
      * @return
      */
-
     @Transactional
     public Estudante create(Estudante estudante) {
         // Verifique se o utilizador associado existe
@@ -101,13 +100,11 @@ public class EstudanteService {
     }
 
     // Method related to relationship
-
     /**
      *
      * @param estudante
      * @return
      */
-
     public Utilizador findUtilizadorPorEstudante(Estudante estudante) {
         return estudante.getUtilizador();
     }
@@ -148,6 +145,5 @@ public class EstudanteService {
     public Optional<Estudante> findByCurso(String curso) {
         return estudanteRepository.findByCurso(curso);
     }
-
 
 }

@@ -21,10 +21,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class FaculdadeService {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(FaculdadeService.class.getName());
+    private static final Logger logger = Logger.getLogger(FaculdadeService.class.getName());
 
     /**
      *
@@ -32,13 +33,11 @@ public class FaculdadeService {
     private final FaculdadeRepository faculdadeRepository;
 
     // CRUD methods
-
     /**
      *
      * @param faculdade
      * @return
      */
-
     @Transactional
     public Faculdade create(Faculdade faculdade) {
         return faculdadeRepository.save(faculdade);
@@ -91,13 +90,11 @@ public class FaculdadeService {
     }
 
     // Methods related to relationships
-
     /**
      *
      * @param faculdade
      * @return
      */
-
     public List<Curso> findCursosPorFaculdade(Faculdade faculdade) {
         return faculdade.getCursoList();
     }

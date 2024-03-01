@@ -21,10 +21,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class MultaService {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(MultaService.class.getName());
+    private static final Logger logger = Logger.getLogger(MultaService.class.getName());
 
     /**
      *
@@ -32,13 +33,11 @@ public class MultaService {
     private final MultaRepository multaRepository;
 
     // CRUD methods
-
     /**
      *
      * @param multa
      * @return
      */
-
     @Transactional
     public Multa create(Multa multa) {
         // Verifique se as entidades associadas existem
@@ -113,13 +112,11 @@ public class MultaService {
     }
 
     // Methods related to relationships
-
     /**
      *
      * @param multa
      * @return
      */
-
     public Emprestimo findEmprestimoPorMulta(Multa multa) {
         return multa.getEmprestimo();
     }

@@ -10,10 +10,11 @@ import lombok.Data;
 @Data
 
 public class UtilizadorDTO {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(UtilizadorDTO.class.getName());
+    private static final Logger logger = Logger.getLogger(UtilizadorDTO.class.getName());
 
     /**
      *
@@ -59,6 +60,5 @@ public class UtilizadorDTO {
      *
      */
     private String departamento;
-
 
 }

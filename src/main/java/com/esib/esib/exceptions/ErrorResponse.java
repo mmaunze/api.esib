@@ -20,10 +20,11 @@ import lombok.Setter;
 
 @JsonInclude(NON_NULL)
 public class ErrorResponse {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(ErrorResponse.class.getName());
+    private static final Logger logger = Logger.getLogger(ErrorResponse.class.getName());
 
     /**
      *
@@ -62,8 +63,8 @@ public class ErrorResponse {
      * @return
      */
     public String toJson() {
-        return "{\"status\": " + getStatus() + ", " +
-                "\"message\": \"" + getMessage() + "\"}";
+        return "{\"status\": " + getStatus() + ", "
+                + "\"message\": \"" + getMessage() + "\"}";
     }
 
     /**
@@ -84,6 +85,5 @@ public class ErrorResponse {
          */
         private final String message;
     }
-
 
 }

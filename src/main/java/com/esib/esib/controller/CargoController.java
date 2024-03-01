@@ -34,10 +34,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class CargoController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(CargoController.class.getName());
+    private static final Logger logger = Logger.getLogger(CargoController.class.getName());
 
     /**
      *
@@ -108,7 +109,7 @@ public class CargoController {
     public ResponseEntity<Void> update(@RequestBody CargoDTO cargoDTO, @PathVariable Long id) {
         try {
             cargoService.update(convertToEntity(cargoDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -123,14 +124,13 @@ public class CargoController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             cargoService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
-
     /**
      *
      * @param cargo

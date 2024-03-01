@@ -34,10 +34,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class TipoObraController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(TipoObraController.class.getName());
+    private static final Logger logger = Logger.getLogger(TipoObraController.class.getName());
 
     /**
      *
@@ -108,7 +109,7 @@ public class TipoObraController {
     public ResponseEntity<Void> update(@RequestBody TipoObraDTO tipoObraDTO, @PathVariable Long id) {
         try {
             tipoObraService.update(convertToEntity(tipoObraDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -123,14 +124,13 @@ public class TipoObraController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             tipoObraService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
-
     /**
      *
      * @param tipoObra

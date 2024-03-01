@@ -39,10 +39,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class MonografiaController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(MonografiaController.class.getName());
+    private static final Logger logger = Logger.getLogger(MonografiaController.class.getName());
 
     /**
      *
@@ -247,7 +248,7 @@ public class MonografiaController {
     public ResponseEntity<Void> update(@RequestBody MonografiaDTO monografiaDTO, @PathVariable Long id) {
         try {
             monografiaService.update(convertToEntity(monografiaDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -262,7 +263,7 @@ public class MonografiaController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             monografiaService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -278,9 +279,9 @@ public class MonografiaController {
 
         monografiaDTO.setId(monografia.getId());
         monografiaDTO.setTitulo(monografia.getObra().getTitulo());
-        monografiaDTO.setAutores(monografia.getObra().getAutor1() +
-                " " + monografia.getObra().getAutor2() +
-                " " + monografia.getObra().getAutor3());
+        monografiaDTO.setAutores(monografia.getObra().getAutor1()
+                + " " + monografia.getObra().getAutor2()
+                + " " + monografia.getObra().getAutor3());
         monografiaDTO.setNrPaginas(monografia.getObra().getNrPaginas());
         monografiaDTO.setLocalPublicacao(monografia.getObra().getLocalPublicacao());
         monografiaDTO.setAnoPublicacao(monografia.getObra().getAnoPublicacao());

@@ -9,10 +9,11 @@ import lombok.Data;
  */
 @Data
 public class EstadoDTO {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(EstadoDTO.class.getName());
+    private static final Logger logger = Logger.getLogger(EstadoDTO.class.getName());
 
     /**
      *

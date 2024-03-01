@@ -11,10 +11,11 @@ import lombok.Data;
 @Data
 
 public class ReservaDTO {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(ReservaDTO.class.getName());
+    private static final Logger logger = Logger.getLogger(ReservaDTO.class.getName());
 
     /**
      *

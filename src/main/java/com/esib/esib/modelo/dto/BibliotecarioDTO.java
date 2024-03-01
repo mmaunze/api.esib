@@ -9,10 +9,11 @@ import lombok.Data;
  */
 @Data
 public class BibliotecarioDTO {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(BibliotecarioDTO.class.getName());
+    private static final Logger logger = Logger.getLogger(BibliotecarioDTO.class.getName());
 
     /**
      *
@@ -58,6 +59,5 @@ public class BibliotecarioDTO {
      *
      */
     private String faculdade;
-
 
 }

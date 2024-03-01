@@ -10,10 +10,11 @@ import lombok.Data;
  */
 @Data
 public class MovimentoDTO {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(MovimentoDTO.class.getName());
+    private static final Logger logger = Logger.getLogger(MovimentoDTO.class.getName());
 
     /**
      *

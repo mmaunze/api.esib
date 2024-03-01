@@ -36,10 +36,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequestMapping("/utilizadores")
 @RequiredArgsConstructor
 public class UtilizadorController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(UtilizadorController.class.getName());
+    private static final Logger logger = Logger.getLogger(UtilizadorController.class.getName());
 
     /**
      *
@@ -227,8 +228,8 @@ public class UtilizadorController {
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Void> update(@RequestBody UtilizadorDTO utilizadorDTO, @PathVariable Long id) {
         try {
-            utilizadorService.update(convertToEntity(utilizadorDTO));
-            return noContent().build();
+            utilizadorService.update(id, convertToEntity(utilizadorDTO));
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -243,7 +244,7 @@ public class UtilizadorController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             utilizadorService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -252,14 +253,11 @@ public class UtilizadorController {
     /*
      * Métodos auxiliares para conversão entre Entidade e DTO
      */
-
     /**
      *
      * @param utilizador
      * @return
      */
-
-
     private UtilizadorDTO convertToDTO(Utilizador utilizador) {
         var utilizadorDTO = new UtilizadorDTO();
         utilizadorDTO.setId(utilizador.getId());

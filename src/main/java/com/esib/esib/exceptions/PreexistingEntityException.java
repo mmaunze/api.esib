@@ -7,10 +7,11 @@ import java.util.logging.Logger;
  * @author Meldo Maunze
  */
 public class PreexistingEntityException extends Exception {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(PreexistingEntityException.class.getName());
+    private static final Logger logger = Logger.getLogger(PreexistingEntityException.class.getName());
 
     /**
      *

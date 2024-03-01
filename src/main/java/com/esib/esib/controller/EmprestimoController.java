@@ -38,10 +38,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class EmprestimoController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(EmprestimoController.class.getName());
+    private static final Logger logger = Logger.getLogger(EmprestimoController.class.getName());
 
     /**
      *
@@ -254,7 +255,7 @@ public class EmprestimoController {
     public ResponseEntity<Void> update(@RequestBody EmprestimoDTO emprestimoDTO, @PathVariable Long id) {
         try {
             emprestimoService.update(convertToEntity(emprestimoDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -269,7 +270,7 @@ public class EmprestimoController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             emprestimoService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }

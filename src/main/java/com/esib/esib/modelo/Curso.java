@@ -1,4 +1,3 @@
-
 package com.esib.esib.modelo;
 
 import java.io.Serializable;
@@ -26,8 +25,8 @@ import lombok.Data;
  */
 @Entity
 @Table(catalog = "esib", schema = "public", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "sigla" }),
-        @UniqueConstraint(columnNames = { "descricao" }) })
+    @UniqueConstraint(columnNames = {"sigla"}),
+    @UniqueConstraint(columnNames = {"descricao"})})
 @XmlRootElement
 @Data
 public class Curso implements Serializable {
@@ -39,7 +38,7 @@ public class Curso implements Serializable {
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(Curso.class.getName());
+    private static final Logger logger = Logger.getLogger(Curso.class.getName());
 
     /**
      *
@@ -68,14 +67,14 @@ public class Curso implements Serializable {
      *
      */
     @JoinColumn(name = "id_faculdade", referencedColumnName = "id_faculdade", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
+    @ManyToOne(optional = false, fetch = LAZY, cascade = {PERSIST, MERGE})
     private Faculdade faculdade;
 
     /**
      *
      */
     @JoinColumn(name = "id_area", referencedColumnName = "id_area", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
+    @ManyToOne(optional = false, fetch = LAZY, cascade = {PERSIST, MERGE})
     private AreaCientifica areaCientifica;
 
     /**
@@ -89,6 +88,5 @@ public class Curso implements Serializable {
      */
     @OneToMany(cascade = ALL, mappedBy = "curso", fetch = LAZY)
     private List<Estudante> estudanteList;
-
 
 }

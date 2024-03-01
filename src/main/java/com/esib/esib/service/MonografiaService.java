@@ -19,10 +19,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class MonografiaService {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(MonografiaService.class.getName());
+    private static final Logger logger = Logger.getLogger(MonografiaService.class.getName());
 
     /**
      *
@@ -30,13 +31,11 @@ public class MonografiaService {
     private final MonografiaRepository monografiaRepository;
 
     // CRUD methods
-
     /**
      *
      * @param monografia
      * @return
      */
-
     @Transactional
     public Monografia create(Monografia monografia) {
         // Verifique se a obra associada existe
@@ -105,13 +104,11 @@ public class MonografiaService {
     }
 
     // Methods related to relationships
-
     /**
      *
      * @param monografia
      * @return
      */
-
     public Obra findObraPorMonografia(Monografia monografia) {
         return monografia.getObra();
     }
@@ -172,6 +169,5 @@ public class MonografiaService {
     public List<Monografia> findBySupervisor(String supervisor) {
         return monografiaRepository.findBySupervisor(supervisor);
     }
-
 
 }

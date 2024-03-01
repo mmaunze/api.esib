@@ -34,10 +34,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class IdiomaController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(IdiomaController.class.getName());
+    private static final Logger logger = Logger.getLogger(IdiomaController.class.getName());
 
     /**
      *
@@ -108,7 +109,7 @@ public class IdiomaController {
     public ResponseEntity<Void> update(@RequestBody IdiomaDTO idiomaDTO, @PathVariable Long id) {
         try {
             idiomaService.update(convertToEntity(idiomaDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -123,14 +124,13 @@ public class IdiomaController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             idiomaService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
-
     /**
      *
      * @param idioma

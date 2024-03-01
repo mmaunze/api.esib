@@ -1,4 +1,3 @@
-
 package com.esib.esib.modelo;
 
 import java.io.Serializable;
@@ -33,7 +32,7 @@ public class Revista implements Serializable {
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(Revista.class.getName());
+    private static final Logger logger = Logger.getLogger(Revista.class.getName());
 
     /**
      *
@@ -80,8 +79,7 @@ public class Revista implements Serializable {
      *
      */
     @JoinColumn(name = "id_obra", referencedColumnName = "id_obra", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
+    @OneToOne(optional = false, fetch = LAZY, cascade = {PERSIST, MERGE})
     private Obra obra;
-
 
 }

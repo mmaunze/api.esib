@@ -20,10 +20,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class PagamentoMultaService {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(PagamentoMultaService.class.getName());
+    private static final Logger logger = Logger.getLogger(PagamentoMultaService.class.getName());
 
     /**
      *
@@ -31,13 +32,11 @@ public class PagamentoMultaService {
     private final PagamentoMultaRepository pagamentoMultaRepository;
 
     // CRUD methods
-
     /**
      *
      * @param pagamentoMulta
      * @return
      */
-
     @Transactional
     public PagamentoMulta create(PagamentoMulta pagamentoMulta) {
         // Verifique se a multa associada existe
@@ -145,15 +144,12 @@ public class PagamentoMultaService {
         pagamentoMultaRepository.deleteById(id);
     }
 
-
     // Methods related to relationships
-
     /**
      *
      * @param pagamentoMulta
      * @return
      */
-
     public Multa findMultaPorPagamentoMulta(PagamentoMulta pagamentoMulta) {
         return pagamentoMulta.getMulta();
     }
@@ -166,6 +162,5 @@ public class PagamentoMultaService {
     public Bibliotecario findBibliotecarioPorPagamentoMulta(PagamentoMulta pagamentoMulta) {
         return pagamentoMulta.getBibliotecario();
     }
-
 
 }

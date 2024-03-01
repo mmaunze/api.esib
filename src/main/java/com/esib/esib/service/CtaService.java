@@ -18,10 +18,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class CtaService {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(CtaService.class.getName());
+    private static final Logger logger = Logger.getLogger(CtaService.class.getName());
 
     /**
      *
@@ -29,13 +30,11 @@ public class CtaService {
     private final CtaRepository ctaRepository;
 
     // CRUD methods
-
     /**
      *
      * @param cta
      * @return
      */
-
     @Transactional
     public Cta create(Cta cta) {
         return ctaRepository.save(cta);
@@ -104,6 +103,5 @@ public class CtaService {
     public Optional<Cta> findByEmail(String email) {
         return ctaRepository.findByEmail(email);
     }
-
 
 }

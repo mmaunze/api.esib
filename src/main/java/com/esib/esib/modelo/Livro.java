@@ -1,4 +1,3 @@
-
 package com.esib.esib.modelo;
 
 import java.io.Serializable;
@@ -23,7 +22,7 @@ import lombok.Data;
  */
 @Entity
 @Table(catalog = "esib", schema = "public", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "isbn" }) })
+    @UniqueConstraint(columnNames = {"isbn"})})
 @XmlRootElement
 @Data
 public class Livro implements Serializable {
@@ -35,7 +34,7 @@ public class Livro implements Serializable {
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(Livro.class.getName());
+    private static final Logger logger = Logger.getLogger(Livro.class.getName());
 
     /**
      *
@@ -77,8 +76,7 @@ public class Livro implements Serializable {
      *
      */
     @JoinColumn(name = "id_obra", referencedColumnName = "id_obra", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
+    @OneToOne(optional = false, fetch = LAZY, cascade = {PERSIST, MERGE})
     private Obra obra;
-
 
 }

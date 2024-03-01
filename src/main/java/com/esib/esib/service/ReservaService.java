@@ -21,19 +21,19 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class ReservaService {
+
     // Additional methods
     /*
     * public boolean verificarDisponibilidadeObra(Obra obra) {
     * return reservaRepository.findByObraAndIdEstado(obra, new
     * Estado().isAciva()).isEmpty(); // Estado da reserva = Ativa
     * }
-    */
-    
+     */
+
     /**
      *
      */
-    
-    private static final Logger LOG = Logger.getLogger(ReservaService.class.getName());
+    private static final Logger logger = Logger.getLogger(ReservaService.class.getName());
 
     /**
      *
@@ -41,13 +41,11 @@ public class ReservaService {
     private final ReservaRepository reservaRepository;
 
     // CRUD methods
-
     /**
      *
      * @param reserva
      * @return
      */
-
     @Transactional
     public Reserva create(Reserva reserva) {
         // Verifique se a obra associada existe
@@ -132,13 +130,11 @@ public class ReservaService {
     }
 
     // Methods related to relationships
-
     /**
      *
      * @param reserva
      * @return
      */
-
     public Obra findObraPorReserva(Reserva reserva) {
         return reserva.getObra();
     }

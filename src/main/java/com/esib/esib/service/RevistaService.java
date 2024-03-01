@@ -19,10 +19,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class RevistaService {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(RevistaService.class.getName());
+    private static final Logger logger = Logger.getLogger(RevistaService.class.getName());
 
     /**
      *
@@ -30,13 +31,11 @@ public class RevistaService {
     private final RevistaRepository revistaPeriodicaRepository;
 
     // CRUD methods
-
     /**
      *
      * @param revistaPeriodica
      * @return
      */
-
     @Transactional
     public Revista create(Revista revistaPeriodica) {
         // Verifique se a obra associada existe
@@ -109,13 +108,11 @@ public class RevistaService {
     }
 
     // Methods related to relationships
-
     /**
      *
      * @param revistaPeriodica
      * @return
      */
-
     public Obra findObraPorRevistaPeriodica(Revista revistaPeriodica) {
         return revistaPeriodica.getObra();
     }
@@ -190,6 +187,5 @@ public class RevistaService {
     public List<Revista> findByNumero(Integer numero) {
         return revistaPeriodicaRepository.findByNumero(numero);
     }
-
 
 }

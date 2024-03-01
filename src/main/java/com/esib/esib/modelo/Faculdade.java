@@ -1,4 +1,3 @@
-
 package com.esib.esib.modelo;
 
 import java.io.Serializable;
@@ -24,8 +23,8 @@ import lombok.Data;
  */
 @Entity
 @Table(catalog = "esib", schema = "public", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "sigla" }),
-        @UniqueConstraint(columnNames = { "descricao" }) })
+    @UniqueConstraint(columnNames = {"sigla"}),
+    @UniqueConstraint(columnNames = {"descricao"})})
 @XmlRootElement
 @Data
 
@@ -38,7 +37,7 @@ public class Faculdade implements Serializable {
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(Faculdade.class.getName());
+    private static final Logger logger = Logger.getLogger(Faculdade.class.getName());
 
     /**
      *

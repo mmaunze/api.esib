@@ -22,10 +22,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class JWTUtil {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(JWTUtil.class.getName());
+    private static final Logger logger = Logger.getLogger(JWTUtil.class.getName());
 
     /**
      *
@@ -106,6 +107,5 @@ public class JWTUtil {
             return null;
         }
     }
-
 
 }

@@ -11,16 +11,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class EsibApplicationTests {
 
+    /**
+     *
+     */
+    private static final Logger logger = Logger.getLogger(EsibApplicationTests.class.getName());
 
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(EsibApplicationTests.class.getName());
-    /**
-     *
-     */
     @Test
-                void contextLoads() {
-                }
+    void contextLoads() {
+    }
 
 }

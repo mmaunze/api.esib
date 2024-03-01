@@ -36,10 +36,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequestMapping("/bibliotecarios")
 @RequiredArgsConstructor
 public class BibliotecarioController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(BibliotecarioController.class.getName());
+    private static final Logger logger = Logger.getLogger(BibliotecarioController.class.getName());
 
     /**
      *
@@ -174,7 +175,7 @@ public class BibliotecarioController {
     public ResponseEntity<Void> update(@RequestBody BibliotecarioDTO bibliotecarioDTO, @PathVariable Long id) {
         try {
             bibliotecarioService.update(convertToEntity(bibliotecarioDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -189,7 +190,7 @@ public class BibliotecarioController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             bibliotecarioService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -198,14 +199,11 @@ public class BibliotecarioController {
     /*
      * Métodos auxiliares para conversão entre Entidade e DTO
      */
-
     /**
      *
      * @param bibliotecario
      * @return
      */
-
-
     private BibliotecarioDTO convertToDTO(Bibliotecario bibliotecario) {
 
         var bibliotecarioDTO = new BibliotecarioDTO();
@@ -228,7 +226,6 @@ public class BibliotecarioController {
      * @param bibliotecarioDTO
      * @return
      */
-    
     private Bibliotecario convertToEntity(BibliotecarioDTO bibliotecarioDTO) {
 
         var bibliotecario = new Bibliotecario();

@@ -36,10 +36,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class DevolucaoController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(DevolucaoController.class.getName());
+    private static final Logger logger = Logger.getLogger(DevolucaoController.class.getName());
 
     /**
      *
@@ -229,7 +230,7 @@ public class DevolucaoController {
     public ResponseEntity<Void> update(@RequestBody DevolucaoDTO DevolucaoDTO, @PathVariable Long id) {
         try {
             devolucaoService.update(convertToEntity(DevolucaoDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -244,7 +245,7 @@ public class DevolucaoController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             devolucaoService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }

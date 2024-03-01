@@ -35,7 +35,7 @@ public class Bibliotecario implements Serializable {
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(Bibliotecario.class.getName());
+    private static final Logger logger = Logger.getLogger(Bibliotecario.class.getName());
 
     /**
      *
@@ -67,14 +67,14 @@ public class Bibliotecario implements Serializable {
      *
      */
     @JoinColumn(name = "id_faculdade", referencedColumnName = "id_faculdade", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
+    @ManyToOne(optional = false, fetch = LAZY, cascade = {PERSIST, MERGE})
     private Faculdade faculdade;
 
     /**
      *
      */
     @JoinColumn(name = "id_bibliotecario", referencedColumnName = "id_utilizador", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
+    @OneToOne(optional = false, fetch = LAZY, cascade = {PERSIST, MERGE})
     private Utilizador utilizador;
 
     /**
@@ -82,6 +82,5 @@ public class Bibliotecario implements Serializable {
      */
     @OneToMany(cascade = ALL, mappedBy = "bibliotecario", fetch = LAZY)
     private List<Movimento> movimentoList;
-
 
 }

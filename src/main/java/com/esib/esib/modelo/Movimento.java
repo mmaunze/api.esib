@@ -1,4 +1,3 @@
-
 package com.esib.esib.modelo;
 
 import java.io.Serializable;
@@ -38,7 +37,7 @@ public class Movimento implements Serializable {
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(Movimento.class.getName());
+    private static final Logger logger = Logger.getLogger(Movimento.class.getName());
 
     /**
      *
@@ -66,21 +65,21 @@ public class Movimento implements Serializable {
      *
      */
     @JoinColumn(name = "id_bibliotecario", referencedColumnName = "id_bibliotecario", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
+    @ManyToOne(optional = false, fetch = LAZY, cascade = {PERSIST, MERGE})
     private Bibliotecario bibliotecario;
 
     /**
      *
      */
     @JoinColumn(name = "id_obra", referencedColumnName = "id_obra", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
+    @ManyToOne(optional = false, fetch = LAZY, cascade = {PERSIST, MERGE})
     private Obra obra;
 
     /**
      *
      */
     @JoinColumn(name = "id_tipo_movimento", referencedColumnName = "id_tipo_movimento", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
+    @ManyToOne(optional = false, fetch = LAZY, cascade = {PERSIST, MERGE})
     private TipoMovimento tipoMovimento;
 
     /**
@@ -89,6 +88,5 @@ public class Movimento implements Serializable {
     @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador")
     @ManyToOne(fetch = LAZY)
     private Utilizador utilizador;
-
 
 }

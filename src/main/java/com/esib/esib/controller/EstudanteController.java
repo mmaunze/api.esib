@@ -36,10 +36,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequestMapping("/utilizadores/estudantes")
 @RequiredArgsConstructor
 public class EstudanteController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(EstudanteController.class.getName());
+    private static final Logger logger = Logger.getLogger(EstudanteController.class.getName());
 
     /**
      *
@@ -174,7 +175,7 @@ public class EstudanteController {
     public ResponseEntity<Void> update(@RequestBody EstudanteDTO estudanteDTO, @PathVariable Long id) {
         try {
             estudanteService.update(convertToEntity(estudanteDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -189,7 +190,7 @@ public class EstudanteController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             estudanteService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -198,14 +199,11 @@ public class EstudanteController {
     /*
      * Métodos auxiliares para conversão entre Entidade e DTO
      */
-
     /**
      *
      * @param estudante
      * @return
      */
-
-
     private EstudanteDTO convertToDTO(Estudante estudante) {
 
         var estudanteDTO = new EstudanteDTO();
@@ -220,8 +218,6 @@ public class EstudanteController {
         estudanteDTO.setDepartamento(estudante.getUtilizador().getDepartamento().getDescricao());
         estudanteDTO.setCurso(estudante.getCurso().getDescricao());
         estudanteDTO.setNivel(estudante.getNivel());
-
-
 
         return estudanteDTO;
     }
@@ -246,8 +242,6 @@ public class EstudanteController {
                 .setDepartamento(departamentoService.findByDescricao(estudanteDTO.getDepartamento()));
         estudante.setCurso(cursoService.findByDescricao(estudanteDTO.getCurso()));
         estudante.setNivel(estudanteDTO.getNivel());
-
-
 
         return estudante;
     }

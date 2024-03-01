@@ -22,10 +22,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class BibliotecarioService {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(BibliotecarioService.class.getName());
+    private static final Logger logger = Logger.getLogger(BibliotecarioService.class.getName());
 
     /**
      *
@@ -38,13 +39,11 @@ public class BibliotecarioService {
     private final EstadoRepository estadoRepository;
 
     // CRUD methods
-
     /**
      *
      * @param bibliotecario
      * @return
      */
-
     @Transactional
     public Bibliotecario create(Bibliotecario bibliotecario) {
 
@@ -109,13 +108,11 @@ public class BibliotecarioService {
     }
 
     // Specific operations methods
-
     /**
      *
      * @param emprestimo
      * @return
      */
-
     @Transactional
     public Emprestimo registrarEmprestimo(Emprestimo emprestimo) {
         emprestimo.setBibliotecario(findById(emprestimo.getBibliotecario().getId())
@@ -132,10 +129,10 @@ public class BibliotecarioService {
     public Devolucao registrarDevolucao(Devolucao devolucao) {
         Emprestimo emprestimo = devolucao.getEmprestimo();
         emprestimo.setEstado(estadoRepository.findByDescricao("devolvido"));
-       if ( emprestimo.getBibliotecario() != null){
-        bibliotecarioRepository.save(emprestimo.getBibliotecario()); // Update bibliotecario with updated emprestimo
-       }
-       return devolucao;
+        if (emprestimo.getBibliotecario() != null) {
+            bibliotecarioRepository.save(emprestimo.getBibliotecario()); // Update bibliotecario with updated emprestimo
+        }
+        return devolucao;
     }
 
     /**
@@ -143,11 +140,10 @@ public class BibliotecarioService {
      * @param pagamentoMulta
      * @return
      */
-    
     @Transactional
     public PagamentoMulta registrarPagamentoMulta(PagamentoMulta pagamentoMulta) {
         bibliotecarioRepository.save(pagamentoMulta.getBibliotecario()); // Update bibliotecario with updated
-                                                                         // pagamentoMulta
+        // pagamentoMulta
         return pagamentoMulta;
     }
 
@@ -178,6 +174,5 @@ public class BibliotecarioService {
         return bibliotecarioRepository.findBibliotecarioPorUsername(username);
 
     }
-
 
 }

@@ -36,10 +36,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class ReservaController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(ReservaController.class.getName());
+    private static final Logger logger = Logger.getLogger(ReservaController.class.getName());
 
     /**
      *
@@ -211,7 +212,7 @@ public class ReservaController {
     public ResponseEntity<Void> update(@RequestBody ReservaDTO reservaDTO, @PathVariable Long id) {
         try {
             reservaService.update(convertToEntity(reservaDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -226,7 +227,7 @@ public class ReservaController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             reservaService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }

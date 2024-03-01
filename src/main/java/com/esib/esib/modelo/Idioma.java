@@ -1,4 +1,3 @@
-
 package com.esib.esib.modelo;
 
 import java.io.Serializable;
@@ -34,7 +33,7 @@ public class Idioma implements Serializable {
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(Idioma.class.getName());
+    private static final Logger logger = Logger.getLogger(Idioma.class.getName());
 
     /**
      *
@@ -57,6 +56,5 @@ public class Idioma implements Serializable {
      */
     @OneToMany(cascade = ALL, mappedBy = "idioma", fetch = LAZY)
     private List<Obra> obraList;
-
 
 }

@@ -34,10 +34,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class EstadoController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(EstadoController.class.getName());
+    private static final Logger logger = Logger.getLogger(EstadoController.class.getName());
 
     /**
      *
@@ -108,7 +109,7 @@ public class EstadoController {
     public ResponseEntity<Void> update(@RequestBody EstadoDTO estadoDTO, @PathVariable Long id) {
         try {
             estadoService.update(convertToEntity(estadoDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -123,14 +124,13 @@ public class EstadoController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             estadoService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
-
     /**
      *
      * @param estado

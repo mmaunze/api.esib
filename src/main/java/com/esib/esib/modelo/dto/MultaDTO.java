@@ -10,10 +10,11 @@ import lombok.Data;
 @Data
 
 public class MultaDTO {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(MultaDTO.class.getName());
+    private static final Logger logger = Logger.getLogger(MultaDTO.class.getName());
 
     /**
      *

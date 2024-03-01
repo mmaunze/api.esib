@@ -36,10 +36,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class AreaCientificaController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(AreaCientificaController.class.getName());
+    private static final Logger logger = Logger.getLogger(AreaCientificaController.class.getName());
 
     /**
      *
@@ -110,7 +111,7 @@ public class AreaCientificaController {
     public ResponseEntity<Void> update(@RequestBody AreaCientificaDTO areaCientificaDTO, @PathVariable Long id) {
         try {
             areaCientificaService.update(id, convertToEntity(areaCientificaDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -125,14 +126,13 @@ public class AreaCientificaController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             areaCientificaService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (IllegalOrphanException | NonexistentEntityException e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
-
     /**
      *
      * @param areaCientifica

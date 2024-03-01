@@ -34,10 +34,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class TipoMovimentoController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(TipoMovimentoController.class.getName());
+    private static final Logger logger = Logger.getLogger(TipoMovimentoController.class.getName());
 
     /**
      *
@@ -108,7 +109,7 @@ public class TipoMovimentoController {
     public ResponseEntity<Void> update(@RequestBody TipoMovimentoDTO tipoMovimentoDTO, @PathVariable Long id) {
         try {
             tipoMovimentoService.update(convertToEntity(tipoMovimentoDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -123,14 +124,13 @@ public class TipoMovimentoController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             tipoMovimentoService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
-
     /**
      *
      * @param tipoMovimento

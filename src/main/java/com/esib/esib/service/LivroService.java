@@ -19,10 +19,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class LivroService {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(LivroService.class.getName());
+    private static final Logger logger = Logger.getLogger(LivroService.class.getName());
 
     /**
      *
@@ -30,26 +31,23 @@ public class LivroService {
     private final LivroRepository livroRepository;
 
     // CRUD methods
-
     /**
      *
      * @param livro
      * @return
      */
-
     @Transactional
     public Livro create(Livro livro) {
-        
+
         Obra obra = livro.getObra();
         if (obra == null) {
             throw new IllegalArgumentException("Obra associada ao livro não informada");
         }
-        
-         // Verifique se o ISBN é único
-         if (livroRepository.existsByIsbn(livro.getIsbn())) {
-         throw new IllegalArgumentException("Livro com ISBN já existente");
-         }
-         
+
+        // Verifique se o ISBN é único
+        if (livroRepository.existsByIsbn(livro.getIsbn())) {
+            throw new IllegalArgumentException("Livro com ISBN já existente");
+        }
 
         return livroRepository.save(livro);
     }
@@ -100,13 +98,11 @@ public class LivroService {
     }
 
     // Method related to relationship
-
     /**
      *
      * @param livro
      * @return
      */
-
     public Obra findObraPorLivro(Livro livro) {
         return livro.getObra();
     }
@@ -166,6 +162,5 @@ public class LivroService {
     public List<Livro> findByEdicao(Integer numero) {
         return livroRepository.findByEdicao(numero);
     }
-
 
 }

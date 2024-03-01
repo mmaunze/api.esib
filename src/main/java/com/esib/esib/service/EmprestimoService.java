@@ -21,10 +21,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class EmprestimoService {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(EmprestimoService.class.getName());
+    private static final Logger logger = Logger.getLogger(EmprestimoService.class.getName());
 
     /**
      *
@@ -37,20 +38,18 @@ public class EmprestimoService {
     private final ObraRepository obraRepository;
 
     // CRUD methods
-
     /**
      *
      * @param emprestimo
      * @return
      */
-
     @Transactional
     public Emprestimo create(Emprestimo emprestimo) {
         // Verifique se todos os dados obrigatórios estão presentes
-        if (emprestimo.getBibliotecario() == null ||
-                emprestimo.getEstado() == null ||
-                emprestimo.getObra() == null ||
-                emprestimo.getUtilizador() == null) {
+        if (emprestimo.getBibliotecario() == null
+                || emprestimo.getEstado() == null
+                || emprestimo.getObra() == null
+                || emprestimo.getUtilizador() == null) {
             throw new RuntimeException("Dados obrigatórios do emprestimo não informados");
         }
 
@@ -80,7 +79,7 @@ public class EmprestimoService {
      * @return
      */
     public Optional<Emprestimo> findById(Long id) {
-      return emprestimoRepository.findById(id);
+        return emprestimoRepository.findById(id);
     }
 
     /**
@@ -117,7 +116,7 @@ public class EmprestimoService {
     public List<Emprestimo> findByObra(Long obra) {
         return emprestimoRepository.findByObra(obra);
     }
-    
+
     /**
      *
      * @param titulo
@@ -152,7 +151,7 @@ public class EmprestimoService {
      */
     @Transactional
     public Emprestimo update(Emprestimo emprestimo) {
-        
+
         var newEmprestimo = new Emprestimo();
 
         newEmprestimo.setId(emprestimo.getId());
@@ -181,7 +180,6 @@ public class EmprestimoService {
     }
 
     // Method to calculate due date
-
     /**
      *
      * @param prazoEmprestimo
@@ -201,7 +199,5 @@ public class EmprestimoService {
     public List<Emprestimo> findByEstado(String estado) {
         return emprestimoRepository.findByEstado(estado);
     }
-
-
 
 }

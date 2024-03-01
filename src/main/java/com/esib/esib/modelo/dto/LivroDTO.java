@@ -9,10 +9,11 @@ import lombok.Data;
  */
 @Data
 public class LivroDTO {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(LivroDTO.class.getName());
+    private static final Logger logger = Logger.getLogger(LivroDTO.class.getName());
 
     /**
      *
@@ -20,7 +21,6 @@ public class LivroDTO {
     private Long id;
 
     // Atributos da Obra (genericos)
-
     /**
      *
      */
@@ -67,7 +67,6 @@ public class LivroDTO {
     private String fotografia;
 
     // Atributos epecificos do Livro
-
     /**
      *
      */
@@ -87,6 +86,5 @@ public class LivroDTO {
      *
      */
     private int volume;
-
 
 }

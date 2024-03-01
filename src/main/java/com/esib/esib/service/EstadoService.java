@@ -22,10 +22,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class EstadoService {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(EstadoService.class.getName());
+    private static final Logger logger = Logger.getLogger(EstadoService.class.getName());
 
     /**
      *
@@ -33,13 +34,11 @@ public class EstadoService {
     private final EstadoRepository estadoRepository;
 
     // CRUD methods
-
     /**
      *
      * @param estado
      * @return
      */
-
     @Transactional
     public Estado create(Estado estado) {
         return estadoRepository.save(estado);
@@ -94,13 +93,11 @@ public class EstadoService {
     }
 
     // Methods related to relationships
-
     /**
      *
      * @param estado
      * @return
      */
-
     public List<Emprestimo> findEmprestimosPorEstado(Estado estado) {
         return estado.getEmprestimoList();
     }
@@ -141,6 +138,5 @@ public class EstadoService {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findByDescricao'");
     }
-
 
 }

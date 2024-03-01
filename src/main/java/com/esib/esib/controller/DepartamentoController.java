@@ -34,10 +34,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class DepartamentoController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(DepartamentoController.class.getName());
+    private static final Logger logger = Logger.getLogger(DepartamentoController.class.getName());
 
     /**
      *
@@ -108,7 +109,7 @@ public class DepartamentoController {
     public ResponseEntity<Void> update(@RequestBody DepartamentoDTO departamentoDTO, @PathVariable Long id) {
         try {
             departamentoService.update(convertToEntity(departamentoDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -123,14 +124,13 @@ public class DepartamentoController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             departamentoService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
-
     /**
      *
      * @param departamento
@@ -142,7 +142,6 @@ public class DepartamentoController {
         departamentoDTO.setId(departamento.getId());
         departamentoDTO.setDescricao(departamento.getDescricao());
         departamentoDTO.setSigla(departamento.getSigla());
-
 
         return departamentoDTO;
     }

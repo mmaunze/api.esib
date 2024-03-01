@@ -1,4 +1,3 @@
-
 package com.esib.esib.modelo;
 
 import java.io.Serializable;
@@ -34,7 +33,7 @@ public class Estudante implements Serializable {
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(Estudante.class.getName());
+    private static final Logger logger = Logger.getLogger(Estudante.class.getName());
 
     /**
      *
@@ -55,15 +54,14 @@ public class Estudante implements Serializable {
      *
      */
     @JoinColumn(name = "id_curso", referencedColumnName = "id_curso", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
+    @ManyToOne(optional = false, fetch = LAZY, cascade = {PERSIST, MERGE})
     private Curso curso;
 
     /**
      *
      */
     @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
+    @OneToOne(optional = false, fetch = LAZY, cascade = {PERSIST, MERGE})
     private Utilizador utilizador;
-
 
 }

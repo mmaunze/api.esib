@@ -35,10 +35,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Slf4j(topic = "GLOBAL_EXCEPTION_HANDLER")
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler implements AuthenticationFailureHandler {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(GlobalExceptionHandler.class.getName());
+    private static final Logger logger = Logger.getLogger(GlobalExceptionHandler.class.getName());
 
     /**
      *
@@ -253,6 +254,5 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler imple
         ErrorResponse errorResponse = new ErrorResponse(status, "Username or password are invalid");
         response.getWriter().append(errorResponse.toJson());
     }
-
 
 }

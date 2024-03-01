@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = FORBIDDEN)
 public class AuthorizationException extends AccessDeniedException {
 
-
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(AuthorizationException.class.getName());
+    private static final Logger logger = Logger.getLogger(AuthorizationException.class.getName());
+
     /**
      *
      * @param message

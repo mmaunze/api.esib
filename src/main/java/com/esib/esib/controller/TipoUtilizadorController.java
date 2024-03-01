@@ -34,10 +34,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class TipoUtilizadorController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(TipoUtilizadorController.class.getName());
+    private static final Logger logger = Logger.getLogger(TipoUtilizadorController.class.getName());
 
     /**
      *
@@ -108,7 +109,7 @@ public class TipoUtilizadorController {
     public ResponseEntity<Void> update(@RequestBody TipoUtilizadorDTO tipoUtilizadorDTO, @PathVariable Long id) {
         try {
             tipoUtilizadorService.update(convertToEntity(tipoUtilizadorDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -123,14 +124,13 @@ public class TipoUtilizadorController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             tipoUtilizadorService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
-
     /**
      *
      * @param tipoUtilizador

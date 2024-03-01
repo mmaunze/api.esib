@@ -10,10 +10,11 @@ import lombok.Data;
  */
 @Data
 public class PagamentoMultaDTO {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(PagamentoMultaDTO.class.getName());
+    private static final Logger logger = Logger.getLogger(PagamentoMultaDTO.class.getName());
 
     /**
      *

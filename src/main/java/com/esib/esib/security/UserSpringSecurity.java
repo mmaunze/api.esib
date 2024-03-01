@@ -18,10 +18,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NoArgsConstructor
 @Getter
 public class UserSpringSecurity implements UserDetails {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(UserSpringSecurity.class.getName());
+    private static final Logger logger = Logger.getLogger(UserSpringSecurity.class.getName());
 
     /**
      *
@@ -102,6 +103,5 @@ public class UserSpringSecurity implements UserDetails {
     public boolean hasRole(ProfileEnum profileEnum) {
         return getAuthorities().contains(new SimpleGrantedAuthority(profileEnum.getDescription()));
     }
-
 
 }

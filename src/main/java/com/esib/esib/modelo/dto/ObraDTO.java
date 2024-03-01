@@ -1,5 +1,7 @@
 package com.esib.esib.modelo.dto;
+
 import java.util.logging.Logger;
+
 import lombok.Data;
 
 /**
@@ -8,10 +10,11 @@ import lombok.Data;
  */
 @Data
 public class ObraDTO {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(ObraDTO.class.getName());
+    private static final Logger logger = Logger.getLogger(ObraDTO.class.getName());
 
     /**
      *
@@ -26,7 +29,7 @@ public class ObraDTO {
     /**
      *
      */
-    private  String autores;
+    private String autores;
 
     /**
      *
@@ -73,5 +76,6 @@ public class ObraDTO {
      */
     private String estado;
 
+    private String referencia;
 
 }

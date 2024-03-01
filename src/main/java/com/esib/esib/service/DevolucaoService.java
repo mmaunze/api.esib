@@ -21,10 +21,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class DevolucaoService {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(DevolucaoService.class.getName());
+    private static final Logger logger = Logger.getLogger(DevolucaoService.class.getName());
 
     /**
      *
@@ -37,13 +38,11 @@ public class DevolucaoService {
     private final EmprestimoRepository emprestimoRepository;
 
     // CRUD methods
-
     /**
      *
      * @param devolucao
      * @return
      */
-
     @Transactional
     public Devolucao create(Devolucao devolucao) {
         // Verifique se o emprestimo associado existe e está ativo
@@ -112,7 +111,6 @@ public class DevolucaoService {
     }
 
     // Method to calculate delay in days
-
     /**
      *
      * @param dataEmprestimo
@@ -178,6 +176,5 @@ public class DevolucaoService {
         return devolucaoRepository.findByAreaCientifica(areacientifica);
 
     }
-
 
 }

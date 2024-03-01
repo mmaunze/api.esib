@@ -1,24 +1,16 @@
 package com.esib.esib.controller;
 
-import com.esib.esib.modelo.Multa;
-import com.esib.esib.modelo.PagamentoMulta;
-import com.esib.esib.modelo.dto.PagamentoMultaDTO;
-import com.esib.esib.service.BibliotecarioService;
-import com.esib.esib.service.MultaService;
-import com.esib.esib.service.PagamentoMultaService;
+import static java.util.stream.Collectors.*;
+import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.ResponseEntity.*;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.*;
+
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
-import static java.util.stream.Collectors.toList;
-import lombok.RequiredArgsConstructor;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.OK;
+
 import org.springframework.http.ResponseEntity;
-import static org.springframework.http.ResponseEntity.created;
-import static org.springframework.http.ResponseEntity.noContent;
-import static org.springframework.http.ResponseEntity.ok;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +19,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
+
+import com.esib.esib.modelo.Multa;
+import com.esib.esib.modelo.PagamentoMulta;
+import com.esib.esib.modelo.dto.PagamentoMultaDTO;
+import com.esib.esib.service.BibliotecarioService;
+import com.esib.esib.service.MultaService;
+import com.esib.esib.service.PagamentoMultaService;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  *
@@ -38,10 +38,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class PagamentoMultaController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(PagamentoMultaController.class.getName());
+    private static final Logger logger = Logger.getLogger(PagamentoMultaController.class.getName());
 
     /**
      *
@@ -122,7 +123,7 @@ public class PagamentoMultaController {
     public ResponseEntity<Void> update(@RequestBody PagamentoMultaDTO pagamentoDTO, @PathVariable Long id) {
         try {
             pagamentoPagamentoMultaService.update(convertToEntity(pagamentoDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -137,14 +138,13 @@ public class PagamentoMultaController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             pagamentoPagamentoMultaService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
-
     /**
      *
      * @param pagamento

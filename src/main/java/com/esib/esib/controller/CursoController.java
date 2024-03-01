@@ -35,10 +35,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class CursoController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(CursoController.class.getName());
+    private static final Logger logger = Logger.getLogger(CursoController.class.getName());
 
     /**
      *
@@ -114,7 +115,7 @@ public class CursoController {
     public ResponseEntity<Void> update(@RequestBody CursoDTO cursoDTO, @PathVariable Long id) {
         try {
             cursoService.update(convertToEntity(cursoDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -129,14 +130,13 @@ public class CursoController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             cursoService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
-
     /**
      *
      * @param curso

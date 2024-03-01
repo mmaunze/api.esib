@@ -10,10 +10,11 @@ import lombok.Data;
 @Data
 
 public class TipoObraDTO {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(TipoObraDTO.class.getName());
+    private static final Logger logger = Logger.getLogger(TipoObraDTO.class.getName());
 
     /**
      *

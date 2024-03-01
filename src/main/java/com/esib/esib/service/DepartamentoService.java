@@ -19,10 +19,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class DepartamentoService {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(DepartamentoService.class.getName());
+    private static final Logger logger = Logger.getLogger(DepartamentoService.class.getName());
 
     /**
      *
@@ -30,13 +31,11 @@ public class DepartamentoService {
     private final DepartamentoRepository departamentoRepository;
 
     // CRUD methods
-
     /**
      *
      * @param departamento
      * @return
      */
-
     @Transactional
     public Departamento create(Departamento departamento) {
         return departamentoRepository.save(departamento);
@@ -79,13 +78,11 @@ public class DepartamentoService {
     }
 
     // Methods related to relationships
-
     /**
      *
      * @param departamento
      * @return
      */
-
     public List<Utilizador> findUtilizadoresPorDepartamento(Departamento departamento) {
         return departamento.getUtilizadorList();
     }
@@ -98,6 +95,5 @@ public class DepartamentoService {
     public Departamento findByDescricao(String departamento) {
         return departamentoRepository.findByDescricao(departamento);
     }
-
 
 }

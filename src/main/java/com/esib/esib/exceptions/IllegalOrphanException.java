@@ -9,10 +9,11 @@ import java.util.logging.Logger;
  * @author Meldo Maunze
  */
 public class IllegalOrphanException extends Exception {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(IllegalOrphanException.class.getName());
+    private static final Logger logger = Logger.getLogger(IllegalOrphanException.class.getName());
 
     /**
      *
@@ -24,11 +25,10 @@ public class IllegalOrphanException extends Exception {
      * @param messages
      */
     public IllegalOrphanException(List<String> messages) {
-        super((messages != null && messages.isEmpty()  ? messages.get(0) : null));
+        super((messages != null && messages.isEmpty() ? messages.get(0) : null));
         if (messages == null) {
             this.messages = new ArrayList<>();
-        }
-        else {
+        } else {
             this.messages = messages;
         }
     }

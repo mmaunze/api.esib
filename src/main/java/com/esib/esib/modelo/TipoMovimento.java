@@ -1,4 +1,3 @@
-
 package com.esib.esib.modelo;
 
 import java.io.Serializable;
@@ -24,7 +23,7 @@ import lombok.Data;
  */
 @Entity
 @Table(name = "tipo_movimento", catalog = "esib", schema = "public", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "descricao" }) })
+    @UniqueConstraint(columnNames = {"descricao"})})
 @XmlRootElement
 @Data
 public class TipoMovimento implements Serializable {
@@ -36,7 +35,7 @@ public class TipoMovimento implements Serializable {
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(TipoMovimento.class.getName());
+    private static final Logger logger = Logger.getLogger(TipoMovimento.class.getName());
 
     /**
      *
@@ -68,6 +67,5 @@ public class TipoMovimento implements Serializable {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getPermiteEmprestimo'");
     }
-
 
 }

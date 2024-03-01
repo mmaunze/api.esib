@@ -14,11 +14,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
-
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(WebConfig.class.getName());
+    private static final Logger logger = Logger.getLogger(WebConfig.class.getName());
+
     /**
      *
      * @param registry

@@ -21,10 +21,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Data
 public class MovimentoService {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(MovimentoService.class.getName());
+    private static final Logger logger = Logger.getLogger(MovimentoService.class.getName());
 
     /**
      *
@@ -32,13 +33,11 @@ public class MovimentoService {
     private final MovimentoRepository movimentoRepository;
 
     // CRUD methods
-
     /**
      *
      * @param movimento
      * @return
      */
-
     @Transactional
     public Movimento create(Movimento movimento) {
         // Verifique se as entidades associadas existem
@@ -159,5 +158,10 @@ public class MovimentoService {
         return movimentoRepository.findByAcientifica(estado);
     }
 
+    public Object gerarRelatorio() {
+
+       return "relatorios";
+       
+    }
 
 }

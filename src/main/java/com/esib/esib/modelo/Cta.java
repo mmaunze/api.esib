@@ -1,4 +1,3 @@
-
 package com.esib.esib.modelo;
 
 import java.io.Serializable;
@@ -34,7 +33,7 @@ public class Cta implements Serializable {
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(Cta.class.getName());
+    private static final Logger logger = Logger.getLogger(Cta.class.getName());
 
     /**
      *
@@ -54,15 +53,14 @@ public class Cta implements Serializable {
      *
      */
     @JoinColumn(name = "id_cargo", referencedColumnName = "id_cargo", nullable = false)
-    @ManyToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
+    @ManyToOne(optional = false, fetch = LAZY, cascade = {PERSIST, MERGE})
     private Cargo cargo;
 
     /**
      *
      */
     @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = LAZY, cascade = { PERSIST, MERGE})
+    @OneToOne(optional = false, fetch = LAZY, cascade = {PERSIST, MERGE})
     private Utilizador utilizador;
-
 
 }

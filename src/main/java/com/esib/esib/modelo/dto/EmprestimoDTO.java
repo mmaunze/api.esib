@@ -10,10 +10,11 @@ import lombok.Data;
  */
 @Data
 public class EmprestimoDTO {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(EmprestimoDTO.class.getName());
+    private static final Logger logger = Logger.getLogger(EmprestimoDTO.class.getName());
 
     /**
      *
@@ -44,7 +45,7 @@ public class EmprestimoDTO {
      *
      */
     private String bibliotecarioNome;
-    
+
     /**
      *
      */
@@ -69,6 +70,5 @@ public class EmprestimoDTO {
      *
      */
     private String utlizadorNome;
-
 
 }

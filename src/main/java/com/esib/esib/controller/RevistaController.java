@@ -37,10 +37,11 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RequiredArgsConstructor
 
 public class RevistaController {
+
     /**
      *
      */
-    private static final Logger LOG = Logger.getLogger(RevistaController.class.getName());
+    private static final Logger logger = Logger.getLogger(RevistaController.class.getName());
 
     /**
      *
@@ -253,7 +254,7 @@ public class RevistaController {
     public ResponseEntity<Void> update(@RequestBody RevistaDTO revistaDTO, @PathVariable Long id) {
         try {
             revistaService.update(convertToEntity(revistaDTO));
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -268,7 +269,7 @@ public class RevistaController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             revistaService.delete(id);
-            return noContent().build();
+            return ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
@@ -284,9 +285,9 @@ public class RevistaController {
 
         revistaDTO.setId(revista.getId());
         revistaDTO.setTitulo(revista.getObra().getTitulo());
-        revistaDTO.setAutores(revista.getObra().getAutor1() +
-                " " + revista.getObra().getAutor2() +
-                " " + revista.getObra().getAutor3());
+        revistaDTO.setAutores(revista.getObra().getAutor1()
+                + " " + revista.getObra().getAutor2()
+                + " " + revista.getObra().getAutor3());
         revistaDTO.setNrPaginas(revista.getObra().getNrPaginas());
         revistaDTO.setLocalPublicacao(revista.getObra().getLocalPublicacao());
         revistaDTO.setAnoPublicacao(revista.getObra().getAnoPublicacao());
