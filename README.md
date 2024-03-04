@@ -23,12 +23,27 @@ Este projeto implementa um sistema de biblioteca completo utilizando Java com Sp
 - Registrar empréstimos de livros para usuários.
 - Devolver livros emprestados.
 - Visualizar histórico de empréstimos de um usuário.
+- Registar e pagar multas associadas aos empréstimos.
 
 ### Gerenciamento de Usuários:
 
 - Cadastrar, editar e excluir usuários.
 - Pesquisar usuários por nome e email.
 - Visualizar detalhes de um usuário.
+
+### Registo e Pagamento de Multas:
+
+- Registar multas associadas a atrasos na devolução de livros.
+- Efetuar o pagamento das multas pendentes.
+
+### Consulta de Movimentos:
+
+- Consultar o histórico de movimentos, incluindo empréstimos, devoluções e pagamentos de multas.
+
+### Produção de Relatórios Periódicos:
+
+- Gerar relatórios periódicos em formato PDF com estatísticas e informações relevantes do sistema.
+
 
 ## Tecnologias Utilizadas
 
