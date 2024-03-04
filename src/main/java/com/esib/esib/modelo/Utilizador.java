@@ -35,6 +35,7 @@ import lombok.Data;
     @UniqueConstraint(columnNames = {"contacto"}),
     @UniqueConstraint(columnNames = {"email"}),
     @UniqueConstraint(columnNames = {"username"})})
+    
 @XmlRootElement
 @Data
 public class Utilizador implements Serializable {

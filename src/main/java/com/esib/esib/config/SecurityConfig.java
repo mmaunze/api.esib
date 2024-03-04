@@ -35,19 +35,19 @@ public class SecurityConfig {
      *
      */
     private static final String[] PUBLIC_MATCHERS = {
-        "/",
-        "/utilizadores",
-        "/login",
-        "/obras"
+        "/**",
+        "/utilizadores/**",
+        "/login/**",
+        "/obras/**"
 
     };
     /**
      *
      */
     private static final String[] PUBLIC_MATCHERS_POST = {
-        "/utilizadores",
-        "/login",
-        "/obras"
+        "/utilizadores/**",
+        "/login/**",
+        "/obras/**"
     };
     /**
      *

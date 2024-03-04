@@ -1,23 +1,15 @@
 package com.esib.esib.controller;
 
-import com.esib.esib.modelo.Utilizador;
-import com.esib.esib.modelo.dto.UtilizadorDTO;
-import com.esib.esib.service.AreaCientificaService;
-import com.esib.esib.service.DepartamentoService;
-import com.esib.esib.service.TipoUtilizadorService;
-import com.esib.esib.service.UtilizadorService;
+import static java.util.stream.Collectors.*;
+import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.ResponseEntity.*;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.*;
+
 import java.net.URI;
 import java.util.List;
 import java.util.logging.Logger;
-import static java.util.stream.Collectors.toList;
-import lombok.RequiredArgsConstructor;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.OK;
+
 import org.springframework.http.ResponseEntity;
-import static org.springframework.http.ResponseEntity.created;
-import static org.springframework.http.ResponseEntity.noContent;
-import static org.springframework.http.ResponseEntity.ok;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +18,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
+
+import com.esib.esib.modelo.Utilizador;
+import com.esib.esib.modelo.dto.UtilizadorDTO;
+import com.esib.esib.service.AreaCientificaService;
+import com.esib.esib.service.DepartamentoService;
+import com.esib.esib.service.TipoUtilizadorService;
+import com.esib.esib.service.UtilizadorService;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  *
