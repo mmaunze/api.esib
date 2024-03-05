@@ -1,9 +1,9 @@
 package com.esib.esib.service;
 
-import com.esib.esib.modelo.Emprestimo;
-import com.esib.esib.modelo.Estado;
-import com.esib.esib.modelo.Multa;
-import com.esib.esib.modelo.PagamentoMulta;
+import com.esib.esib.model.Emprestimo;
+import com.esib.esib.model.Estado;
+import com.esib.esib.model.Multa;
+import com.esib.esib.model.PagamentoMulta;
 import com.esib.esib.repository.MultaRepository;
 import java.util.List;
 import java.util.Optional;

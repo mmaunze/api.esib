@@ -1,7 +1,7 @@
 package com.esib.esib.controller;
 
-import com.esib.esib.modelo.TipoObra;
-import com.esib.esib.modelo.dto.TipoObraDTO;
+import com.esib.esib.model.TipoObra;
+import com.esib.esib.model.dto.TipoObraDTO;
 import com.esib.esib.service.TipoObraService;
 import java.net.URI;
 import java.util.List;

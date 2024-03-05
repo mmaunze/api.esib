@@ -1,7 +1,7 @@
 package com.esib.esib.service;
 
-import com.esib.esib.modelo.Estudante;
-import com.esib.esib.modelo.Utilizador;
+import com.esib.esib.model.Estudante;
+import com.esib.esib.model.Utilizador;
 import com.esib.esib.repository.EstudanteRepository;
 import java.util.List;
 import java.util.Optional;

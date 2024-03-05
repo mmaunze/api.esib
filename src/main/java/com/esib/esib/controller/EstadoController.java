@@ -1,7 +1,7 @@
 package com.esib.esib.controller;
 
-import com.esib.esib.modelo.Estado;
-import com.esib.esib.modelo.dto.EstadoDTO;
+import com.esib.esib.model.Estado;
+import com.esib.esib.model.dto.EstadoDTO;
 import com.esib.esib.service.EstadoService;
 import java.net.URI;
 import java.util.List;

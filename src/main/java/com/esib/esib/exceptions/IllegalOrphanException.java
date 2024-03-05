@@ -1,6 +1,7 @@
 package com.esib.esib.exceptions;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -9,12 +10,6 @@ import java.util.logging.Logger;
  * @author Meldo Maunze
  */
 public class IllegalOrphanException extends Exception {
-
-    /**
-     *
-     */
-    private static final Logger logger = Logger.getLogger(IllegalOrphanException.class.getName());
-
     /**
      *
      */
@@ -38,7 +33,12 @@ public class IllegalOrphanException extends Exception {
      * @return
      */
     public List<String> getMessages() {
-        return messages;
+        return Collections.unmodifiableList(messages);
     }
+
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(IllegalOrphanException.class.getName());
 
 }

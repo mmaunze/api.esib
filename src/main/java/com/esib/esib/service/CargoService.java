@@ -1,6 +1,6 @@
 package com.esib.esib.service;
 
-import com.esib.esib.modelo.Cargo;
+import com.esib.esib.model.Cargo;
 import com.esib.esib.repository.CargoRepository;
 import java.util.List;
 import java.util.Optional;

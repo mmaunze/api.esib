@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.esib.esib.modelo.Movimento;
-import com.esib.esib.modelo.dto.MovimentoDTO;
+import com.esib.esib.model.Movimento;
+import com.esib.esib.model.dto.MovimentoDTO;
 import com.esib.esib.service.BibliotecarioService;
 import com.esib.esib.service.MovimentoService;
 import com.esib.esib.service.ObraService;

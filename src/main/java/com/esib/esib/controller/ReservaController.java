@@ -1,7 +1,7 @@
 package com.esib.esib.controller;
 
-import com.esib.esib.modelo.Reserva;
-import com.esib.esib.modelo.dto.ReservaDTO;
+import com.esib.esib.model.Reserva;
+import com.esib.esib.model.dto.ReservaDTO;
 import com.esib.esib.service.EstadoService;
 import com.esib.esib.service.ReservaService;
 import com.esib.esib.service.UtilizadorService;

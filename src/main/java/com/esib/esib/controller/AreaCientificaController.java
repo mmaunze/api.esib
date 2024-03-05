@@ -2,8 +2,8 @@ package com.esib.esib.controller;
 
 import com.esib.esib.exceptions.IllegalOrphanException;
 import com.esib.esib.exceptions.NonexistentEntityException;
-import com.esib.esib.modelo.AreaCientifica;
-import com.esib.esib.modelo.dto.AreaCientificaDTO;
+import com.esib.esib.model.AreaCientifica;
+import com.esib.esib.model.dto.AreaCientificaDTO;
 import com.esib.esib.service.AreaCientificaService;
 import java.net.URI;
 import java.util.List;
@@ -125,6 +125,7 @@ public class AreaCientificaController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             areaCientificaService.delete(id);
+            logger.info("Usuario removido");
             return ok().build();
         } catch (IllegalOrphanException | NonexistentEntityException e) {
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
@@ -132,11 +133,13 @@ public class AreaCientificaController {
     }
 
     // Métodos auxiliares para conversão entre Entidade e DTO
+
     /**
      *
      * @param areaCientifica
      * @return
      */
+    
     private AreaCientificaDTO convertToDTO(AreaCientifica areaCientifica) {
 
         var areaCientificaDTO = new AreaCientificaDTO();

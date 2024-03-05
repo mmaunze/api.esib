@@ -1,7 +1,7 @@
 package com.esib.esib.controller;
 
-import com.esib.esib.modelo.Faculdade;
-import com.esib.esib.modelo.dto.FaculdadeDTO;
+import com.esib.esib.model.Faculdade;
+import com.esib.esib.model.dto.FaculdadeDTO;
 import com.esib.esib.service.FaculdadeService;
 import java.net.URI;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.esib.esib.controller;
 
-import com.esib.esib.modelo.TipoUtilizador;
-import com.esib.esib.modelo.dto.TipoUtilizadorDTO;
+import com.esib.esib.model.TipoUtilizador;
+import com.esib.esib.model.dto.TipoUtilizadorDTO;
 import com.esib.esib.service.TipoUtilizadorService;
 import java.net.URI;
 import java.util.List;

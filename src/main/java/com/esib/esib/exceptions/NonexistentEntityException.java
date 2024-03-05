@@ -10,11 +10,6 @@ public class NonexistentEntityException extends Exception {
 
     /**
      *
-     */
-    private static final Logger logger = Logger.getLogger(NonexistentEntityException.class.getName());
-
-    /**
-     *
      * @param message
      * @param cause
      */
@@ -29,5 +24,10 @@ public class NonexistentEntityException extends Exception {
     public NonexistentEntityException(String message) {
         super(message);
     }
+
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(NonexistentEntityException.class.getName());
 
 }

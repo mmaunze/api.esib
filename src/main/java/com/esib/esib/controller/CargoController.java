@@ -1,7 +1,7 @@
 package com.esib.esib.controller;
 
-import com.esib.esib.modelo.Cargo;
-import com.esib.esib.modelo.dto.CargoDTO;
+import com.esib.esib.model.Cargo;
+import com.esib.esib.model.dto.CargoDTO;
 import com.esib.esib.service.CargoService;
 import java.net.URI;
 import java.util.List;

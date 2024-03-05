@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.esib.esib.modelo.Curso;
-import com.esib.esib.modelo.dto.CursoDTO;
+import com.esib.esib.model.Curso;
+import com.esib.esib.model.dto.CursoDTO;
 import com.esib.esib.service.CursoService;
 import com.esib.esib.service.FaculdadeService;
 

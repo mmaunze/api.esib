@@ -1,7 +1,7 @@
 package com.esib.esib.service;
 
-import com.esib.esib.modelo.Devolucao;
-import com.esib.esib.modelo.Emprestimo;
+import com.esib.esib.model.Devolucao;
+import com.esib.esib.model.Emprestimo;
 import com.esib.esib.repository.DevolucaoRepository;
 import com.esib.esib.repository.EmprestimoRepository;
 import java.util.Date;

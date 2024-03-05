@@ -1,7 +1,7 @@
 package com.esib.esib.security;
 
 import com.esib.esib.exceptions.GlobalExceptionHandler;
-import com.esib.esib.modelo.Utilizador;
+import com.esib.esib.model.Utilizador;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.ArrayList;

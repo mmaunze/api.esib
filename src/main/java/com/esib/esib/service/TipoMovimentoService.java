@@ -1,7 +1,7 @@
 package com.esib.esib.service;
 
-import com.esib.esib.modelo.Movimento;
-import com.esib.esib.modelo.TipoMovimento;
+import com.esib.esib.model.Movimento;
+import com.esib.esib.model.TipoMovimento;
 import com.esib.esib.repository.TipoMovimentoRepository;
 import java.util.List;
 import java.util.Optional;

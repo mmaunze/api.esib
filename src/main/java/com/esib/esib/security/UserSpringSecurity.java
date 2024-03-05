@@ -1,6 +1,5 @@
 package com.esib.esib.security;
 
-import com.esib.esib.modelo.enums.ProfileEnum;
 import java.util.Collection;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -10,6 +9,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.esib.esib.model.enums.ProfileEnum;
 
 /**
  *

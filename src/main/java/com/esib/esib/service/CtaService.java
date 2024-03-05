@@ -1,6 +1,6 @@
 package com.esib.esib.service;
 
-import com.esib.esib.modelo.Cta;
+import com.esib.esib.model.Cta;
 import com.esib.esib.repository.CtaRepository;
 import java.util.List;
 import java.util.Optional;

@@ -68,7 +68,7 @@ Este projeto implementa um sistema de biblioteca completo utilizando Java com Sp
 
 1. Clone este repositório.
 2. Instale o Java 17 e o Maven.
-3. Importe o projeto para o seu IDE favorito (ex: IntelliJ IDEA).
+3. Importe o projeto para o seu IDE favorito (ex: VSCODE).
 4. Configure o banco de dados PostgreSQL.
 5. Inicie o servidor Spring Boot usando o comando `mvn spring-boot:run`.
 

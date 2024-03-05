@@ -1,7 +1,7 @@
 package com.esib.esib.service;
 
-import com.esib.esib.modelo.Monografia;
-import com.esib.esib.modelo.Obra;
+import com.esib.esib.model.Monografia;
+import com.esib.esib.model.Obra;
 import com.esib.esib.repository.MonografiaRepository;
 import java.util.List;
 import java.util.Optional;

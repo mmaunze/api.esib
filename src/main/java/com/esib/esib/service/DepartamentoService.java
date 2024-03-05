@@ -1,7 +1,7 @@
 package com.esib.esib.service;
 
-import com.esib.esib.modelo.Departamento;
-import com.esib.esib.modelo.Utilizador;
+import com.esib.esib.model.Departamento;
+import com.esib.esib.model.Utilizador;
 import com.esib.esib.repository.DepartamentoRepository;
 import java.util.List;
 import java.util.Optional;

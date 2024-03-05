@@ -1,7 +1,7 @@
 package com.esib.esib.controller;
 
-import com.esib.esib.modelo.Bibliotecario;
-import com.esib.esib.modelo.dto.BibliotecarioDTO;
+import com.esib.esib.model.Bibliotecario;
+import com.esib.esib.model.dto.BibliotecarioDTO;
 import com.esib.esib.service.AreaCientificaService;
 import com.esib.esib.service.BibliotecarioService;
 import com.esib.esib.service.DepartamentoService;

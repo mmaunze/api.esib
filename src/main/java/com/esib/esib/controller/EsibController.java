@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esib.esib.service.MovimentoService;
+import java.util.logging.Level;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +25,9 @@ import lombok.RequiredArgsConstructor;
 
 public class EsibController {
 
+    /**
+     *
+     */
     private final MovimentoService movimentoService;
 
     /**
@@ -40,12 +44,16 @@ public class EsibController {
         try {
             return new ResponseEntity<>("Bem vindo a prefaculdade", HttpStatus.OK);
         } catch (Exception e) {
-            logger.info("erro" + e);
+            logger.log(Level.INFO, "erro{0}", e);
 
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR );
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @GetMapping("/relatorios")
     public ResponseEntity<?> gerarRelatorio() {
         try {

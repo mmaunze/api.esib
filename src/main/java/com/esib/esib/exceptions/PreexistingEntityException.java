@@ -10,11 +10,6 @@ public class PreexistingEntityException extends Exception {
 
     /**
      *
-     */
-    private static final Logger logger = Logger.getLogger(PreexistingEntityException.class.getName());
-
-    /**
-     *
      * @param message
      * @param cause
      */
@@ -29,5 +24,10 @@ public class PreexistingEntityException extends Exception {
     public PreexistingEntityException(String message) {
         super(message);
     }
+
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(PreexistingEntityException.class.getName());
 
 }

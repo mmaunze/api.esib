@@ -1,11 +1,14 @@
 package com.esib.esib.exceptions;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.*;
+import static java.util.Objects.*;
+
 import java.util.ArrayList;
 import java.util.List;
-import static java.util.Objects.isNull;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.logging.Logger;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -20,11 +23,6 @@ import lombok.Setter;
 
 @JsonInclude(NON_NULL)
 public class ErrorResponse {
-
-    /**
-     *
-     */
-    private static final Logger logger = Logger.getLogger(ErrorResponse.class.getName());
 
     /**
      *
@@ -85,5 +83,10 @@ public class ErrorResponse {
          */
         private final String message;
     }
+
+    /**
+     *
+     */
+    private static final Logger LOG = Logger.getLogger(ErrorResponse.class.getName());
 
 }

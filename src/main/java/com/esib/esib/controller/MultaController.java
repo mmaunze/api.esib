@@ -1,7 +1,7 @@
 package com.esib.esib.controller;
 
-import com.esib.esib.modelo.Multa;
-import com.esib.esib.modelo.dto.MultaDTO;
+import com.esib.esib.model.Multa;
+import com.esib.esib.model.dto.MultaDTO;
 import com.esib.esib.service.EstadoService;
 import com.esib.esib.service.MultaService;
 import java.net.URI;

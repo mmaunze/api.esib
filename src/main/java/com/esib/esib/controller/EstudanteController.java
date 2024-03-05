@@ -1,7 +1,7 @@
 package com.esib.esib.controller;
 
-import com.esib.esib.modelo.Estudante;
-import com.esib.esib.modelo.dto.EstudanteDTO;
+import com.esib.esib.model.Estudante;
+import com.esib.esib.model.dto.EstudanteDTO;
 import com.esib.esib.service.AreaCientificaService;
 import com.esib.esib.service.CursoService;
 import com.esib.esib.service.DepartamentoService;

@@ -1,9 +1,9 @@
 package com.esib.esib.service;
 
-import com.esib.esib.modelo.Bibliotecario;
-import com.esib.esib.modelo.Curso;
-import com.esib.esib.modelo.Faculdade;
-import com.esib.esib.modelo.Monografia;
+import com.esib.esib.model.Bibliotecario;
+import com.esib.esib.model.Curso;
+import com.esib.esib.model.Faculdade;
+import com.esib.esib.model.Monografia;
 import com.esib.esib.repository.FaculdadeRepository;
 import java.util.List;
 import java.util.Optional;

@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.esib.esib.modelo.Multa;
-import com.esib.esib.modelo.PagamentoMulta;
-import com.esib.esib.modelo.dto.PagamentoMultaDTO;
+import com.esib.esib.model.Multa;
+import com.esib.esib.model.PagamentoMulta;
+import com.esib.esib.model.dto.PagamentoMultaDTO;
 import com.esib.esib.service.BibliotecarioService;
 import com.esib.esib.service.MultaService;
 import com.esib.esib.service.PagamentoMultaService;

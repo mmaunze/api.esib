@@ -1,7 +1,7 @@
 package com.esib.esib.controller;
 
-import com.esib.esib.modelo.Departamento;
-import com.esib.esib.modelo.dto.DepartamentoDTO;
+import com.esib.esib.model.Departamento;
+import com.esib.esib.model.dto.DepartamentoDTO;
 import com.esib.esib.service.DepartamentoService;
 import java.net.URI;
 import java.util.List;
@@ -82,6 +82,7 @@ public class DepartamentoController {
      * @param departamentoDTO
      * @return
      */
+    
     @PostMapping()
     public ResponseEntity<Void> create(@RequestBody DepartamentoDTO departamentoDTO) {
         try {

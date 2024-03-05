@@ -1,7 +1,7 @@
 package com.esib.esib.controller;
 
-import com.esib.esib.modelo.Cta;
-import com.esib.esib.modelo.dto.CtaDTO;
+import com.esib.esib.model.Cta;
+import com.esib.esib.model.dto.CtaDTO;
 import com.esib.esib.service.AreaCientificaService;
 import com.esib.esib.service.CargoService;
 import com.esib.esib.service.CtaService;

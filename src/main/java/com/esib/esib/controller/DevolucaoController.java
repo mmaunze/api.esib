@@ -1,7 +1,7 @@
 package com.esib.esib.controller;
 
-import com.esib.esib.modelo.Devolucao;
-import com.esib.esib.modelo.dto.DevolucaoDTO;
+import com.esib.esib.model.Devolucao;
+import com.esib.esib.model.dto.DevolucaoDTO;
 import com.esib.esib.service.BibliotecarioService;
 import com.esib.esib.service.DevolucaoService;
 import com.esib.esib.service.EmprestimoService;

@@ -1,7 +1,7 @@
 package com.esib.esib.controller;
 
-import com.esib.esib.modelo.TipoMovimento;
-import com.esib.esib.modelo.dto.TipoMovimentoDTO;
+import com.esib.esib.model.TipoMovimento;
+import com.esib.esib.model.dto.TipoMovimentoDTO;
 import com.esib.esib.service.TipoMovimentoService;
 import java.net.URI;
 import java.util.List;

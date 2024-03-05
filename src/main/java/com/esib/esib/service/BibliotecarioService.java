@@ -1,9 +1,9 @@
 package com.esib.esib.service;
 
-import com.esib.esib.modelo.Bibliotecario;
-import com.esib.esib.modelo.Devolucao;
-import com.esib.esib.modelo.Emprestimo;
-import com.esib.esib.modelo.PagamentoMulta;
+import com.esib.esib.model.Bibliotecario;
+import com.esib.esib.model.Devolucao;
+import com.esib.esib.model.Emprestimo;
+import com.esib.esib.model.PagamentoMulta;
 import com.esib.esib.repository.BibliotecarioRepository;
 import com.esib.esib.repository.EstadoRepository;
 import java.util.List;

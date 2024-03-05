@@ -1,7 +1,7 @@
 package com.esib.esib.controller;
 
-import com.esib.esib.modelo.Idioma;
-import com.esib.esib.modelo.dto.IdiomaDTO;
+import com.esib.esib.model.Idioma;
+import com.esib.esib.model.dto.IdiomaDTO;
 import com.esib.esib.service.IdiomaService;
 import java.net.URI;
 import java.util.List;

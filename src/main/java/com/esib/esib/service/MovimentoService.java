@@ -1,9 +1,9 @@
 package com.esib.esib.service;
 
-import com.esib.esib.modelo.Bibliotecario;
-import com.esib.esib.modelo.Movimento;
-import com.esib.esib.modelo.Obra;
-import com.esib.esib.modelo.TipoMovimento;
+import com.esib.esib.model.Bibliotecario;
+import com.esib.esib.model.Movimento;
+import com.esib.esib.model.Obra;
+import com.esib.esib.model.TipoMovimento;
 import com.esib.esib.repository.MovimentoRepository;
 import java.util.List;
 import java.util.Optional;
@@ -158,6 +158,10 @@ public class MovimentoService {
         return movimentoRepository.findByAcientifica(estado);
     }
 
+    /**
+     *
+     * @return
+     */
     public Object gerarRelatorio() {
 
        return "relatorios";

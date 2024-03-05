@@ -1,7 +1,7 @@
 package com.esib.esib.service;
 
-import com.esib.esib.modelo.TipoUtilizador;
-import com.esib.esib.modelo.Utilizador;
+import com.esib.esib.model.TipoUtilizador;
+import com.esib.esib.model.Utilizador;
 import com.esib.esib.repository.TipoUtilizadorRepository;
 import java.util.List;
 import java.util.Optional;

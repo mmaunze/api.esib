@@ -1,8 +1,8 @@
 package com.esib.esib.service;
 
-import com.esib.esib.modelo.Bibliotecario;
-import com.esib.esib.modelo.Multa;
-import com.esib.esib.modelo.PagamentoMulta;
+import com.esib.esib.model.Bibliotecario;
+import com.esib.esib.model.Multa;
+import com.esib.esib.model.PagamentoMulta;
 import com.esib.esib.repository.PagamentoMultaRepository;
 import java.util.List;
 import java.util.Optional;

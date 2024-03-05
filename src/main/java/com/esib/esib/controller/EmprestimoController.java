@@ -1,7 +1,7 @@
 package com.esib.esib.controller;
 
-import com.esib.esib.modelo.Emprestimo;
-import com.esib.esib.modelo.dto.EmprestimoDTO;
+import com.esib.esib.model.Emprestimo;
+import com.esib.esib.model.dto.EmprestimoDTO;
 import com.esib.esib.service.BibliotecarioService;
 import com.esib.esib.service.EmprestimoService;
 import com.esib.esib.service.EstadoService;

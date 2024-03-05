@@ -10,13 +10,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.esib.esib.modelo.AreaCientifica;
-import com.esib.esib.modelo.Departamento;
-import com.esib.esib.modelo.Emprestimo;
-import com.esib.esib.modelo.Reserva;
-import com.esib.esib.modelo.TipoUtilizador;
-import com.esib.esib.modelo.Utilizador;
-import com.esib.esib.modelo.enums.ProfileEnum;
+import com.esib.esib.model.AreaCientifica;
+import com.esib.esib.model.Departamento;
+import com.esib.esib.model.Emprestimo;
+import com.esib.esib.model.Reserva;
+import com.esib.esib.model.TipoUtilizador;
+import com.esib.esib.model.Utilizador;
+import com.esib.esib.model.enums.ProfileEnum;
 import com.esib.esib.repository.UtilizadorRepository;
 
 import lombok.Data;
@@ -102,6 +102,7 @@ public class UtilizadorService {
 
     /**
      *
+     * @param id
      * @param utilizador
      * @return
      */

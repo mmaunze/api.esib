@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.esib.esib.modelo.Utilizador;
-import com.esib.esib.modelo.dto.UtilizadorDTO;
+import com.esib.esib.model.Utilizador;
+import com.esib.esib.model.dto.UtilizadorDTO;
 import com.esib.esib.service.AreaCientificaService;
 import com.esib.esib.service.DepartamentoService;
 import com.esib.esib.service.TipoUtilizadorService;

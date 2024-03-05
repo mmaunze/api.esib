@@ -1,14 +1,14 @@
 package com.esib.esib.service;
 
-import com.esib.esib.modelo.AreaCientifica;
-import com.esib.esib.modelo.Emprestimo;
-import com.esib.esib.modelo.Estado;
-import com.esib.esib.modelo.Idioma;
-import com.esib.esib.modelo.Movimento;
-import com.esib.esib.modelo.Multa;
-import com.esib.esib.modelo.Obra;
-import com.esib.esib.modelo.Reserva;
-import com.esib.esib.modelo.TipoObra;
+import com.esib.esib.model.AreaCientifica;
+import com.esib.esib.model.Emprestimo;
+import com.esib.esib.model.Estado;
+import com.esib.esib.model.Idioma;
+import com.esib.esib.model.Movimento;
+import com.esib.esib.model.Multa;
+import com.esib.esib.model.Obra;
+import com.esib.esib.model.Reserva;
+import com.esib.esib.model.TipoObra;
 import com.esib.esib.repository.ObraRepository;
 import java.util.List;
 import java.util.Optional;

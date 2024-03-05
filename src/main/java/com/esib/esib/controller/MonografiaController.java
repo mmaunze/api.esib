@@ -1,7 +1,7 @@
 package com.esib.esib.controller;
 
-import com.esib.esib.modelo.Monografia;
-import com.esib.esib.modelo.dto.MonografiaDTO;
+import com.esib.esib.model.Monografia;
+import com.esib.esib.model.dto.MonografiaDTO;
 import com.esib.esib.service.AreaCientificaService;
 import com.esib.esib.service.CursoService;
 import com.esib.esib.service.EstadoService;
@@ -34,7 +34,7 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
  * @author Meldo Maunze
  */
 @RestController
-@RequestMapping("/monografias")
+@RequestMapping("/obras/monografias")
 @RequiredArgsConstructor
 
 public class MonografiaController {

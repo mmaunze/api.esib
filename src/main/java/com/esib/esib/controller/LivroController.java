@@ -1,7 +1,7 @@
 package com.esib.esib.controller;
 
-import com.esib.esib.modelo.Livro;
-import com.esib.esib.modelo.dto.LivroDTO;
+import com.esib.esib.model.Livro;
+import com.esib.esib.model.dto.LivroDTO;
 import com.esib.esib.service.AreaCientificaService;
 import com.esib.esib.service.EstadoService;
 import com.esib.esib.service.IdiomaService;

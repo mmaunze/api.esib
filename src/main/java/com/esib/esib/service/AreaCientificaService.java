@@ -2,9 +2,9 @@ package com.esib.esib.service;
 
 import com.esib.esib.exceptions.IllegalOrphanException;
 import com.esib.esib.exceptions.NonexistentEntityException;
-import com.esib.esib.modelo.AreaCientifica;
-import com.esib.esib.modelo.Obra;
-import com.esib.esib.modelo.Utilizador;
+import com.esib.esib.model.AreaCientifica;
+import com.esib.esib.model.Obra;
+import com.esib.esib.model.Utilizador;
 import com.esib.esib.repository.AreaCientificaRepository;
 import java.util.ArrayList;
 import java.util.List;
