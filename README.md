@@ -87,7 +87,7 @@ Contribuições são bem-vindas! Para mais informações, consulte o guia de con
 
 ## Licença
 
-Este projeto está licenciado sob a licença MIT.
+Este projeto está licenciado sob a licença GNU.
 
 ## Autor
 
